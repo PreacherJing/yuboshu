@@ -1,0 +1,39 @@
+.flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.personal {
+  padding: 30rpx;
+  box-sizing: border-box;
+  background: #ffffff;
+}
+.personal .item .title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  align-items: center;
+  align-content: center;
+}
+.personal .item .title .btn-add {
+  padding: 20rpx;
+}
+.personal .item .title .btn-add .icon {
+  font-size: 48rpx;
+}
+.personal .item .tags {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.personal .item .tags .tag {
+  padding: 20rpx;
+  box-sizing: border-box;
+  flex-basis: 208rpx;
+  overflow: hidden;
+  border: #13100e solid 1px;
+  text-align: center;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+  margin-right: 10px;
+}
+

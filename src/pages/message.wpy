@@ -1,0 +1,127 @@
+<style lang="less" scoped>
+.list {
+  padding: 30rpx;
+  .item {
+    .time {
+      padding: 20rpx;
+      text-align: center;
+      font-size: 24rpx;
+      color: #b2b2b2;
+    }
+    .content {
+      background: #ffffff;
+      padding: 30rpx;
+      border-radius: 20rpx;
+      font-size: 32rpx;
+      line-height: 48rpx;
+      .tool {
+        text-align: right;
+        .btn {
+          font-size: 28rpx;
+          padding: 30rpx;
+          display: inline-block;
+          color: #409eff;
+          &.has-read {
+            color: #b2b2b2;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+<template>
+  <mp-page
+    :state="state"
+    :offset="0"
+    :marginOffset="0"
+    :enableTips="false"
+    :enableRefresh="false"
+    :showMoreLoading="false"
+    @retry="onRetry"
+  >
+    <div slot="empty">
+      <div class="list">
+        <div class="item" v-for="(item, index) in items">
+          <div class="time">{{item.senDate}}</div>
+          <div class="content">
+            <div>
+              <text space="nbsp" :decode="true">{{item.message.content}}</text>
+            </div>
+            <div class="tool">
+              <div
+                class="btn {{item.isRead ? 'has-read' : ''}}"
+                @tap="onRead(item.id, index)"
+              >{{item.isRead ? '已读' : '标记已读'}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <loading :show="true" type="circle" v-if="hasMore" />
+      <no-more v-else />
+    </div>
+  </mp-page>
+</template>
+<script>
+import { Notice } from '../common/api';
+import wepy from '@wepy/core';
+wepy.page({
+  data: {
+    items: [],
+    state: 0,
+    pageIndex: 1,
+    pageSize: 10,
+    hasMore: true
+  },
+  async onLoad() {
+    await this.loadData();
+  },
+  async onReachBottom() {
+    await this.loadData();
+  },
+  methods: {
+    format(text) {
+      if (!text) {
+        return;
+      }
+      return text.replace(/\\n/g, '\n');
+    },
+    async loadData() {
+      const res = await Notice.getSysMsg(this.pageIndex, this.pageSize);
+      if (res) {
+        for (const item of res) {
+          item.message.content = this.format(item.message.content);
+          this.items.push(item);
+        }
+        this.pageIndex++;
+        this.hasMore = res.length === this.pageSize;
+        this.state = 2
+      } else {
+        this.state = 1
+      }
+    },
+    async onRetry() {
+      this.state = 0;
+      this.pageIndex = 1;
+      await this.loadData();
+    },
+    async onRead(id, index) {
+      const isRead = await Notice.setRead(id);
+      if (isRead) {
+        this.items[index].isRead = true;
+      }
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: '系统消息',
+    "usingComponents": {
+      "mp-page": "../components/mp-page",
+      "loading": "../components/loading/loading",
+      "no-more": "../components/no-more",
+      "empty": "../components/empty",
+    }
+}
+</config>

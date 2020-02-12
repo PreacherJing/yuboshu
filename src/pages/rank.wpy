@@ -1,0 +1,191 @@
+<style lang="less" scoped>
+page {
+  background: #fae37c;
+}
+.rank {
+  padding: 30rpx;
+  .img-rank {
+    text-align: left;
+    margin-left: 40rpx;
+    margin-bottom: 30rpx;
+    image {
+      height: 160rpx;
+      width: 400rpx;
+    }
+  }
+  .list {
+    border-radius: 20rpx;
+    background: #ffffff;
+    padding: 20rpx;
+    padding-top: 0rpx;
+    .item {
+      padding: 30rpx 0rpx;
+      position: relative;
+      &::after {
+        content: ' ';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: 1px;
+        border-top: 0.4px solid rgba(235, 237, 245, 0.8);
+        color: rgba(235, 237, 245, 0.8);
+      }
+      &.item-hover {
+        background: #f4f4f4;
+      }
+    }
+  }
+}
+.btn-follow {
+  font-size: 24rpx;
+  background: #fae37c;
+  box-shadow: 4rpx 8rpx 12rpx rgba(250, 227, 124, 0.5);
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  .icon {
+    font-size: 30rpx;
+  }
+  &.follow {
+    background: #f8f8f8;
+    color: #b2b2b2;
+    box-shadow: none;
+  }
+  &.btn-hover {
+    background: rgba(250, 227, 124, 0.5);
+  }
+}
+.rank-num {
+  width: 60rpx;
+  text-align: center;
+  font-size: 28rpx;
+  margin-right: 30rpx;
+  font-weight: bold;
+  color: #474747;
+  .icon {
+    font-size: 48rpx;
+  }
+  image {
+    width: 56rpx;
+    height: 56rpx;
+  }
+}
+</style>
+<template>
+  <mp-page
+    :state="state"
+    :offset="0"
+    :marginOffset="0"
+    :enableTips="false"
+    :enableRefresh="false"
+    :showMoreLoading="false"
+    @retry="onRetry"
+  >
+    <div slot="empty" class="rank">
+      <div class="img-rank">
+        <img src="http://img.wutuobangxinyougou.com/ic_rank.svg" />
+      </div>
+      <div class="list" v-if="items.length">
+        <div class="item" hover-class="item-hover" v-for="(item, index) in items" :key="item.id">
+          <user-item :info="item.user">
+            <div slot="left" class="rank-num">
+              <text v-if="item.rownum > 3">{{item.rownum}}</text>
+              <img src="http://img.wutuobangxinyougou.com/rank_{{item.rownum}}.svg" v-else />
+            </div>
+            <div slot="action">
+              <div
+                class="btn-follow {{item.hasFollow ? 'follow' : ''}}"
+                hover-class="btn-hover"
+                @tap.stop="onFollow(item, index)"
+              >
+                <div class="icon icon-add" v-if="!item.hasFollow"></div>
+                <div>{{item.hasFollow ? '已关注' : '关注'}}</div>
+              </div>
+            </div>
+          </user-item>
+        </div>
+        <loading :show="true" type="circle" v-if="hasMore" />
+        <no-more v-else />
+      </div>
+      <div class="empty" v-else>
+        <empty des="还没有人关注你,发个动弹试试" btnTxt="发布动弹" />
+      </div>
+    </div>
+  </mp-page>
+</template>
+<script>
+import { Follow } from '../common/api';
+import wepy from '@wepy/core';
+wepy.page({
+  data: {
+    items: [],
+    state: 0,
+    pageIndex: 1,
+    pageSize: 20,
+    hasMore: true,
+    userId: null
+  },
+  async onLoad() {
+    await this.loadData();
+  },
+  async onReachBottom() {
+    await this.loadData();
+  },
+  methods: {
+    async loadData() {
+      if (!this.hasMore) {
+        return;
+      }
+      let res = await Follow.getRank(this.pageIndex, this.pageSize);
+      if (res) {
+        if (res.length > 0) {
+          for (const item of res) {
+            this.items.push(item);
+          }
+          this.pageIndex++;
+        }
+        this.hasMore = res.length === this.pageSize;
+        this.state = 2;
+      } else {
+        this.state = 1;
+      }
+    },
+    async onRetry() {
+      this.state = 0;
+      await this.loadData();
+    },
+    async onFollow(item, index) {
+      const { isBinding } = wx.getStorageSync('user');
+      if (isBinding === 0) {
+        wx.navigateTo({
+          url: '/pages/gender'
+        });
+      } else {
+        if (!item.hasFollow) {
+          const isFollow = await Follow.concern(item.id);
+          if (isFollow) {
+            this.items[index].hasFollow = true;
+          }
+        }
+      }
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: '',
+    backgroundColor: '#fae37c',
+    navigationBarBackgroundColor: '#fae37c',
+    "usingComponents": {
+      "mp-page": "../components/mp-page",
+      "user-item": "../components/user-item",
+      "loading": "../components/loading/loading",
+      "no-more": "../components/no-more",
+      "empty": "../components/empty",
+    }
+}
+</config>

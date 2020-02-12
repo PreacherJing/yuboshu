@@ -1,0 +1,221 @@
+<style lang="less">
+.container {
+  position: relative;
+  .tabs {
+    border-radius: 0rpx;
+    text-align: left;
+    .tab {
+      font-size: 28rpx;
+      &.active {
+        font-size: 34rpx;
+      }
+    }
+  }
+  .home-action {
+    position: fixed;
+    bottom: 60rpx;
+    right: 30rpx;
+    transition: all 0.3s;
+    .btn-i {
+      width: 96rpx;
+      height: 96rpx;
+      line-height: 96rpx;
+      text-align: center;
+      background: #fae37c;
+      border-radius: 96rpx;
+      box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20rpx;
+      position: relative;
+      .icon {
+        font-size: 56rpx;
+      }
+      .action-des {
+        position: absolute;
+        padding: 0rpx 20rpx;
+        background: #fae37c;
+        border-radius: 15rpx;
+        // color: red;
+        font-size: 26rpx;
+        width: 340rpx;
+        right: 120rpx;
+        top: 15rpx;
+        box-shadow: -3rpx 8rpx 8rpx rgba(80, 80, 80, 0.1);
+        .action-txt {
+          line-height: 70rpx;
+        }
+        .arr {
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-top: 20rpx solid transparent;
+          border-bottom: 20rpx solid transparent;
+          border-left: 20rpx solid #fae37c;
+          top: 16rpx;
+          right: -13rpx;
+        }
+      }
+      .dot {
+        position: absolute;
+        height: 30rpx;
+        width: 108rpx;
+        line-height: 30rpx;
+        border-radius: 30rpx;
+        font-size: 18rpx;
+        color: #fcd684;
+        background: #f55569;
+        text-align: center;
+        left: -6rpx;
+        bottom: 0rpx;
+        &.has {
+          color: #fff;
+          background: #f55569;
+        }
+      }
+      &.btn-share {
+        // color: red;
+      }
+      &.btn-card {
+        image {
+          width: 56rpx;
+          height: 56rpx;
+          margin-top: 20rpx;
+        }
+      }
+    }
+  }
+}
+</style>
+<template>
+  <div class="container">
+    <navigation-bar :back="false" :loading="loading" background="#ffffff">
+      <div slot="left">
+        <tab extClass="tabs" :labels="labels" :selectedIndex="tabIndex" @change="onTabChange" />
+      </div>
+    </navigation-bar>
+    <swiper :current="current" @change="onChange" style="height: calc(100vh - 64px);">
+      <swiper-item>
+        <topic ref="topic" />
+      </swiper-item>
+      <swiper-item>
+        <recommend />
+      </swiper-item>
+      <swiper-item>
+        <follow ref="follow" />
+      </swiper-item>
+    </swiper>
+    <div class="home-action" style="right: {{action_right}}rpx;">
+      <div class="btn-circle btn-i" @tap.stop="goSend">
+        <div class="icon icon-xiezuo"></div>
+      </div>
+      <div class="btn-card btn-i" @tap.stop="goPlane">
+        <div class="icon icon-plane"></div>
+      </div>
+      <div class="btn-share btn-i" @tap.stop="goMoney">
+        <div class="icon icon-hongbao"></div>
+        <div class="dot">认证领¥30</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { Notice } from '../common/api';
+import shareMixin from '../common/share.js';
+import wepy from '@wepy/core';
+wepy.page({
+  mixins: [shareMixin],
+  data: {
+    labels: ['话题', '推荐', '关注'],
+    current: 1,
+    tabIndex: 1,
+    hasInitTopic: false,
+    hasInitFollow: false,
+    loading: false
+  },
+  async onLoad(q) {
+    console.log(q);
+
+    const total = Notice.getNoticeCount();
+    if (total > 0) {
+      wx.setTabBarBadge({
+        index: 1,
+        text: total.toString()
+      });
+    }
+    if (this.$app.$options.globalData.postId) {
+      wx.navigateTo({
+        url: '/pages/post-details?id=' + this.$app.$options.globalData.postId
+      });
+    }
+    if (this.$app.$options.globalData.commentId) {
+      wx.navigateTo({
+        url: '/pages/post-comment?id=' + this.$app.$options.globalData.commentId
+      });
+    }
+    Notice.appUpdate();
+  },
+  watch: {
+    async current(index) {
+      if (index === 0) {
+        if (!this.hasInitTopic) {
+          await this.$refs.topic.init();
+          this.hasInitTopic = true;
+        }
+        this.$refs.topic.loadTrack();
+      } else if (index === 2) {
+        if (!this.hasInitFollow) {
+          await this.$refs.follow.init();
+          this.hasInitFollow = true;
+        }
+      }
+    }
+  },
+  methods: {
+    onTabChange(index) {
+      this.current = index;
+    },
+    onChange(res) {
+      const { current, source } = res.$wx.detail;
+      if (source === 'touch') {
+        this.tabIndex = current;
+        this.current = current;
+      }
+    },
+    goMoney() {
+      const { isBinding } = wx.getStorageSync('user');
+      if (isBinding === 0) {
+        wx.navigateTo({
+          url: '/pages/gender'
+        });
+      } else {
+        wx.navigateTo({
+          url: '/pages/lachine'
+        });
+      }
+    },
+    goPlane() {
+      wx.navigateTo({
+        url: '/pages/paper-plane'
+      });
+    },
+    goSend() {
+      wx.navigateTo({
+        url: '/pages/post-type'
+      });
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: '社区',
+    navigationStyle: 'custom',
+    usingComponents: {
+        "tab": "../components/tab-bar",
+        "navigation-bar": "../components/navigation-bar/navigation-bar",
+        "recommend": "../components/page-recommend",
+        "follow": "../components/page-follow",
+        "topic": "../components/page-topic",
+    }
+}
+</config>

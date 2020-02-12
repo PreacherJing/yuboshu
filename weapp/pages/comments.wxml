@@ -1,0 +1,41 @@
+
+<mp-page bind_init="_initComponent" state="{{ state }}" offset="{{ 0 }}" marginOffset="{{ 0 }}" enableTips="{{ false }}" enableRefresh="{{ false }}" showMoreLoading="{{ false }}" data-wpy-evt="15-0" bindretry="_proxy">
+  <view slot="empty">
+    <view wx:if="{{ items.length }}" class="list">
+      <view wx:for="{{ items }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" class="item">
+        <user-item bind_init="_initComponent" info="{{ item.user }}">
+          <view slot="action" wx:if="{{ fromType !== '2' }}" data-wpy-evt="15-1" catchtap="_proxy" data-wpytap-a="{{ item }}">
+            <view hover-class="btn-hover" class="btn">回复</view>
+          </view>
+        </user-item>
+        <view class="item-txt">
+          <text class="txt-type">
+            <text class="icon icon-{{icons[fromType]}}"></text>
+            <text>{{lables[fromType]}}{{fromType === '2' ? des[item.likeType] : ''}}</text>
+          </text>
+          <block wx:for="{{ item.content }}" wx:for-index="index" wx:for-item="obj" wx:key="index">
+            <text wx:if="{{ obj.type === 0 }}" space="nbsp" class="{{showInfo ? 'simple' : ''}}">{{obj.value}}</text>
+            <image wx:else src="{{ obj.src }}" class="icon-img"></image>
+          </block>
+        </view>
+        <view wx:if="{{ item.imgs }}" class="comment-imgs">
+          <view wx:for="{{ item.imgs }}" wx:for-index="index" wx:for-item="img" wx:key="index" key="{{ index }}" class="comment-img-item">
+            <image src="{{ img.path }}" mode="aspectFill" lazy-load="{{ true }}" data-wpy-evt="15-2" catchtap="_proxy" data-wpytap-a="{{ item }}" data-wpytap-b="{{ index }}"></image>
+            <view wx:if="{{ img.height > item.height }}" class="img-des">长图</view>
+          </view>
+        </view>
+        <view wx:if="{{ item.source }}" data-wpy-evt="15-3" catchtap="_proxy" data-wpytap-a="{{ item }}" class="item-source">
+          <image src="{{ item.source.imgs[0].path }}" mode="aspectFill" wx:if="{{ item.source && item.source.imgs && item.source.imgs.length }}"></image>
+          <view class="item-source-txt">{{item.source.content}}</view>
+        </view>
+        <view wx:if="{{ item.senDate && fromType !== '2' }}" class="item-date">{{item.senDate}}</view>
+      </view>
+      <loading bind_init="_initComponent" show="{{ true }}" type="circle" wx:if="{{ hasMore }}"></loading>
+      <no-more bind_init="_initComponent" wx:else></no-more>
+    </view>
+    <view wx:else class="empty">
+      <empty bind_init="_initComponent" des="还没有人跟你互动过,发个动弹试试" btnTxt="发布动弹" data-wpy-evt="15-4" bindaction="_proxy"></empty>
+    </view>
+    <comment-input bind_init="_initComponent" show="{{ showInput }}" placeholder="{{ placeholder }}" toUserId="{{ toUserId }}" replyId="{{ replyId }}" toUserNick="{{ toUserNick }}" commentId="{{ commentId }}" postId="{{ postId }}" type="{{ 1 }}" data-wpy-evt="15-5" bindhide="_proxy"></comment-input>
+  </view>
+</mp-page>

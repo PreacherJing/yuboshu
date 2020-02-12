@@ -1,0 +1,16 @@
+{
+    "navigationBarTitleText": "我",
+    "navigationStyle": "custom",
+    "component": true,
+    "usingComponents": {
+        "navigation-bar": "../components/navigation-bar/navigation-bar",
+        "screen-dialog": "../components/half-screen-dialog/half-screen-dialog",
+        "mp-page": "../components/mp-page",
+        "post-item": "../components/post-item",
+        "post-comments": "../components/post-comments",
+        "comment-action": "../components/comment-action",
+        "user-item": "../components/user-item",
+        "comment-input": "../components/comment-input",
+        "likers": "../components/post-likers"
+    }
+}

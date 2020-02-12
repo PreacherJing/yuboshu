@@ -1,0 +1,6 @@
+{
+    "component": true,
+    "usingComponents": {
+        "emoji-input": "emoji-input"
+    }
+}

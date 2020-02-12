@@ -1,0 +1,28 @@
+
+<mp-page bind_init="_initComponent" state="{{ state }}" offset="{{ 0 }}" marginOffset="{{ 0 }}" enableTips="{{ false }}" enableRefresh="{{ false }}" showMoreLoading="{{ false }}" data-wpy-evt="17-0" bindretry="_proxy">
+  <view slot="empty">
+    <view wx:if="{{ items.length }}" class="list">
+      <view wx:for="{{ items }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" class="item">
+        <user-item bind_init="_initComponent" info="{{ item.user }}">
+          <view slot="action" data-wpy-evt="17-1" catchtap="_proxy" data-wpytap-a="{{ item }}" data-wpytap-b="{{ index }}">
+            <view hover-class="btn-hover" class="btn-follow {{item.hasFollow ? 'has-follow' : ''}}">
+              <view wx:if="{{ !item.hasFollow }}" class="icon icon-add"></view>
+              <view>{{item.hasFollow ? '已关注' : '关注'}}</view>
+            </view>
+          </view>
+        </user-item>
+        <view class="item-content">
+          <view class="item-txt">
+            <text class="icon icon-love-full"></text>关注了你
+          </view>
+          <view class="item-date">{{item.moment}}</view>
+        </view>
+      </view>
+      <loading bind_init="_initComponent" show="{{ true }}" type="circle" wx:if="{{ hasMore }}"></loading>
+      <no-more bind_init="_initComponent" wx:else></no-more>
+    </view>
+    <view wx:else class="empty">
+      <empty bind_init="_initComponent" des="还没有人关注你,发个动弹试试" btnTxt="发布动弹" data-wpy-evt="17-2" bindaction="_proxy"></empty>
+    </view>
+  </view>
+</mp-page>

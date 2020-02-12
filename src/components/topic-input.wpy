@@ -1,0 +1,148 @@
+<style lang="less" scoped>
+.topics {
+  .topic-item {
+    text-align: left;
+    font-size: 30rpx;
+    padding: 20rpx 30rpx;
+    display: flex;
+    align-items: center;
+    display: flex;
+    image {
+      width: 96rpx;
+      height: 96rpx;
+      border-radius: 10rpx;
+    }
+    .content {
+      margin-left: 20rpx;
+      .title {
+        margin-bottom: 8rpx;
+        .top {
+          background: #409eff;
+          color: #ffffff;
+          font-size: 20rpx;
+          padding: 3rpx 6rpx;
+          border-radius: 6rpx;
+          margin-left: 8rpx;
+          vertical-align: middle;
+          &.top-gift {
+            background: #fdf6ec;
+            color: #ec9615;
+          }
+        }
+      }
+      .des{
+        font-size: 24rpx;
+        color: #b2b2b2;
+        .num{
+          margin-right: 10rpx;
+        }
+      }
+    }
+  }
+}
+</style>
+<template>
+  <screen-dialog :show="show" title="选择话题" @close="onClose">
+    <div slot="footer">
+      <searchbar placeholder="输入话题" @input="onSearch" @cancel="onCancel"></searchbar>
+      <scroll-view
+        :scroll-y="true"
+        @scrolltolower="onScrolltolower"
+        style="height:calc(65vh - 96rpx);"
+      >
+        <div class="topics">
+          <div class="topic-item" v-for="item in items" :key="item.id" @tap.stop="onSelect(item)">
+            <img :src="item.iconPath" />
+            <div class="content">
+              <div class="title">
+                <text>#{{item.title}}</text>
+                <text class="top" v-if="item.isTop">顶</text>
+                <text class="top top-gift" v-if="item.isActivity">有奖活动</text>
+              </div>
+              <div class="des">
+                <text class="num">{{item.followCount}}</text>
+                <text>{{item.nickName}}</text>
+              </div>
+            </div>
+          </div>
+        </div>
+      </scroll-view>
+    </div>
+  </screen-dialog>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { Topic } from '../common/api';
+wepy.component({
+  options: {
+    addGlobalClass: true
+  },
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: {
+    items: [],
+    pageIndex: 1,
+    pageSize: 20,
+    isCanLoad: true
+  },
+  watch: {
+    async show(val) {
+      if (val) {
+        await this.loadData();
+      }
+    }
+  },
+  methods: {
+    async loadData() {
+      if (this.isCanLoad) {
+        const items = await Topic.getTopicList(this.pageIndex, this.pageSize);
+        for (const item of items) {
+          this.items.push(item);
+        }
+        if (items.length >= this.pageSize) {
+          this.pageIndex++;
+        } else {
+          this.isCanLoad = false;
+        }
+      }
+    },
+    onSelect(topic) {
+      this.$emit('result', {
+        id: topic.id,
+        title: topic.title
+      });
+    },
+    async onSearch(e) {
+      const { value } = e.$wx.detail;
+      this.pageIndex = 1;
+      this.isCanLoad = true;
+      const items = await Topic.searchTopic(value, this.pageIndex, this.pageSize);
+      this.items = items;
+    },
+    async onCancel() {
+      this.items = [];
+      this.isCanLoad = true;
+      this.pageIndex = 1;
+      await this.loadData();
+    },
+    onClose() {
+      this.$emit('close');
+    },
+    async onScrolltolower() {
+      await this.loadData();
+    }
+  }
+});
+</script>
+<config>
+{
+    "usingComponents": {
+        "screen-dialog": "./half-screen-dialog/half-screen-dialog",
+        "searchbar": "./searchbar/searchbar",
+    }
+}
+</config>

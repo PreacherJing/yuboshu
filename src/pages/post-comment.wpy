@@ -1,0 +1,233 @@
+<style lang="less" scoped>
+.comments {
+  background: #ffffff;
+  margin-top: 30rpx;
+  .comments-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rpx 20rpx;
+    .title {
+      font-size: 32rpx;
+    }
+    .zan {
+      display: flex;
+      align-items: center;
+      font-size: 24rpx;
+      color: #b2b2b2;
+      margin: 30rpx 0rpx;
+      image {
+        width: 36rpx;
+        height: 36rpx;
+        border-radius: 36rpx;
+        border: #ffffff solid 4rpx;
+        margin-right: -14rpx;
+      }
+      .zan-des {
+        margin-left: 24rpx;
+      }
+    }
+  }
+}
+.page-action {
+  position: fixed;
+  background: #fff;
+  bottom: 0rpx;
+  left: 0rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10rpx 30rpx;
+  box-sizing: border-box;
+  z-index: 1000;
+  &::after {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 0.4px solid rgba(235, 237, 245, 0.8);
+    color: rgba(235, 237, 245, 0.8);
+  }
+  .item {
+    padding: 20rpx;
+    box-sizing: border-box;
+    flex-grow: 1;
+    text-align: center;
+    font-size: 24rpx;
+    display: flex;
+    padding: 20rpx 30rpx;
+    justify-content: center;
+    .icon {
+      font-size: 48rpx;
+      margin-right: 6rpx;
+    }
+  }
+  .item-input {
+    font-size: 28rpx;
+    color: #b2b2b2;
+    background: #f8f8f8;
+    line-height: 64rpx;
+    height: 64rpx;
+    padding: 0rpx 20rpx;
+    flex-grow: 1;
+    border-radius: 80rpx;
+    width: 240rpx;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /*设置文本行数限制*/
+    -webkit-box-orient: vertical; /*设置文本排列方式*/
+  }
+}
+</style>
+<template>
+  <div>
+    <mp-page
+      :state="state"
+      :offset="0"
+      :bottomOffset="110"
+      @retry="onRetry"
+      :showMoreLoading="false"
+    >
+      <comment-item :item="comment" :showAction="false" :actionType="1" />
+      <div class="comments">
+        <div class="comments-top">
+          <div class="title">评论({{comment.replyCount}})</div>
+          <div class="zan">
+            <img v-for="(img, index) in post.likers" :src="img" :key="index" />
+            <div class="zan-des">{{comment.thumbsCount}}人赞了</div>
+          </div>
+        </div>
+        <post-replys
+          :commentId="commentId"
+          ref="comments"
+          @action="onShowInput"
+          @itemTap="onItemTap"
+        />
+      </div>
+    </mp-page>
+    <comment-action
+      :commentCount="comment.replyCount"
+      :thumbsCount="comment.thumbsCount"
+      :postId="comment.id"
+      :commentId="null"
+      :sourceId="comment.id"
+      :likeType="1"
+      :toUserId="comment.userId"
+      :isCancel="comment.hasLike"
+      des="{{'回复' + comment.user.nick}}"
+      @thumbs="onThumbs"
+      @showInput="onShowInput"
+      v-if="state===3"
+    />
+    <comment-input
+      :show="showInput"
+      @hide="onHide"
+      :placeholder="placeholder"
+      :toUserId="toUserId"
+      :replyId="replyId"
+      :toUserNick="toUserNick"
+      :commentId="commentId"
+      :postId="comment.postId"
+      :type="1"
+      @comment="onComment"
+      v-if="state === 3"
+    />
+  </div>
+</template>
+<script>
+import { Post } from '../common/api';
+import wepy from '@wepy/core';
+wepy.page({
+  data: {
+    state: 0,
+    toUserId: null,
+    toUserNick: null,
+    showInput: false,
+    comment: null,
+    replyId: null,
+    placeholder: '',
+    user: null,
+    commentId: null
+  },
+  onShareAppMessage() {
+    const imageUrl =
+      this.comment.imgs && this.comment.imgs.length
+        ? this.comment.imgs[0].path
+        : `${Post.getImgUrl()}/share.png`;
+    return {
+      title: this.comment.origTxt,
+      imageUrl: imageUrl,
+      path: `/pages/index?id=${this.user.id}&postId=${this.comment.id}`
+    };
+  },
+  async onLoad(q) {
+    this.user = wx.getStorageSync('user');
+    const { id } = q;
+    this.commentId = id;
+    await this.init();
+  },
+  methods: {
+    async init() {
+      this.state = 0;
+      const res = await Post.getCommentDetail(this.commentId);
+      if (res) {
+        this.comment = res;
+        this.toUserId = this.comment.userId;
+        this.placeholder = `回复${this.comment.user.nick}:`;
+        this.state = 3;
+      } else {
+        this.state = 1;
+      }
+    },
+    async onRetry() {
+      await this.init();
+    },
+    onShowInput() {
+      this.showInput = true;
+    },
+    onHide() {
+      if (this.comment) {
+        this.placeholder = `回复${this.comment.user.nick}:`;
+        this.toUserId = this.comment.userId;
+      }
+      this.toUserNick = null;
+      this.replyId = null;
+      this.showInput = false;
+    },
+    onComment(comment) {
+      this.$refs.comments.unshift(comment);
+    },
+    onItemTap(comment) {
+      this.placeholder = `回复${comment.user.nick}:`;
+      this.toUserId = comment.user.id;
+      this.toUserNick = comment.user.nick;
+      this.replyId = comment.id;
+      this.onShowInput();
+    },
+    onThumbs(hasLike) {
+      this.comment.hasLike = hasLike;
+      if (hasLike) {
+        this.comment.thumbsCount++;
+      } else {
+        this.comment.thumbsCount--;
+      }
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: '评论详情',
+    navigationBarBackgroundColor: '#ffffff',
+    usingComponents: {
+        "mp-page": "../components/mp-page",
+        "comment-action": "../components/comment-action",
+        "comment-item": "../components/post-comment-item",
+        "post-replys": "../components/post-replys",
+        "comment-input": "../components/comment-input"
+    }
+}
+</config>

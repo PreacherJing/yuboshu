@@ -1,0 +1,45 @@
+.photos {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-left: 30rpx;
+  padding-top: 30rpx;
+}
+.photos .photo {
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+  width: 220rpx;
+  height: 220rpx;
+  position: relative;
+}
+.photos .photo .btn-more {
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+  background: rgba(0, 0, 0, 0.5);
+  font-size: 48rpx;
+  color: #ffffff;
+  font-weight: bold;
+  line-height: 50rpx;
+  text-align: center;
+  border-radius: 8rpx;
+  right: 8rpx;
+  bottom: 8rpx;
+}
+.photos .photo image {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 20rpx;
+  margin-right: 10rpx;
+}
+.photos .photo .add {
+  text-align: center;
+  line-height: 220rpx;
+  border-radius: 20rpx;
+  background: #f8f8f8;
+}
+.photos .photo .add .icon {
+  font-size: 64rpx;
+  color: #b2b2b2;
+}
+

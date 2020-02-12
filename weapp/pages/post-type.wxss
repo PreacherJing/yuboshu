@@ -1,0 +1,35 @@
+.item {
+  background: #ffffff;
+  padding: 30rpx 32rpx;
+  display: flex;
+  align-items: center;
+  margin: 0rpx 32rpx;
+  margin-top: 30rpx;
+  border-radius: 8rpx;
+  line-height: normal;
+  text-align: left;
+}
+.item::after {
+  border: none;
+}
+.item.item-hover {
+  background: #fbfbfb;
+}
+.item image {
+  width: 220rpx;
+  height: 160rpx;
+}
+.item .center {
+  flex-grow: 1;
+  margin-left: 30rpx;
+}
+.item .center .title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.item .center .des {
+  font-size: 28rpx;
+  color: #878b99;
+  margin-top: 12rpx;
+}
+

@@ -1,0 +1,10 @@
+{
+    "component": true,
+    "usingComponents": {
+        "loading": "loading/loading",
+        "comment-item": "post-comment-item",
+        "mp-page": "mp-page",
+        "empty": "empty",
+        "no-more": "no-more"
+    }
+}

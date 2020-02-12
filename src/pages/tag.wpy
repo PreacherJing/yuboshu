@@ -1,0 +1,107 @@
+<style lang="less" scoped>
+.labels {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 30rpx 0rpx;
+  .label {
+    flex-basis: 220rpx;
+    padding: 30rpx 0rpx;
+    margin-bottom: 30rpx;
+    font-size: 30rpx;
+    text-align: center;
+    background: #ffffff;
+    color: #000000;
+    border-radius: 8rpx;
+    &.active {
+      background: #ffd100;
+    }
+  }
+}
+</style>
+<template>
+  <div class="container">
+    <div class="labels">
+      <div
+        class="label {{label.isActive ? 'active' : ''}}"
+        v-for="(label, index) in labels"
+        :key="label.id"
+        @tap="onTap(index)"
+      >{{label.text}}</div>
+    </div>
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { User } from '../common/api';
+wepy.page({
+  data: {
+    labels: [],
+    parent: '',
+    tags: []
+  },
+  async onLoad() {
+    if (this.$wx.getOpenerEventChannel) {
+      this.eventChannel = this.$wx.getOpenerEventChannel();
+      this.eventChannel.on('acceptDataFromOpenerPage', async obj => {
+        await this.init(obj);
+      });
+    } else {
+      await this.init(this.$app.$options.globalData.tagData);
+    }
+  },
+  onUnload() {
+    let labels = [];
+    for (const label of this.labels) {
+      if (label.isActive) {
+        labels.push(Object.assign({}, label));
+      }
+    }
+    if (this.eventChannel) {
+      this.eventChannel.emit('acceptDataFromOpenedPage', {
+        labels,
+        parent: this.parent
+      });
+    } else {
+      this.$app.$options.globalData.tagData = {
+        labels,
+        parent: this.parent,
+        isEdit: true
+      };
+    }
+  },
+  methods: {
+    onTap(index) {
+      this.labels[index].isActive = !this.labels[index].isActive;
+    },
+    async init(obj) {
+      wx.setNavigationBarTitle({
+        title: obj.title
+      });
+      this.tags = obj.tags;
+      this.parent = obj.title;
+      const res = await User.getLabels(obj.title);
+      if (res) {
+        for (const label of res) {
+          label.isActive = false;
+          for (const tag of this.tags) {
+            if (label.text === tag.text) {
+              label.isActive = true;
+              continue;
+            }
+          }
+          this.labels.push(label);
+        }
+      }
+    }
+  }
+});
+</script>
+<config>
+{
+    "usingComponents": {
+    }
+}
+</config>

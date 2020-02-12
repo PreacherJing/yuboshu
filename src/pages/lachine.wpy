@@ -1,0 +1,15 @@
+<template>
+    <web-view :src="src"/>
+</template>
+<script>
+import wepy from '@wepy/core';
+wepy.page({
+    data: {
+        src: null
+    },
+    onLoad() {
+        const token = wx.getStorageSync('token') || ''
+        this.src = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1710dd7f9b1bbe4f&redirect_uri=${encodeURIComponent('https://www.wutuobangxinyougou.com/lachine.html?token=' + token)}&response_type=code&scope=snsapi_base&state=0#wechat_redirect`
+    }
+})
+</script>

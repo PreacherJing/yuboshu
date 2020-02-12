@@ -1,0 +1,37 @@
+
+<view class="container">
+  <swiper indicator-dots="{{ true }}" indicator-color="#fae37c" indicator-active-color="rgba(250, 227, 124, 0.2)" style="height: calc(100vh - 56px);">
+    <swiper-item>
+      <view class="item">
+        <image src="http://img.wutuobangxinyougou.com/guide_1.svg"></image>
+        <view class="title">记录校园</view>
+        <view class="des">记录校园生活，分享大学故事</view>
+        <button hover-class="btn-hover" loading="{{ loading }}" disabled="{{ disabled }}" data-wpy-evt="3-0" bindtap="_proxy" class="btn">{{btntext}}</button>
+      </view>
+    </swiper-item>
+    <swiper-item>
+      <view class="item">
+        <image src="http://img.wutuobangxinyougou.com/guide_2.svg"></image>
+        <view class="title">真实的TA</view>
+        <view class="des">新乡各高校真实学生，学生实名认证</view>
+        <button hover-class="btn-hover" loading="{{ loading }}" disabled="{{ disabled }}" data-wpy-evt="3-1" bindtap="_proxy" class="btn">{{btntext}}</button>
+      </view>
+    </swiper-item>
+    <swiper-item>
+      <view class="item">
+        <image src="http://img.wutuobangxinyougou.com/guide_3.svg"></image>
+        <view class="title">拓展圈子</view>
+        <view class="des">认识志趣相同的同学,拓展人脉</view>
+        <button hover-class="btn-hover" loading="{{ loading }}" disabled="{{ disabled }}" data-wpy-evt="3-2" bindtap="_proxy" class="btn">{{btntext}}</button>
+      </view>
+    </swiper-item>
+    <swiper-item>
+      <view class="item">
+        <image src="http://img.wutuobangxinyougou.com/guide_4.svg"></image>
+        <view class="title">校园网红</view>
+        <view class="des">施展你的才华,成为校园里耀眼的星</view>
+        <button hover-class="btn-hover" loading="{{ loading }}" disabled="{{ disabled }}" data-wpy-evt="3-3" bindtap="_proxy" class="btn">{{btntext}}</button>
+      </view>
+    </swiper-item>
+  </swiper>
+</view>

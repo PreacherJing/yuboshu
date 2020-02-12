@@ -1,0 +1,155 @@
+<style lang="less" scoped>
+.flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.personal {
+  padding: 30rpx;
+  box-sizing: border-box;
+  background: #ffffff;
+  .item {
+    .title {
+      font-size: 36rpx;
+      font-weight: bold;
+      margin-bottom: 20rpx;
+      align-items: center;
+      align-content: center;
+      .btn-add {
+        padding: 20rpx;
+        .icon {
+          font-size: 48rpx;
+        }
+      }
+    }
+    .tags {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      .tag {
+        padding: 20rpx;
+        box-sizing: border-box;
+        flex-basis: 208rpx;
+        overflow: hidden;
+        border: #13100e solid 1px;
+        text-align: center;
+        font-size: 28rpx;
+        margin-bottom: 20rpx;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+</style>
+<template>
+  <scroll-view :scroll-y="scrollY" style="height: calc(100% - 80rpx);">
+    <div class="personal">
+      <div class="item" v-for="(item,name) in tags" :key="index">
+        <div class="title flex">
+          <div>{{name}}</div>
+          <div class="btn-add" v-if="mode === 'edit'" @tap="onAdd(name)">
+            <div class="icon icon-add-line"></div>
+          </div>
+        </div>
+        <div class="tags flex">
+          <div class="tag" v-for="tag in item" :key="tag.id">{{tag.text}}</div>
+        </div>
+      </div>
+    </div>
+  </scroll-view>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { User } from '../common/api';
+wepy.component({
+  options: {
+    addGlobalClass: true
+  },
+  props: {
+    scrollY: Boolean,
+    mode: {
+      type: String,
+      default: 'view'
+    },
+    userId: Number,
+    show: {
+      type: Boolean,
+      default: false
+    },
+    reload: {
+      type: Boolean,
+      default: false
+    }
+  },
+  watch: {
+    async show(isShow) {
+      if (isShow) {
+        await this.loadData();
+      }
+    },
+    async reload() {
+      const tagData = this.$app.$options.globalData.tagData;
+      if (tagData && tagData.isEdit) {
+        this.tags[tagData.parent] = tagData.labels;
+        await User.addLabels(this.userId, tagData.parent, tagData.labels);
+      }
+    }
+  },
+  data: {
+    tags: {
+      性格: [],
+      足迹: [],
+      作品: [],
+      电影: [],
+      美食: [],
+      运动: [],
+      音乐: []
+    },
+    isqq: false
+  },
+  attached() {
+    this.isqq = User.isQQ();
+  },
+  methods: {
+    onAdd(parent) {
+      if (this.isqq) {
+        this.$emit('reset');
+        this.$app.$options.globalData.tagData = {
+          title: parent,
+          tags: this.tags[parent]
+        };
+        wx.navigateTo({
+          url: '/pages/tag'
+        });
+      } else {
+        wx.navigateTo({
+          url: '/pages/tag',
+          events: {
+            acceptDataFromOpenedPage: async res => {
+              this.tags[res.parent] = res.labels;
+              await User.addLabels(this.userId, res.parent, res.labels);
+            }
+          },
+          success: res => {
+            // 通过eventChannel向被打开页面传送数据
+            res.eventChannel.emit('acceptDataFromOpenerPage', {
+              title: parent,
+              tags: this.tags[parent]
+            });
+          }
+        });
+      }
+    },
+    async loadData() {
+      const res = await User.getLabelsForUser(this.userId);
+      if (res) {
+        for (const key in res) {
+          if (res.hasOwnProperty(key)) {
+            const el = res[key];
+            this.tags[key] = el;
+          }
+        }
+      }
+    }
+  }
+});
+</script>

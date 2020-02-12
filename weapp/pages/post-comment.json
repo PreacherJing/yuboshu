@@ -1,0 +1,12 @@
+{
+    "navigationBarTitleText": "评论详情",
+    "navigationBarBackgroundColor": "#ffffff",
+    "component": true,
+    "usingComponents": {
+        "mp-page": "../components/mp-page",
+        "comment-action": "../components/comment-action",
+        "comment-item": "../components/post-comment-item",
+        "post-replys": "../components/post-replys",
+        "comment-input": "../components/comment-input"
+    }
+}

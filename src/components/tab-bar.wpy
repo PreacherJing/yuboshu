@@ -1,0 +1,88 @@
+<style lang="less" scoped>
+.tab-bar {
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  text-align: center;
+  position: relative;
+  background: #fff;
+  .tabs {
+    display: inline-block;
+    position: relative;
+    .tab-bar {
+      position: absolute;
+      width: 18rpx;
+      height: 6rpx;
+      background: #13100e;
+      border-radius: 30rpx;
+      transition: all 0.3s;
+      bottom: 12rpx;
+    }
+  }
+  .tab {
+    display: inline-block;
+    font-size: 30rpx;
+    width: 120rpx;
+    padding: 24rpx 0rpx;
+    box-sizing: border-box;
+    line-height: 40rpx;
+    color: #9b9b9b;
+    text-align: center;
+    transition: all 0.3s;
+    &.active {
+      color: #000000;
+      font-weight: bold;
+    }
+  }
+}
+</style>
+<template>
+  <div class="tab-bar {{extClass}}">
+    <div class="tabs">
+      <div
+        class="tab {{index === selectedIndex ? 'active' : ''}}"
+        v-for="(item, index) in labels"
+        :key="index"
+        @tap="tabTap(index)"
+      >{{item}}</div>
+      <div class="tab-bar" style="left: {{left}}rpx;"></div>
+    </div>
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core';
+
+wepy.component({
+  options: {
+    addGlobalClass: true
+  },
+  props: {
+    labels: Array,
+    selectedIndex: {
+      type: Number,
+      default: 0
+    },
+    extClass: {
+      type: String,
+      default: ''
+    }
+  },
+  data: {
+    left: 51
+  },
+  watch: {
+    selectedIndex(index) {
+      this.change(index);
+    }
+  },
+  methods: {
+    change(index) {
+      this.left = index * (100 + 19) + 51;
+    },
+    tabTap(index) {
+      this.selectedIndex = index;
+      this.change(index);
+      this.$emit('change', index);
+    }
+  }
+});
+</script>

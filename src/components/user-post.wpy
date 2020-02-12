@@ -1,0 +1,126 @@
+<style lang="less" scoped>
+</style>
+<template>
+  <div v-show="typeIndex === type">
+    <mp-page
+      :state="state"
+      :offset="offset"
+      :bottomOffset="100"
+      :marginOffset="0"
+      :enableTips="false"
+      :enableRefresh="false"
+      :showMoreLoading="false"
+      :scrollY="scrollY"
+      @scrolltolower="onScrolltolower"
+      @retry="onRetry"
+    >
+      <div class="topic-posts">
+        <post-item v-for="item in items" :key="item.id" :item="item" :showDel="isSelf" :isSelf="isSelf" :index="index"  @del="onDel"/>
+        <loading :show="true" type="circle" v-if="hasMore" />
+        <no-more v-else />
+      </div>
+      <div slot="empty">
+        <div class="empty">
+          <empty des="该话题还没有精华动弹" btnTxt="发布动弹" />
+        </div>
+      </div>
+    </mp-page>
+  </div>
+</template>
+<script>
+import { Post } from '../common/api';
+import wepy from '@wepy/core';
+wepy.component({
+  options: {
+    addGlobalClass: true
+  },
+  props: {
+    userId: Number,
+		isSelf: Boolean,
+    offset: Number,
+    scrollY: Boolean
+  },
+  data: {
+    state: 0,
+    items: [],
+    pageIndex: 1,
+    pageSize: 6,
+    hasInit: false,
+    hasMore: true,
+    isLoadData: false
+  },
+  watch: {
+    async userId(val) {
+      await this.loadBase();
+    }
+  },
+  methods: {
+    async loadPosts() {
+      if (this.isLoadData || !this.hasMore) {
+        return;
+      }
+      this.isLoadData = true;
+      const res = await Post.getPostForUser(
+        this.userId,
+        this.pageIndex,
+        this.pageSize
+      );
+      if (res) {
+        for (const item of res.items) {
+          this.items.push(item);
+        }
+        this.pageIndex++;
+        this.hasMore = res.items.length === this.pageSize;
+      }
+      this.isLoadData = false;
+    },
+    async init() {
+      this.pageIndex = 1;
+      this.state = 0;
+      this.hasMore = true;
+      const res = await Post.getPostForUser(this.userId, 1, this.pageSize);
+      if (res) {
+        if (res.items.length) {
+          this.items = res.items;
+          this.pageIndex++;
+          this.hasMore = res.items.length === this.pageSize;
+          this.state = 3;
+        } else {
+          this.state = 2;
+        }
+      } else {
+        this.state = 1;
+      }
+    },
+    async loadBase() {
+      if (!this.hasInit) {
+        await this.init();
+        this.hasInit = true;
+      }
+    },
+    async onDel(res) {
+      const isDel = await Post.removePost(res.id);
+      if (isDel) {
+        this.items.splice(res.index, 1);
+      }
+    },
+    async onRetry() {
+      await this.init();
+    },
+    async onScrolltolower() {
+      await this.loadPosts();
+    }
+  }
+});
+</script>
+<config>
+{
+    usingComponents: {
+      "mp-page": "./mp-page",
+      "post-item": "./post-user-item",
+      "empty": "./empty",
+      "no-more": "./no-more",
+      "loading": "./loading/loading"
+    }
+}
+</config>

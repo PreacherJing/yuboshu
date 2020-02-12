@@ -1,0 +1,185 @@
+<style lang="less" scoped>
+.list {
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+  .item {
+    padding: 20rpx;
+    background: #fff;
+    margin-bottom: 20rpx;
+    border-radius: 20rpx;
+    .item-content {
+      padding-left: 80rpx;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .item-txt {
+        margin: 20rpx 0rpx;
+        font-size: 28rpx;
+        color: #7a8299;
+        .icon {
+          margin-right: 8rpx;
+          font-size: 34rpx;
+          color: #7a8299;
+        }
+      }
+      .item-date {
+        font-size: 24rpx;
+        color: #b2b2b2;
+        margin-top: 20rpx;
+      }
+    }
+  }
+}
+.btn-follow {
+  font-size: 24rpx;
+  background: #fae37c;
+  box-shadow: 4rpx 8rpx 12rpx rgba(250, 227, 124, 0.5);
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  .icon {
+    font-size: 30rpx;
+  }
+  &.has-follow {
+    background: #f8f8f8;
+    color: #b2b2b2;
+    box-shadow: none;
+  }
+  &.btn-hover {
+    background: rgba(250, 227, 124, 0.5);
+  }
+}
+</style>
+<template>
+  <mp-page
+    :state="state"
+    :offset="0"
+    :marginOffset="0"
+    :enableTips="false"
+    :enableRefresh="false"
+    :showMoreLoading="false"
+    @retry="onRetry"
+  >
+    <div slot="empty">
+      <div class="list" v-if="items.length">
+        <div class="item" v-for="(item, index) in items" :key="item.id">
+          <user-item :info="item.user">
+            <div slot="action" @tap.stop="onFollow(item, index)">
+              <div
+                class="btn-follow {{item.hasFollow ? 'has-follow' : ''}}"
+                hover-class="btn-hover"
+              >
+                <div class="icon icon-add" v-if="!item.hasFollow"></div>
+                <div>{{item.hasFollow ? '已关注' : '关注'}}</div>
+              </div>
+            </div>
+          </user-item>
+          <div class="item-content">
+            <div class="item-txt">
+              <text class="icon icon-love-full" />关注了你
+            </div>
+            <div class="item-date">{{item.moment}}</div>
+          </div>
+        </div>
+        <loading :show="true" type="circle" v-if="hasMore" />
+        <no-more v-else />
+      </div>
+      <div class="empty" v-else>
+        <empty des="还没有人关注你,发个动弹试试" btnTxt="发布动弹" @action="onAction"/>
+      </div>
+    </div>
+  </mp-page>
+</template>
+<script>
+import { Follow } from '../common/api';
+import wepy from '@wepy/core';
+wepy.page({
+  config: {},
+  data: {
+    state: 0,
+    items: [],
+    pageIndex: 1,
+    pageSize: 20,
+    hasMore: true
+  },
+  async onLoad() {
+    if (this.$wx.getOpenerEventChannel()) {
+      this.eventChannel = this.$wx.getOpenerEventChannel();
+    }
+    await this.loadData();
+  },
+  onUnload() {
+    if (this.eventChannel) {
+      this.eventChannel.emit('acceptDataFromOpenedPage', {
+        needLoad: this.needLoad
+      });
+    }
+  },
+  async onPullDownRefresh() {
+    this.state = 0;
+    this.hasMore = true;
+    this.pageIndex = 1;
+    this.items = [];
+    await this.loadData();
+    wx.stopPullDownRefresh();
+  },
+  async onReachBottom() {
+    await this.loadData();
+  },
+  methods: {
+    async loadData() {
+      if (!this.hasMore) {
+        return;
+      }
+      const res = await Follow.getFans(this.pageIndex, this.pageSize);
+      if (res) {
+        for (const item of res) {
+          this.items.push(item);
+        }
+        this.state = 2;
+        this.pageIndex++;
+        this.hasMore = res.length === this.pageSize;
+      } else {
+        this.state = 1;
+      }
+    },
+    async onRetry() {
+      this.state = 0;
+      await this.loadData();
+    },
+    async onFollow(item, index) {
+      if (item.hasFollow) {
+        const isOk = await Follow.takeOff(item.user.id);
+        if (isOk) {
+          this.items[index].hasFollow = false;
+        }
+      } else {
+        const isOk = await Follow.concern(item.user.id);
+        if (isOk) {
+          this.items[index].hasFollow = true;
+        }
+      }
+    },
+    onAction() {
+      wx.navigateTo({
+        url: '/pages/post-type'
+      });
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: '新增粉丝',
+    enablePullDownRefresh:true,
+    "usingComponents": {
+      "mp-page": "../components/mp-page",
+      "user-item": "../components/user-item",
+      "loading": "../components/loading/loading",
+      "no-more": "../components/no-more",
+      "empty": "../components/empty",
+    }
+}
+</config>

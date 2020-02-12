@@ -1,0 +1,189 @@
+<style lang="less">
+page {
+  background: #fff;
+}
+swiper {
+  swiper-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .item {
+      text-align: center;
+      padding-bottom: 40rpx;
+      image {
+        width: 500rpx;
+        height: 650rpx;
+      }
+      .title {
+        font-size: 36rpx;
+        font-weight: bold;
+        margin: 30rpx 0rpx;
+      }
+      .des {
+        font-size: 28rpx;
+        color: #969696;
+        margin-bottom: 60rpx;
+      }
+      .btn {
+        height: 72rpx;
+        line-height: 72rpx;
+        border-radius: 72rpx;
+        padding: 0rpx 64rpx;
+        display: inline-block;
+        background: #fae37c;
+        color: #13100e;
+        border: none;
+        box-shadow: 4rpx 8rpx 12rpx rgba(250, 227, 124, 0.3);
+        font-size: 34rpx;
+        &::after {
+          border: none;
+        }
+        &.btn-hover {
+          background: rgba(250, 227, 124, 0.5);
+        }
+      }
+    }
+  }
+}
+</style>
+<template>
+  <div class="container">
+    <swiper
+      style="height: calc(100vh - 56px);"
+      :indicator-dots="true"
+      indicator-color="#fae37c"
+      indicator-active-color="rgba(250, 227, 124, 0.2)"
+    >
+      <swiper-item>
+        <div class="item">
+          <img src="http://img.wutuobangxinyougou.com/guide_1.svg" />
+          <div class="title">记录校园</div>
+          <div class="des">记录校园生活，分享大学故事</div>
+          <button
+            class="btn"
+            hover-class="btn-hover"
+            :loading="loading"
+            :disabled="disabled"
+            @tap="login"
+          >{{btntext}}</button>
+        </div>
+      </swiper-item>
+      <swiper-item>
+        <div class="item">
+          <img src="http://img.wutuobangxinyougou.com/guide_2.svg" />
+          <div class="title">真实的TA</div>
+          <div class="des">新乡各高校真实学生，学生实名认证</div>
+          <button
+            class="btn"
+            hover-class="btn-hover"
+            :loading="loading"
+            :disabled="disabled"
+            @tap="login"
+          >{{btntext}}</button>
+        </div>
+      </swiper-item>
+      <swiper-item>
+        <div class="item">
+          <img src="http://img.wutuobangxinyougou.com/guide_3.svg" />
+          <div class="title">拓展圈子</div>
+          <div class="des">认识志趣相同的同学,拓展人脉</div>
+          <button
+            class="btn"
+            hover-class="btn-hover"
+            :loading="loading"
+            :disabled="disabled"
+            @tap="login"
+          >{{btntext}}</button>
+        </div>
+      </swiper-item>
+      <swiper-item>
+        <div class="item">
+          <img src="http://img.wutuobangxinyougou.com/guide_4.svg" />
+          <div class="title">校园网红</div>
+          <div class="des">施展你的才华,成为校园里耀眼的星</div>
+          <button
+            class="btn"
+            hover-class="btn-hover"
+            :loading="loading"
+            :disabled="disabled"
+            @tap="login"
+          >{{btntext}}</button>
+        </div>
+      </swiper-item>
+    </swiper>
+  </div>
+</template>
+
+<script>
+import wepy from '@wepy/core';
+import { User } from '../common/api';
+wepy.page({
+  data: {
+    btntext: '开始体验',
+    loading: false,
+    disabled: false
+  },
+  async onLoad(q) {
+    console.log(q);
+
+    const scene = decodeURIComponent(q.scene);
+    const { room, mode, id, postId, commentId } = q;
+    if (room) {
+      this.$app.$options.globalData.room = room;
+    }
+    if (mode) {
+      this.$app.$options.globalData.mode = mode;
+    }
+    if (scene) {
+      const obj = {};
+      const params = scene.split('&');
+      for (const p of params) {
+        const arr = p.split('=');
+        if (arr.length === 2) {
+          obj[arr[0]] = arr[1];
+        }
+      }
+      console.log(obj);
+
+      this.shareId = obj.id || id;
+      this.$app.$options.globalData.postId = obj.postId || postId;
+      this.$app.$options.globalData.commentId = obj.commentId || commentId;
+    }
+    const user = wx.getStorageSync('user');
+    if (user) {
+      await this.login();
+    }
+  },
+  methods: {
+    async login() {
+      this.loading = true;
+      this.disabled = true;
+      this.btntext = '开启中..';
+      this.code = await User.login(this.shareId);
+      if (this.code === -1) {
+        wx.showToast({
+          title: '登陆失败请重试',
+          icon: 'none',
+          duration: 2000
+        });
+        this.btntext = '重试';
+        this.showFooter = true;
+      } else {
+        wx.switchTab({
+          url: '/pages/home'
+        });
+      }
+      this.loading = false;
+      this.disabled = false;
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: '玉帛书',
+    navigationBarBackgroundColor: '#ffffff',
+    usingComponents: {
+    }
+}
+</config>

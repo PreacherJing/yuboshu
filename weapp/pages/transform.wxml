@@ -1,0 +1,12 @@
+
+<view class="container">
+  <view class="form">
+    <view class="form-title">转换玉帛贝的数量</view>
+    <input type="number" value="{{ score }}" bindinput="_proxy" data-model-id="3" placeholder="输入数量" data-wpy-evt="30-0"></input>
+    <view class="form-score">消耗{{score || '0'}}个玉帛钻</view>
+    <view class="form-des">当前余额：{{user.converScore}}钻</view>
+  </view>
+  <button disabled="{{ btnDisabled }}" loading="{{ btnLoading }}" hover-class="btn-hover" data-wpy-evt="30-1" bindtap="_proxy" class="btn">
+    <view>确认转换</view>
+  </button>
+</view>

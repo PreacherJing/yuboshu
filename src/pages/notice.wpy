@@ -1,0 +1,333 @@
+<style lang="less">
+page {
+  background: #fff;
+}
+.header {
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0rpx;
+  .item {
+    text-align: center;
+    flex-grow: 1;
+    .item-ic {
+      width: 72rpx;
+      height: 72rpx;
+      border-radius: 160rpx;
+      display: inline-block;
+      color: #fff;
+      margin-bottom: 12rpx;
+      position: relative;
+      .item-count {
+        position: absolute;
+        height: 32rpx;
+        min-width: 32rpx;
+        border-radius: 32rpx;
+        line-height: 32rpx;
+        text-align: center;
+        font-size: 20rpx;
+        background: red;
+        border: #fff solid 1px;
+        color: #fff;
+        top: -6rpx;
+        right: -10rpx;
+      }
+      .icon {
+        font-size: 48rpx;
+        display: inline-block;
+        margin-top: 8rpx;
+      }
+      &.sys {
+        background: #fd6d7e;
+      }
+      &.thumbup {
+        background: #45b0f7;
+      }
+      &.fens {
+        background: #4ed2aa;
+      }
+    }
+    .item-title {
+      font-size: 24rpx;
+    }
+  }
+}
+.empty {
+  background: #fff;
+  margin-top: 20rpx;
+  text-align: center;
+  box-sizing: border-box;
+  .space {
+    height: 20rpx;
+    width: 100%;
+    background: #f8f8f8;
+  }
+  image {
+    width: 300rpx;
+    height: 300rpx;
+    margin-top: 100rpx;
+  }
+  .des {
+    font-size: 28rpx;
+    color: #7f8299;
+  }
+}
+.list {
+  background: #f8f8f8;
+  padding-top: 20rpx;
+  .item {
+    display: flex;
+    padding: 30rpx;
+    background: #fff;
+    position: relative;
+    &.item-hover {
+      background: #f6f6f6;
+    }
+    &::after {
+      content: ' ';
+      position: absolute;
+      left: 122rpx;
+      bottom: 0;
+      right: 0;
+      height: 1px;
+      border-bottom: 0.4px solid rgba(235, 237, 245, 0.8);
+      color: rgba(235, 237, 245, 0.8);
+    }
+    .avtater {
+      width: 84rpx;
+      height: 84rpx;
+      border-radius: 8rpx;
+      background: #ffd100;
+      color: #ffffff;
+      position: relative;
+      text-align: center;
+      .icon {
+        font-size: 56rpx;
+        display: inline-block;
+        margin-top: 14rpx;
+      }
+      .num {
+        position: absolute;
+        height: 32rpx;
+        min-width: 32rpx;
+        border-radius: 32rpx;
+        line-height: 32rpx;
+        text-align: center;
+        font-size: 20rpx;
+        background: red;
+        border: #fff solid 1px;
+        color: #fff;
+        top: -10rpx;
+        right: -10rpx;
+      }
+      flex-shrink: 0;
+    }
+    .main {
+      flex-grow: 1;
+      margin-left: 30rpx;
+      .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .title {
+          font-size: 34rpx;
+          color: #1b1a1a;
+        }
+        .date {
+          font-size: 22rpx;
+          color: #b2b2b2;
+        }
+      }
+      .content {
+        margin-top: 10rpx;
+        color: #888888;
+        font-size: 24rpx;
+        max-width: 600rpx;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /*设置文本行数限制*/
+        -webkit-box-orient: vertical; /*设置文本排列方式*/
+        .value {
+          color: #7a8299;
+        }
+      }
+    }
+  }
+}
+</style>
+<template>
+  <div>
+    <div class="header">
+      <div class="item" @tap="goMessage">
+        <div class="item-ic sys">
+          <div class="icon icon-bell-fill" />
+          <div class="item-count" v-if="user.sysMsgCount">{{user.sysMsgCount}}</div>
+        </div>
+        <div class="item-title">小书通知</div>
+      </div>
+      <div class="item" @tap="goComment(2)">
+        <div class="item-ic thumbup">
+          <div class="icon icon-thumbup-fill" />
+          <div class="item-count" v-if="user.likeCount">{{user.likeCount}}</div>
+        </div>
+        <div class="item-title">收到的赞</div>
+      </div>
+      <div class="item" @tap="goFollow">
+        <div class="item-ic fens">
+          <div class="icon icon-user-fill" />
+          <div class="item-count" v-if="user.followCount">{{user.followCount}}</div>
+        </div>
+        <div class="item-title">新增粉丝</div>
+      </div>
+    </div>
+    <div class="empty" v-if="!user.reply && !user.comment">
+      <div class="space"></div>
+      <img src="https://www.wutuobangxinyougou.com/public/ic_notice_empty.svg" alt srcset />
+      <div class="des">网络一线牵，主动才有缘～</div>
+    </div>
+    <div class="list" v-else>
+      <div class="item" hover-class="item-hover" @tap="goComment(0)">
+        <div class="avtater">
+          <text class="icon icon-pinglun"></text>
+          <div class="num" v-if="user.commentCount">{{user.commentCount}}</div>
+        </div>
+        <div class="main">
+          <div class="top">
+            <div class="title">评论通知</div>
+            <div class="date">{{user.comment && user.comment.senDate}}</div>
+          </div>
+          <div class="content">{{user.comment && user.comment.content || '暂无评论'}}</div>
+        </div>
+      </div>
+      <div class="item" hover-class="item-hover" @tap="goComment(1)">
+        <div class="avtater">
+          <text class="icon icon-huifu"></text>
+          <div class="num" v-if="user.replyCount">{{user.replyCount}}</div>
+        </div>
+        <div class="main">
+          <div class="top">
+            <div class="title">回复通知</div>
+            <div class="date">{{user.reply && user.reply.senDate || ''}}</div>
+          </div>
+          <div class="content">{{user.reply && user.reply.content || '暂无回复'}}</div>
+        </div>
+      </div>
+      <div class="item" hover-class="item-hover" @tap="goReward">
+        <div class="avtater">
+          <text class="icon icon-gift"></text>
+          <div class="num" v-if="user.rewardCount">{{user.rewardCount}}</div>
+        </div>
+        <div class="main">
+          <div class="top">
+            <div class="title">赞赏通知</div>
+            <div class="date">{{user.reward && user.reward.rewardDate || ''}}</div>
+          </div>
+          <div class="content" v-if="user.reward && user.reward.user">
+            {{user.reward.user.nick}}
+            <text class="value">赞赏了你{{user.reward.score}}个玉帛钻</text>
+          </div>
+          <div class="content" v-else>还没有用户赞赏你的动弹</div>
+        </div>
+      </div>
+      <div class="item" hover-class="item-hover" @tap="goPlane">
+        <div class="avtater">
+          <text class="icon icon-plane"></text>
+          <div class="num" v-if="user.planeCount">{{user.planeCount}}</div>
+        </div>
+        <div class="main">
+          <div class="top">
+            <div class="title">纸飞机消息</div>
+            <div class="date">{{user.plane && user.plane.senDate || ''}}</div>
+          </div>
+          <div class="content">{{user.plane && user.plane.content || '暂无消息'}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { User, Notice } from '../common/api';
+import shareMixin from '../common/share.js';
+import wepy from '@wepy/core';
+wepy.page({
+  mixins: [shareMixin],
+  data: {
+    state: 3,
+    fileds: ['commentCount', 'replyCount', 'likeCount'],
+    user: null
+  },
+  onLoad() {
+    this.user = wx.getStorageSync('user');
+  },
+  async onShow() {
+    await this.init();
+  },
+  async onPullDownRefresh() {
+    await this.init();
+    wx.stopPullDownRefresh();
+  },
+  methods: {
+    async init() {
+      await this.getCount();
+      const total = Notice.getNoticeCount();
+      if (total) {
+        wx.removeTabBarBadge({
+          index: 1
+        });
+        Notice.setNoticeCount(0);
+      }
+    },
+    async getCount() {
+      const user = await Notice.getMsgCount();
+      if (user) {
+        this.user = user;
+      }
+    },
+    async goComment(type) {
+      await User.setUserFiled(this.fileds[type], 0, false);
+      this.user[this.fileds[type]] = 0;
+      wx.navigateTo({
+        url: '/pages/comments?type=' + type
+      });
+    },
+    async goFollow() {
+      await User.setUserFiled('followCount', 0, false);
+      this.user['followCount'] = 0;
+      wx.navigateTo({
+        url: '/pages/follow'
+      });
+    },
+    goMessage() {
+      wx.navigateTo({
+        url: '/pages/message'
+      });
+    },
+    async goPlane() {
+      await User.setUserFiled('planeCount', 0, false);
+      this.user['planeCount'] = 0;
+      wx.navigateTo({
+        url: '/pages/plane-reply'
+      });
+    },
+    async goReward() {
+      if (this.user.rewardCount) {
+        await User.setUserFiled('rewardCount', 0, false);
+      }
+      wx.navigateTo({
+        url: '/pages/reward'
+      });
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: '消息',
+    enablePullDownRefresh:true,
+    navigationBarBackgroundColor: '#ffffff',
+    usingComponents: {
+    }
+}
+</config>

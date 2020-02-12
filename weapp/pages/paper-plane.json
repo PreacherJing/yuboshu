@@ -1,0 +1,12 @@
+{
+    "navigationBarTitleText": "纸飞机",
+    "backgroundColor": "#ffeb30",
+    "navigationBarBackgroundColor": "#ffeb30",
+    "component": true,
+    "usingComponents": {
+        "dialog": "../components/dialog/dialog",
+        "comment-input": "../components/comment-input",
+        "plane-add": "../components/comment-input",
+        "user-item": "../components/user-item"
+    }
+}

@@ -1,0 +1,202 @@
+{
+	"description": "A WePY project",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"compileType": "miniprogram",
+	"appid": "wxccfdb0fcf115d175",
+	"projectname": "community-miniprogram",
+	"miniprogramRoot": "weapp/",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+	"qqappid": "1110072555",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/home",
+					"pathName": "pages/home",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "pages/post-details",
+					"pathName": "pages/post-details",
+					"query": "id= 2329",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/topic",
+					"pathName": "pages/topic",
+					"query": "id=39",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "pages/post-details",
+					"pathName": "pages/post-details",
+					"query": "id= 2871",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/post-comment",
+					"pathName": "pages/post-comment",
+					"query": "id= 11475",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "pages/user-details",
+					"pathName": "pages/user-details",
+					"query": "id= 14741",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/notice",
+					"pathName": "pages/notice",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/comments",
+					"pathName": "pages/comments",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "pages/comments",
+					"pathName": "pages/comments",
+					"query": "type=0",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/me",
+					"pathName": "pages/me",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/rank",
+					"pathName": "pages/rank",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/topic-maidan",
+					"pathName": "pages/topic-maidan",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/post-send",
+					"pathName": "pages/post-send",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/post-send",
+					"pathName": "pages/post-send",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/topic-add",
+					"pathName": "pages/topic-add",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/index",
+					"pathName": "pages/index",
+					"query": "id=14614&postId=3470",
+					"scene": 1007
+				},
+				{
+					"id": -1,
+					"name": "pages/means",
+					"pathName": "pages/means",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/transform",
+					"pathName": "pages/transform",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/monetize",
+					"pathName": "pages/monetize",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/paper-plane",
+					"pathName": "pages/paper-plane",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/user-school",
+					"pathName": "pages/user-school",
+					"scene": null
+				}
+			]
+		}
+	}
+}

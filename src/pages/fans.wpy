@@ -1,0 +1,123 @@
+<style lang="less" scoped>
+.list {
+  padding: 30rpx;
+  .item {
+    padding: 30rpx;
+    background: #ffffff;
+    margin-bottom: 20rpx;
+    border-radius: 20rpx;
+    &.item-hover {
+      background: #f4f4f4;
+    }
+  }
+}
+</style>
+<template>
+  <mp-page
+    :state="state"
+    :offset="0"
+    :marginOffset="0"
+    :enableTips="false"
+    :enableRefresh="false"
+    :showMoreLoading="false"
+    @retry="onRetry"
+  >
+    <div slot="empty">
+      <div class="list" v-if="items.length">
+        <div class="item" v-for="(item, index) in items" :key="item.id">
+          <user-item :info="item" />
+        </div>
+        <loading :show="true" type="circle" v-if="hasMore" />
+        <no-more v-else />
+      </div>
+      <div class="empty" v-else>
+        <empty des="还没有人关注你,发个动弹试试" btnTxt="发布动弹" />
+      </div>
+    </div>
+  </mp-page>
+</template>
+<script>
+import { Follow } from '../common/api';
+import wepy from '@wepy/core';
+wepy.page({
+  data: {
+    title: ['TA关注的', '关注TA的'],
+    items: [],
+    state: 0,
+    pageIndex: 1,
+    pageSize: 20,
+    hasMore: true,
+    userId: null,
+    fromType: '0' // 0:TA关注的 1:关注TA的
+  },
+  async onLoad(q) {
+    this.fromType = q.type;
+    this.userId = q.userId;
+    wx.setNavigationBarTitle({
+      title: this.title[this.fromType]
+    });
+    await this.loadData();
+  },
+  async onPullDownRefresh() {
+    this.state = 0;
+    this.hasMore = true;
+    this.pageIndex = 1;
+    this.items = [];
+    await this.loadData();
+    wx.stopPullDownRefresh();
+  },
+  async onReachBottom() {
+    await this.loadData();
+  },
+  methods: {
+    async loadData() {
+      if (!this.hasMore) {
+        return;
+      }
+      let res = null;
+      if (this.fromType === '0') {
+        res = await Follow.getUserFollows(
+          this.userId,
+          this.pageIndex,
+          this.pageSize
+        );
+      } else if (this.fromType === '1') {
+        res = await Follow.gerUserFans(
+          this.userId,
+          this.pageIndex,
+          this.pageSize
+        );
+      }
+      if (res) {
+        if (res.length > 0) {
+          for (const item of res) {
+            this.items.push(item);
+          }
+          this.pageIndex++;
+        }
+        this.hasMore = res.length === this.pageSize;
+        this.state = 2;
+      } else {
+        this.state = 1;
+      }
+    },
+    async onRetry() {
+      this.state = 0;
+      await this.loadData();
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: 'TA关注的',
+    enablePullDownRefresh:true,
+    "usingComponents": {
+      "mp-page": "../components/mp-page",
+      "user-item": "../components/user-item",
+      "loading": "../components/loading/loading",
+      "no-more": "../components/no-more",
+      "empty": "../components/empty",
+    }
+}
+</config>

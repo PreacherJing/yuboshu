@@ -1,0 +1,25 @@
+
+<mp-page bind_init="_initComponent" enableRefresh="{{ true }}" data-ref="list" count="{{ count }}" state="{{ state }}" showMoreLoading="{{ hasMore }}" data-wpy-evt="66-0" bindscrolltolower="_proxy" bindretry="_proxy" bindrefresh="_proxy">
+  <block wx:if="{{ items.length }}">
+    <user-recommend bind_init="_initComponent"></user-recommend>
+    <post-item bind_init="_initComponent" wx:for="{{ items }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" item="{{ item }}" showBtnFollow="{{ false }}"></post-item>
+  </block>
+  <block wx:else>
+    <scroll-view scroll-y="{{ true }}" slot="empty" style="height:100%;">
+      <view class="follow-empty">
+        <view class="empty-content">
+          <view class="title">你还没有关注的人哦,</view>
+          <view>已经关注了？别着急，他们也许最近忙考试呢</view>
+        </view>
+      </view>
+      <view class="list">
+        <view class="title">
+          <view class="line"></view>
+          <view class="des">为你推荐了10条动弹</view>
+          <view class="line"></view>
+        </view>
+        <post-item bind_init="_initComponent" wx:for="{{ recommentds }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" item="{{ item }}"></post-item>
+      </view>
+    </scroll-view>
+  </block>
+</mp-page>

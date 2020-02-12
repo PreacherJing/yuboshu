@@ -1,0 +1,102 @@
+<style lang="less" scoped>
+.item {
+  background: #ffffff;
+  padding: 30rpx 32rpx;
+  display: flex;
+  align-items: center;
+  margin: 0rpx 32rpx;
+  margin-top: 30rpx;
+  border-radius: 8rpx;
+  line-height: normal;
+  text-align: left;
+  &::after {
+    border: none;
+  }
+  &.item-hover {
+    background: #fbfbfb;
+  }
+  image {
+    width: 220rpx;
+    height: 160rpx;
+  }
+  .center {
+    flex-grow: 1;
+    margin-left: 30rpx;
+    .title {
+      font-size: 32rpx;
+      font-weight: bold;
+    }
+    .des {
+      font-size: 28rpx;
+      color: #878b99;
+      margin-top: 12rpx;
+    }
+  }
+}
+</style>
+<template>
+  <div class="container">
+    <div class="item" hover-class="item-hover" @tap="goSend(0)">
+      <img src="http://img.wutuobangxinyougou.com/img_dongtan.svg" />
+      <div class="center">
+        <div class="title">发布动弹</div>
+        <div class="des">记录真实的校园生活</div>
+      </div>
+      <div class="right">
+        <div class="icon icon-arrow-right"></div>
+      </div>
+    </div>
+    <button
+      open-type="{{isqq ? 'openGroupProfile' : 'contact'}}"
+      group-id="1006532345"
+      class="item"
+    >
+      <img src="http://img.wutuobangxinyougou.com/ic_contribute.svg" />
+      <div class="center">
+        <div class="title">我要投稿</div>
+        <div class="des">自己发不方便,官方来帮你</div>
+      </div>
+      <div class="right">
+        <div class="icon icon-arrow-right"></div>
+      </div>
+    </button>
+  </div>
+</template>
+<script>
+import { User } from '../common/api';
+import wepy from '@wepy/core';
+import shareMixin from '../common/share.js';
+wepy.page({
+  mixins: [shareMixin],
+  data: {
+    userId: null,
+    isqq: false
+  },
+  onLoad(q) {
+    const { id } = q;
+    this.uerId = id;
+    this.isqq = User.isQQ();
+  },
+  methods: {
+    goSend(type) {
+      const { isBinding } = wx.getStorageSync('user');
+      if (isBinding === 0) {
+        wx.navigateTo({
+          url: '/pages/gender'
+        });
+      } else {
+        wx.navigateTo({
+          url: `/pages/post-send?type=${type}&id=${this.uerId}`
+        });
+      }
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: '发布',
+    "usingComponents": {
+    }
+}
+</config>

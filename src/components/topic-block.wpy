@@ -1,0 +1,186 @@
+<style lang="less" scoped>
+.topic-posts {
+  background: #f8f8f8;
+}
+</style>
+<template>
+  <div v-show="typeIndex === type">
+    <mp-page
+      :state="state"
+      :marginOffset="0"
+      :enableTips="false"
+      :enableRefresh="false"
+      @retry="onRetry"
+    >
+      <div slot="empty">
+        <div class="topic-posts" v-if="items.length">
+          <post-item
+            v-for="(item, index) in items"
+            :key="item.id"
+            :item="item"
+            :index="index"
+            :showMore="isSelf"
+            :showBtnFollow="false"
+            @more="onMore"
+          />
+          <loading :show="true" type="circle" v-if="hasMore" />
+          <no-more v-else />
+        </div>
+        <div class="empty" v-else>
+          <empty des="该话题还没有精华动弹" btnTxt="发布动弹" @action="onAction" />
+        </div>
+      </div>
+    </mp-page>
+  </div>
+</template>
+<script>
+import { Post, Topic } from '../common/api';
+import wepy from '@wepy/core';
+wepy.component({
+  options: {
+    addGlobalClass: true
+  },
+  props: {
+    type: Number,
+    topicId: Number,
+    typeIndex: Number,
+    topicTitle: String,
+    isSelf: Boolean,
+    state: 0
+  },
+  data: {
+    items: [],
+    pageIndex: 1,
+    pageSize: 6,
+    hasInit: false,
+    hasMore: true,
+    isLoadData: false
+  },
+  watch: {
+    async topicId(val) {
+      if (this.type === 0) {
+        await this.loadBase();
+      }
+    }
+  },
+  methods: {
+    async loadPosts() {
+      if (this.isLoadData || !this.hasMore) {
+        return;
+      }
+      this.isLoadData = true;
+      const res = await Post.getTopicPosts(
+        this.topicId,
+        this.type,
+        this.pageIndex,
+        this.pageSize
+      );
+      if (res) {
+        for (const item of res.items) {
+          this.items.push(item);
+        }
+        this.pageIndex++;
+        this.hasMore = res.items.length === this.pageSize;
+      }
+      this.isLoadData = false;
+    },
+    async init() {
+      this.pageIndex = 1;
+      this.state = 0;
+      this.hasMore = true;
+      const res = await Post.getTopicPosts(
+        this.topicId,
+        this.type,
+        1,
+        this.pageSize
+      );
+      if (res) {
+        if (res.items.length) {
+          this.items = res.items;
+          this.pageIndex++;
+          this.state = 2;
+        } else {
+          this.items = []
+          this.state = 2;
+        }
+        this.hasMore = res.items.length === this.pageSize;
+      } else {
+        this.state = 1;
+      }
+    },
+    async loadBase() {
+      if (!this.hasInit) {
+        await this.init();
+        this.hasInit = true;
+      }
+    },
+    async onRetry() {
+      await this.init();
+    },
+    onAction() {
+      wx.navigateTo({
+        url: `/pages/post-send?type=0&topicId=${this.topicId}&title=${encodeURI(
+          this.topicTitle
+        )}`
+      });
+    },
+    onMore(res) {
+      let itemList = ['移除'];
+      if (res.post.isRecommend) {
+        itemList.push('设为普通帖');
+      } else {
+        itemList.push('设为精华帖');
+      }
+      wx.showActionSheet({
+        itemList,
+        itemColor: '#EA0D23',
+        success: async _res => {
+          wx.showModal({
+            title: '操作提示',
+            content:
+              _res.tapIndex === 0
+                ? '确定要把该帖移出话题吗?'
+                : `确定要设置为${res.post.isRecommend ? '普通帖' : '精华帖'}`,
+            success: async obj => {
+              if (obj.confirm) {
+                if (_res.tapIndex === 0) {
+                  const isRemove = await Topic.removePost(
+                    res.post.topicId,
+                    res.post.id
+                  );
+                  if (isRemove) {
+                    this.items.splice(res.index, 1);
+                  }
+                } else if (_res.tapIndex === 1) {
+                  const isOk = await Topic.recommendPost(
+                    res.post.topicId,
+                    res.post.id,
+                    !res.post.isRecommend
+                  );
+                  if (isOk) {
+                    this.items[res.index].isRecommend = !res.post.isRecommend;
+                  }
+                }
+              }
+            }
+          });
+        },
+        fail(res) {
+          console.log(res.errMsg);
+        }
+      });
+    }
+  }
+});
+</script>
+<config>
+{
+    usingComponents: {
+      "mp-page": "./mp-page",
+      "post-item": "./post-item",
+      "empty": "./empty",
+      "no-more": "./no-more",
+      "loading": "./loading/loading"
+    }
+}
+</config>

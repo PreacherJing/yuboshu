@@ -1,0 +1,227 @@
+page {
+  background: #ffeb30;
+}
+.container {
+  position: relative;
+  height: 100vh;
+}
+.container .empty {
+  text-align: center;
+  padding-top: 80rpx;
+  height: 80vh;
+}
+.container .empty image {
+  width: 390rpx;
+  height: 390rpx;
+}
+.container .empty .empty-des {
+  font-size: 28rpx;
+  color: #13100e;
+}
+.container .footer {
+  position: absolute;
+  width: 100%;
+  bottom: 5%;
+  left: 0rpx;
+  text-align: center;
+}
+.container .footer .btn {
+  width: 400rpx;
+  padding: 40rpx;
+  display: inline-block;
+  text-align: center;
+  background: #fff;
+  font-size: 36rpx;
+  font-weight: bold;
+  border-radius: 80rpx;
+  box-shadow: 4rpx 8rpx 12rpx rgba(255, 209, 0, 0.3);
+}
+.container .footer .btn.btn-hover {
+  background: rgba(255, 209, 0, 0.3);
+}
+.container .cloud {
+  position: absolute;
+  top: 30rpx;
+  left: -177rpx;
+  z-index: -1;
+  animation: cloudFrames 14s infinite linear;
+  animation-delay: 1s;
+}
+.container .cloud image {
+  width: 177rpx;
+  height: 96rpx;
+}
+.container .cloud.cloud-1 {
+  animation-delay: 5s;
+  top: 300rpx;
+}
+.container .cloud.cloud-2 {
+  animation-delay: 10s;
+  top: 900rpx;
+}
+.container .planes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 100vh;
+}
+.container .planes .plane-list {
+  position: relative;
+  flex-shrink: 0;
+  flex-basis: 750rpx;
+  width: 750rpx;
+  height: 100%;
+}
+.container .planes .plane-list .plane {
+  width: 114rpx;
+  height: 114rpx;
+  position: absolute;
+  top: calc(5%);
+  left: calc(50%);
+  animation: planFrames 6s infinite linear;
+}
+.container .planes .plane-list .plane .school {
+  position: absolute;
+  right: -140rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 30rpx;
+  top: 0rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  /*设置文本行数限制*/
+  -webkit-box-orient: vertical;
+  /*设置文本排列方式*/
+  background: #fff;
+  font-size: 20rpx;
+  width: 140rpx;
+}
+.container .planes .plane-list .plane .school .icon {
+  font-size: 24rpx;
+}
+.container .planes .plane-list .plane .plane-behind {
+  width: 114rpx;
+  height: 114rpx;
+  position: absolute;
+}
+.container .planes .plane-list .plane .plane-front {
+  width: 114rpx;
+  height: 114rpx;
+  position: absolute;
+}
+.container .planes .plane-list .plane .plane-seen {
+  height: 120rpx;
+  width: 120rpx;
+  position: absolute;
+}
+.container .planes .plane-list .plane .plane-boy {
+  height: 120rpx;
+  width: 120rpx;
+  position: absolute;
+}
+.container .planes .plane-list .plane.plane-0 {
+  top: calc(8%);
+  left: calc(30%);
+}
+.container .planes .plane-list .plane.plane-1 {
+  top: calc(20%);
+  left: calc(60%);
+  animation-delay: 0.1s;
+}
+.container .planes .plane-list .plane.plane-2 {
+  top: calc(30%);
+  left: calc(5%);
+  animation-delay: 0.3s;
+}
+.container .planes .plane-list .plane.plane-3 {
+  top: calc(40%);
+  left: calc(50%);
+  animation-delay: 1s;
+}
+.container .planes .plane-list .plane.plane-4 {
+  top: calc(60%);
+  left: calc(20%);
+  animation-delay: 1.3s;
+}
+.container .planes .plane-list .plane.plane-5 {
+  top: calc(65%);
+  left: calc(70%);
+  animation-delay: 1.5 s;
+}
+@keyframes cloudFrames {
+  0%,
+  1% {
+    transform: translate(-120rpx);
+  }
+  99%,
+  100% {
+    transform: translate(950rpx);
+  }
+}
+@keyframes planFrames {
+  0%,
+  1% {
+    transform: translate(0, -30rpx);
+  }
+  54%,
+  55% {
+    transform: translate(0, 30rpx);
+  }
+  99%,
+  100% {
+    transform: translate(0, -30rpx);
+  }
+}
+.dialog {
+  position: relative;
+}
+.dialog .dialog-footer {
+  margin-top: 50rpx;
+}
+.dialog .dialog-footer .btn {
+  color: #000000;
+  padding: 20rpx;
+  font-size: 32rpx;
+  border-radius: 40rpx;
+  font-weight: normal;
+  align-self: center;
+  line-height: normal;
+  background: #fae37c;
+  color: #13100e;
+  border: none;
+}
+.dialog .dialog-footer .btn::after {
+  border: none;
+}
+.dialog .dialog-footer .btn.btn-hover {
+  background: rgba(250, 227, 124, 0.5);
+}
+.dialog .dialog-main .main-txt {
+  margin: 20rpx 0rpx;
+  color: #000;
+  text-align: left;
+}
+.dialog .dialog-main .main-txt text {
+  color: var(--txt-content);
+  font-size: 28rpx;
+  text-align: left;
+}
+.dialog .dialog-main .main-txt .icon-img {
+  width: 28rpx;
+  height: 28rpx;
+}
+.dialog .btn-close {
+  position: absolute;
+  width: 100rpx;
+  height: 100rpx;
+  top: 0rpx;
+  right: 0rpx;
+  text-align: center;
+  line-height: 100rpx;
+}
+.dialog .btn-close .icon {
+  font-size: 36rpx;
+  color: #c2c2c2;
+}
+

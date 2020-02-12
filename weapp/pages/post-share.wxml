@@ -1,0 +1,10 @@
+
+<view style="height: {{height}}px;" class="share">
+  <navigation-bar bind_init="_initComponent" ext-class="bar-back" back="{{ true }}" show="false" background="#ffd100"></navigation-bar>
+  <scroll-view scroll-y="{{ true }}" style="height: calc(100vh - {{bottom}}px - 160rpx);">
+    <canvas canvas-id="poster" style="width: {{width}}px; height: {{height}}px;background: #ffd100;"></canvas>
+  </scroll-view>
+  <cover-view wx:if="{{ show }}" class="footer">
+    <cover-view data-wpy-evt="26-0" bindtap="_proxy" class="btn">{{btnText}}</cover-view>
+  </cover-view>
+</view>

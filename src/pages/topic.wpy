@@ -1,0 +1,374 @@
+<style lang="less" scoped>
+.user-back {
+  display: flex;
+  align-items: center;
+  .btn-back {
+    width: 64rpx;
+    height: 72rpx;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E  %3Cpath fill='white' fill-opacity='.9' fill-rule='evenodd' d='M10 19.438L8.955 20.5l-7.666-7.79a1.02 1.02 0 0 1 0-1.42L8.955 3.5 10 4.563 2.682 12 10 19.438z'/%3E%3C/svg%3E");
+    background-position: 0% 50%;
+    background-size: 40%;
+    background-repeat: no-repeat;
+    &.btn-black {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E  %3Cpath fill='black' fill-opacity='.9' fill-rule='evenodd' d='M10 19.438L8.955 20.5l-7.666-7.79a1.02 1.02 0 0 1 0-1.42L8.955 3.5 10 4.563 2.682 12 10 19.438z'/%3E%3C/svg%3E");
+    }
+  }
+  .title {
+    font-size: 30rpx;
+    font-weight: bold;
+    color: #000;
+  }
+}
+.shadow {
+  position: fixed;
+  width: 950rpx;
+  height: calc(100vh);
+  top: -200rpx;
+  left: -100rpx;
+  overflow: hidden;
+  z-index: -1;
+  .shadow-main {
+    width: 950rpx;
+    height: calc(100vh);
+    top: -100rpx;
+    left: -100rpx;
+    -webkit-filter: blur(100rpx) brightness(0.7);
+    filter: blur(100rpx) brightness(0.7);
+  }
+}
+.head {
+  color: #fff;
+  padding: 0rpx 30rpx;
+  margin-bottom: 60rpx;
+  .topic {
+    display: flex;
+    align-items: center;
+    padding: 30rpx 0rpx;
+    image {
+      width: 140rpx;
+      height: 140rpx;
+      border-radius: 20rpx;
+      flex-basis: 140rpx;
+      flex-shrink: 0;
+    }
+    .topic-info {
+      margin-left: 20rpx;
+      flex-grow: 1;
+      .title {
+        color: #fff;
+        font-size: 34rpx;
+        font-weight: bold;
+        margin-bottom: 20rpx;
+      }
+      .des {
+        font-size: 24rpx;
+        color: #fff;
+      }
+    }
+  }
+  .tool {
+    display: flex;
+    align-items: center;
+    .count {
+      text {
+        font-size: 26rpx;
+        margin-right: 10rpx;
+      }
+    }
+    .rank {
+      display: flex;
+      align-items: center;
+      padding-left: 10rpx;
+      flex-grow: 1;
+      .ic {
+        width: 56rpx;
+        height: 43rpx;
+      }
+      .rank-name {
+        font-size: 26rpx;
+      }
+      .imgs {
+        display: flex;
+        align-items: center;
+        margin-left: 20rpx;
+        image {
+          width: 36rpx;
+          height: 36rpx;
+          border-radius: 36rpx;
+          border: #ffffff solid 2rpx;
+          margin-right: -14rpx;
+        }
+      }
+      .icon {
+        font-weight: bold;
+        font-size: 30rpx;
+        margin-left: 8rpx;
+      }
+    }
+    .tool-action {
+      .btn {
+        font-size: 28rpx;
+        background: #fae37c;
+        padding: 14rpx 20rpx;
+        border-radius: 8rpx;
+        display: flex;
+        align-items: center;
+        line-height: normal;
+        &::after {
+          border: none;
+        }
+        &.has {
+          box-shadow: none;
+          background: #f8f8f8;
+          color: #b2b2b2;
+          font-size: 26rpx;
+        }
+      }
+    }
+  }
+}
+.main {
+  background: #ffffff;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  position: relative;
+  padding-top: 98rpx;
+  .tab-box {
+    width: 100%;
+    left: 0rpx;
+    top: 0rpx;
+    z-index: 1000;
+    .bar-ext {
+      text-align: left;
+    }
+  }
+  .list {
+    background: #fff;
+  }
+}
+.action-tool {
+  position: fixed;
+  bottom: 60rpx;
+  right: 30rpx;
+  transition: all 0.3s;
+  .btn-i {
+    width: 96rpx;
+    height: 96rpx;
+    line-height: 96rpx;
+    text-align: center;
+    background: #fae37c;
+    border-radius: 96rpx;
+    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20rpx;
+    position: relative;
+    .icon {
+      font-size: 56rpx;
+    }
+  }
+}
+</style>
+<template>
+  <div>
+    <div class="shadow">
+      <div
+        class="shadow-main"
+        style=" background: url({{topic.iconPath}}) no-repeat;background-size: 120% 120%;"
+      ></div>
+    </div>
+    <navigation-bar :back="false" :background="background">
+      <div slot="left" class="user-back">
+        <div class="btn-back btn-black" @tap="goBack" v-if="opacity >= 1"></div>
+        <div class="btn-back" @tap="goBack" v-else></div>
+        <div class="title" style="opacity:{{opacity}};">{{topic.title}}</div>
+      </div>
+    </navigation-bar>
+    <mp-page
+      :state="state"
+      ref="list"
+      :enableRefresh="true"
+      :enableTips="false"
+      :showMoreLoading="false"
+      @scroll="onScroll"
+      @scrolltolower="onScrolltolower"
+      @retry="onRetry"
+      @refresh="onRefresh"
+    >
+      <div class="head">
+        <div class="topic">
+          <img :src="topic.iconPath" />
+          <div class="topic-info">
+            <div class="title">{{topic.title}}</div>
+            <div class="des">{{topic.des}}.</div>
+          </div>
+        </div>
+        <div class="tool">
+          <div class="count">
+            <text>{{topic.followCount}}</text>
+            <text>{{topic.nickName}}</text>
+          </div>
+          <div class="rank">
+            <block v-if="topic.rank.length">
+              <img src="../images/ic_rank.svg" class="ic" />
+              <div class="rank-name">大神榜</div>
+              <div class="imgs">
+                <img :src="rank.user.avtater" v-for="rank in topic.rank" :key="rank.userId" />
+              </div>
+              <div class="icon icon-arrow-right"></div>
+            </block>
+          </div>
+          <div class="tool-action" @tap="onFollow" v-if="!isSelf">
+            <button class="btn {{topic.hasFollow ? 'has' : ''}}">
+              <text class="icon icon-{{topic.hasFollow ? 'follow' : 'add'}}"></text>
+              <text>{{topic.hasFollow ? '已关注' : '关注'}}</text>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="main">
+        <div class="tab-box" style="position: {{tabposition}};top:{{tabTop}}px">
+          <tab-bar
+            :labels="tabs"
+            extClass="bar-ext"
+            :selectedIndex="tabIndex"
+            id="tab"
+            @change="onTabChange"
+          />
+        </div>
+        <topic-block :type="0" :topicId="topicId" :typeIndex="type" ref="new" :isSelf="isSelf" :topicTitle="topic.title"/>
+        <topic-block :type="1" :topicId="topicId" :typeIndex="type" ref="hot" :isSelf="isSelf" :topicTitle="topic.title"/>
+        <topic-block :type="2" :topicId="topicId" :typeIndex="type" ref="elite" :isSelf="isSelf" :topicTitle="topic.title"/>
+      </div>
+    </mp-page>
+    <div class="action-tool">
+      <div class="btn-circle btn-i" @tap.stop="goSend">
+        <div class="icon icon-xiezuo"></div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import { Topic } from '../common/api';
+import shareMixin from '../common/share.js';
+import wepy from '@wepy/core';
+wepy.page({
+  mixins: [shareMixin],
+  data: {
+    tabs: ['最新', '热门', '精华'],
+    fields: ['new', 'hot', 'elite'],
+    current: 0,
+    tabIndex: 0,
+    topic: null,
+    state: 0,
+    opacity: 0,
+    isSelf: false,
+    topicId: null,
+    tabposition: 'absolute',
+    tabTop: 0,
+    type: 0,
+    baseBottom: 0,
+    limitHeight: 0,
+    background: 'transparent'
+  },
+  async onLoad(q) {
+    const { id } = q;
+    this.topicId = id;
+    if (id) {
+      await this.loadTopic(id);
+      const res = wx.getSystemInfoSync();
+      const { statusBarHeight, pixelRatio } = res;
+      const { top, bottom } = wx.getMenuButtonBoundingClientRect();
+      const baseBottom = bottom + (top - statusBarHeight);
+      this.baseBottom = baseBottom;
+      const baseHeight = 464 / pixelRatio;
+      this.limitHeight = baseHeight - baseBottom;
+    } else {
+      this.state = 1;
+    }
+  },
+  methods: {
+    async loadTopic(id) {
+      this.topic = await Topic.getTopic(this.topicId);
+      if (this.topic) {
+        const userId = wx.getStorageSync('userId')
+        this.isSelf = userId === this.topic.ownerId
+        this.state = 3;
+        const { id, title, des, iconPath } = this.topic;
+        Topic.topicAddTrack({
+          id,
+          title,
+          iconPath
+        });
+      } else {
+        this.state = 1;
+      }
+    },
+    async onTabChange(index) {
+      this.current = index;
+      this.type = index;
+      await this.$refs[this.fields[this.type]].loadBase();
+    },
+    onScroll(res) {
+      const top = res.scrollTop;
+      this.opacity = 1 - (this.limitHeight - top) / this.limitHeight;
+      this.background = `rgba(255, 255, 255, ${this.opacity})`;
+      if (top >= this.limitHeight) {
+        this.tabTop = this.baseBottom;
+        this.tabposition = 'fixed';
+      } else if (top < this.limitHeight) {
+        this.tabTop = 0;
+        this.tabposition = 'absolute';
+      }
+    },
+    async onScrolltolower() {
+      await this.$refs[this.fields[this.type]].loadPosts();
+    },
+    async onRetry() {
+      await this.loadTopic(this.topicId);
+    },
+    goBack() {
+      wx.navigateBack();
+    },
+    async onFollow() {
+      const { isBinding } = wx.getStorageSync('user');
+      if (isBinding === 0) {
+        wx.navigateTo({
+          url: '/pages/gender'
+        });
+      } else {
+        const hasFollow = await Topic.topicFollow(this.topicId);
+        if (hasFollow) {
+          Topic.showToast(
+            this.topic.hasFollow ? '已取消关注' : '关注成功',
+            'success'
+          );
+          this.topic.hasFollow = !this.topic.hasFollow;
+        } else {
+          Topic.showToast('关注失败,重试');
+        }
+      }
+    },
+    goSend() {
+      wx.navigateTo({
+        url: `/pages/post-send?type=0&topicId=${this.topicId}&title=${encodeURI(
+          this.topic.title
+        )}`
+      });
+    },
+    async onRefresh() {
+      await this.$refs[this.fields[this.type]].init();
+      this.$refs.list.hideRefresh();
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationStyle: 'custom',
+    "usingComponents": {
+      "navigation-bar": "../components/navigation-bar/navigation-bar",
+      "tab-bar": "../components/tab-bar",
+      "mp-page": "../components/mp-page",
+      "topic-block": "../components/topic-block"
+    }
+}
+</config>

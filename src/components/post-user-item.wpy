@@ -1,0 +1,282 @@
+<style lang="less">
+.post-user-item {
+  background: #ffffff;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-content: flex-start;
+  padding: 30rpx;
+  .left {
+    flex-basis: 140rpx;
+    // width: 160rpx;
+    .left-c {
+      display: flex;
+      .day {
+        font-size: 48rpx;
+        font-weight: bold;
+      }
+      .month {
+        font-size: 24rpx;
+        font-weight: lighter;
+        align-self: flex-end;
+        margin-left: 6rpx;
+      }
+    }
+  }
+  .right {
+    flex-basis: 550rpx;
+    background: #ffffff;
+    margin-bottom: 20rpx;
+    .content {
+      font-size: 32rpx;
+      color: var(--txt-content);
+      margin-bottom: 30rpx;
+      text-align: left;
+      .icon-img {
+        width: 34rpx;
+        height: 34rpx;
+      }
+      .topic {
+        color: #409eff;
+        margin-right: 10rpx;
+      }
+    }
+    .imgs {
+      margin-bottom: 20rpx;
+      image {
+        width: 80%;
+        border-radius: 20rpx;
+      }
+      &.images {
+        image {
+          width: 220rpx;
+          height: 220rpx;
+          margin-right: 20rpx;
+        }
+      }
+    }
+    .count {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: 30rpx;
+      .count-item {
+        flex-grow: 1;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: var(--txt-primary);
+        font-size: 26rpx;
+        &.item-more {
+          flex-grow: 0;
+        }
+        &.item-lock {
+          color: #b2b2b2;
+          font-size: 24rpx;
+          .icon {
+            font-size: 26rpx;
+          }
+        }
+      }
+      .icon {
+        margin-right: 0rpx;
+        margin-right: 8rpx;
+        font-size: 42rpx;
+        // color: var(--txt-second);
+      }
+      .note {
+        color: #b2b2b2;
+        font-size: 24rpx;
+        flex-grow: 1;
+      }
+    }
+    .location {
+      margin-top: 30rpx;
+      .address {
+        display: flex;
+        align-items: center;
+        font-size: 22rpx;
+        color: #24c688;
+        image {
+          width: 32rpx;
+          height: 32rpx;
+          margin-right: 8rpx;
+        }
+        .icon-arr-right {
+          font-size: 36rpx;
+        }
+      }
+    }
+    .topic {
+      font-size: 26rpx;
+      color: #409eff;
+      background: #ecf8ff;
+      padding: 6rpx 14rpx;
+      border-radius: 50rpx;
+      margin-right: 10rpx;
+      display: inline-block;
+      text {
+        font-size: 26rpx;
+      }
+      .icon {
+        font-weight: bold;
+      }
+      .icon-topic-full {
+        font-weight: normal;
+        font-size: 30rpx;
+        margin-right: 6rpx;
+      }
+    }
+  }
+}
+</style>
+<template>
+  <div class="post-user-item" @tap="goDetail">
+    <div class="left">
+      <div class="left-c">
+        <div class="day">{{item.day}}</div>
+        <div class="month">{{item.month}}月</div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="content">
+        <block v-for="obj in item.content">
+          <text
+            v-if="obj.type === 0"
+            space="nbsp"
+            class="{{postAuthorId === item.user.id ? 'is-author' : ''}}"
+          >{{obj.value}}</text>
+          <img v-else class="icon-img" :src="obj.src" />
+        </block>
+      </div>
+      <div class="imgs {{item.imgs.length > 1 ? 'images' : ''}}">
+        <img
+          :src="img.path"
+          @tap.stop="onPreview(item.imgs, index)"
+          v-for="(img, index) in item.imgs"
+          :key="index"
+          mode="aspectFill"
+          :lazy-load="true"
+        />
+      </div>
+      <div class="topic" @tap.stop="goTopic(item.topicId)" v-if="item.posType !== 1">
+        <text class="icon icon-topic-full" />
+        <text>{{item.topicTitle || '日常打卡'}}</text>
+        <text class="icon icon-arrow-right" />
+      </div>
+      <div class="location" v-if="item.address">
+        <div class="address" @tap.stop="openMap(item)">
+          <img src="../images/location.svg" />
+          <div class="name">{{item.address}}</div>
+          <div class="icon icon-arr-right"></div>
+        </div>
+      </div>
+      <div class="count">
+        <block v-if="item.posType === 0 || isSelf">
+          <div class="count-item item-lock" v-if="isSelf && item.posType === 1">
+            <div class="icon icon-lock" />
+            <div>自己可见</div>
+          </div>
+          <div class="count-item">
+            <div class="icon icon-zan-line" />
+            <div>{{item.thumbsCount}}</div>
+          </div>
+          <div class="count-item">
+            <div class="icon icon-comment" />
+            <div>{{item.commentCount}}</div>
+          </div>
+          <div class="count-item" @tap.stop="onShare" v-if="item.posType === 0">
+            <div class="icon icon-share" />
+            <div>分享</div>
+          </div>
+        </block>
+        <block v-else>
+          <div class="icon icon-lock note">{{item.comment}}</div>
+        </block>
+        <div class="count-item item-more" v-if="showDel" @tap.stop="onAction">
+          <div class="icon icon-more" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core';
+wepy.component({
+  options: {
+    addGlobalClass: true
+  },
+  props: {
+    item: Object,
+    index: Number,
+    isSelf: Boolean,
+    showDel: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data: {},
+  methods: {
+    onPreview(imgs, index) {
+      const urls = imgs.map(img => {
+        return img.origPath;
+      });
+      wx.previewImage({
+        urls,
+        current: urls[index]
+      });
+    },
+    onAction() {
+      wx.showActionSheet({
+        itemList: ['删除'],
+        itemColor: '#EA0D23',
+        success: async res => {
+          if (res.tapIndex === 0) {
+            this.$emit('del', {
+              id: this.item.id,
+              index: this.index
+            });
+          }
+        },
+        fail(res) {
+          console.log(res.errMsg);
+        }
+      });
+    },
+    goDetail() {
+      if (this.item.mediaSrc) {
+        wx.navigateTo({
+          url: '/pages/detail-video?id=' + this.item.id
+        });
+      } else {
+        wx.navigateTo({
+          url: '/pages/post-details?id=' + this.item.id
+        });
+      }
+    },
+    onShare() {
+      wx.navigateTo({
+        url: '/pages/post-share?id=' + this.item.id
+      });
+    },
+    openMap(post) {
+      wx.openLocation({
+        latitude: Number.parseFloat(post.latitude),
+        longitude: Number.parseFloat(post.longitude),
+        name: post.address
+      });
+    },
+    goTopic(id) {
+      wx.navigateTo({
+        url: '/pages/topic?id=' + id
+      });
+    }
+  }
+});
+</script>
+<config>
+{
+    "usingComponents": {
+    }
+}
+</config>

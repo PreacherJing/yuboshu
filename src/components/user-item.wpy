@@ -1,0 +1,109 @@
+<style lang="less" scoped>
+.user {
+  display: flex;
+  .avtater {
+    flex-shrink: 0;
+    image {
+      width: 64rpx;
+      height: 64rpx;
+      border-radius: 8rpx;
+    }
+  }
+  .info {
+    flex-grow: 1;
+    margin-left: 20rpx;
+    .info-content {
+      display: flex;
+      align-items: center;
+      .nick {
+        font-size: 26rpx;
+        color: #606266;
+        max-width: 260rpx;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /*设置文本行数限制*/
+        -webkit-box-orient: vertical; /*设置文本排列方式*/
+        &.vip {
+          color: #d81e06;
+        }
+      }
+      .ic-img {
+        width: 28rpx;
+        height: 28rpx;
+        margin-left: 8rpx;
+      }
+    }
+    .info-des {
+      margin-top: 6rpx;
+      color: #b2b2b2;
+      font-size: 22rpx;
+      text-align: left;
+    }
+  }
+  .left{
+    align-self: center;
+  }
+}
+</style>
+<template>
+  <div class="user" @tap.stop="goInfo">
+    <div class="left">
+      <slot name="left" />
+    </div>
+    <div class="avtater">
+      <img :src="info.avtater" />
+    </div>
+    <div class="info">
+      <div class="info-content">
+        <div class="nick {{(info.userType === 3 || info.isVip) ? 'vip' : ''}}">{{info.nick}}</div>
+        <block v-if="item.userType !== 3">
+          <img
+            class="ic-img"
+            v-if="info.isAuth"
+            src="https://www.wutuobangxinyougou.com/public/ic/ic_auth.svg"
+          />
+          <img
+            v-if="info.userType === 5"
+            class="ic-img"
+            src="https://www.wutuobangxinyougou.com/public/ic/ic_writer.svg"
+          />
+        </block>
+        <img
+          v-if="info.userType === 3"
+          class="ic-img"
+          src="https://www.wutuobangxinyougou.com/public/ic/ic_sys.svg"
+        />
+        <div class="info-content-more">
+          <slot name="content" />
+        </div>
+      </div>
+      <div class="info-des">
+        <text v-if="info.userType === 3">{{info.title || info.school}}</text>
+        <text v-else>{{info.gender}}·{{info.title || info.school || '新乡某大学'}}</text>
+      </div>
+    </div>
+    <div class="action">
+      <slot name="action" />
+    </div>
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core';
+wepy.component({
+  options: {
+    multipleSlots: true,
+    addGlobalClass: true
+  },
+  props: {
+    info: Object
+  },
+  methods: {
+    goInfo() {
+       wx.navigateTo({
+        url: '/pages/user-details?id=' + this.info.id
+      });
+    }
+  }
+});
+</script>

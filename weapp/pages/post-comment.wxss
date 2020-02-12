@@ -1,0 +1,85 @@
+.comments {
+  background: #ffffff;
+  margin-top: 30rpx;
+}
+.comments .comments-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rpx 20rpx;
+}
+.comments .comments-top .title {
+  font-size: 32rpx;
+}
+.comments .comments-top .zan {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #b2b2b2;
+  margin: 30rpx 0rpx;
+}
+.comments .comments-top .zan image {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 36rpx;
+  border: #ffffff solid 4rpx;
+  margin-right: -14rpx;
+}
+.comments .comments-top .zan .zan-des {
+  margin-left: 24rpx;
+}
+.page-action {
+  position: fixed;
+  background: #fff;
+  bottom: 0rpx;
+  left: 0rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10rpx 30rpx;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+.page-action::after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 0.4px solid rgba(235, 237, 245, 0.8);
+  color: rgba(235, 237, 245, 0.8);
+}
+.page-action .item {
+  padding: 20rpx;
+  box-sizing: border-box;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 24rpx;
+  display: flex;
+  padding: 20rpx 30rpx;
+  justify-content: center;
+}
+.page-action .item .icon {
+  font-size: 48rpx;
+  margin-right: 6rpx;
+}
+.page-action .item-input {
+  font-size: 28rpx;
+  color: #b2b2b2;
+  background: #f8f8f8;
+  line-height: 64rpx;
+  height: 64rpx;
+  padding: 0rpx 20rpx;
+  flex-grow: 1;
+  border-radius: 80rpx;
+  width: 240rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  /*设置文本行数限制*/
+  -webkit-box-orient: vertical;
+  /*设置文本排列方式*/
+}
+

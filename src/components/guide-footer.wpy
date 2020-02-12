@@ -1,0 +1,85 @@
+<style lang="less">
+.guide-footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  left: 0px;
+  text-align: center;
+  padding: 50rpx 0rpx;
+  button {
+    height: 94rpx;
+    line-height: 94rpx;
+    border-radius: 94rpx;
+    padding: 0rpx 120rpx;
+    display: inline-block;
+    background: #ffd100;
+    color: #13100e;
+    border: none;
+    box-shadow: 4rpx 8rpx 12rpx rgba(255, 209, 0, 0.3);
+    font-size: 34rpx;
+    font-weight: bold;
+    &::after {
+      border: none;
+    }
+    &.btn-login{
+      background: #fae37c;
+    }
+  }
+  .btn-hover {
+    background: #fae37c;
+  }
+  .des {
+    padding: 16rpx 0rpx;
+    color: #888888;
+    font-size: 24rpx;
+    font-weight: lighter;
+  }
+}
+</style>
+<template>
+  <div class="guide-footer">
+    <block v-if="type === 'getUserInfo'">
+      <button
+        @getuserinfo="getuserinfo"
+        :loading="loading"
+        :disabled="disabled"
+        class="btn-login"
+        hover-class="btn-hover"
+        lang="zh_CN"
+        open-type="getUserInfo"
+      >{{btntext}}</button>
+    </block>
+    <block v-else>
+      <button
+        @tap="onTap"
+        :loading="loading"
+        :disabled="disabled"
+        hover-class="btn-hover"
+      >{{btntext}}</button>
+    </block>
+    <div class="des" @tap.stop="desTap">{{des}}</div>
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core';
+wepy.component({
+  props: {
+    btntext: String,
+    type: String,
+    des: String,
+    loading: Boolean,
+    disabled: Boolean
+  },
+  methods: {
+    onTap() {
+      this.$emit('click');
+    },
+    getuserinfo(e) {
+      this.$emit('getuser', e.$wx.detail.userInfo);
+    },
+    desTap() {
+      this.$emit('destap');
+    }
+  }
+});
+</script>

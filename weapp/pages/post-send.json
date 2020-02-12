@@ -1,0 +1,9 @@
+{
+    "navigationStyle": "custom",
+    "component": true,
+    "usingComponents": {
+        "navigation-bar": "../components/navigation-bar/navigation-bar",
+        "emoji-input": "../components/emoji-input",
+        "topic-input": "../components/topic-input"
+    }
+}

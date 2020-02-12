@@ -1,0 +1,446 @@
+<style lang="less" scoped>
+.post {
+  padding: 20rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+  &.post-top {
+    padding: 20rpx;
+    border-bottom-left-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
+  }
+  .post-content {
+    margin-left: 74rpx;
+    .top-des {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      color: #409eff;
+      font-size: 26rpx;
+      padding-bottom: 10rpx;
+      padding-right: 30rpx;
+      .icon {
+        font-size: 28rpx;
+      }
+    }
+    .post-txt {
+      margin: 10rpx 0rpx;
+      font-size: 32rpx;
+      color: #353535;
+      text {
+        color: var(--txt-content);
+        font-size: 32rpx;
+        text-align: left;
+        &.simple {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 5; /*设置文本行数限制*/
+          -webkit-box-orient: vertical; /*设置文本排列方式*/
+        }
+      }
+      .icon-img {
+        width: 34rpx;
+        height: 34rpx;
+      }
+    }
+    .post-imgs {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 10rpx 0rpx;
+      .post-img-item {
+        position: relative;
+        padding: 10rpx;
+        .img-des {
+          position: absolute;
+          right: 20rpx;
+          bottom: 20rpx;
+          background: rgba(0, 0, 0, 0.5);
+          color: #ffffff;
+          font-size: 22rpx;
+          padding: 6rpx 8rpx;
+          border-radius: 6rpx;
+        }
+        image {
+          width: 180rpx;
+          height: 180rpx;
+        }
+      }
+    }
+    .location {
+      margin-top: 30rpx;
+      .address {
+        display: flex;
+        align-items: center;
+        font-size: 22rpx;
+        color: #24c688;
+        image {
+          width: 32rpx;
+          height: 32rpx;
+          margin-right: 8rpx;
+        }
+        .icon-arr-right {
+          font-size: 36rpx;
+        }
+      }
+    }
+    .post-topic {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .topic {
+        font-size: 26rpx;
+        color: #409eff;
+        background: #ecf8ff;
+        padding: 8rpx 20rpx;
+        border-radius: 50rpx;
+        margin-right: 10rpx;
+        display: flex;
+        align-items: center;
+        .topicTitle {
+          max-width: 260rpx;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 1; /*设置文本行数限制*/
+          -webkit-box-orient: vertical; /*设置文本排列方式*/
+        }
+        .icon {
+          font-size: 30rpx;
+        }
+        .icon-topic-full {
+          font-weight: normal;
+          font-size: 30rpx;
+          margin-right: 6rpx;
+        }
+      }
+      .hot-num {
+        color: red;
+        font-size: 28rpx;
+        background: linear-gradient(to right, red, blue);
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        text-fill-color: transparent;
+        .hot-num {
+          font-size: 28rpx;
+          margin-left: 6rpx;
+        }
+        .icon {
+          margin-right: 0rpx;
+        }
+      }
+      .zan {
+        display: flex;
+        align-items: center;
+        font-size: 24rpx;
+        color: #b2b2b2;
+        margin: 30rpx 0rpx;
+        image {
+          width: 36rpx;
+          height: 36rpx;
+          border-radius: 36rpx;
+          border: #ffffff solid 4rpx;
+          margin-right: -14rpx;
+        }
+        .zan-des {
+          margin-left: 24rpx;
+        }
+      }
+    }
+    .post-hot-comment {
+      padding: 10rpx 20rpx;
+      border-left: #efefef solid 1rpx;
+      text {
+        font-size: 26rpx;
+        color: #7a8299;
+        line-height: 42rpx;
+      }
+      .hot-tag {
+        background: #fdf6ec;
+        color: #ec9615;
+        font-weight: normal;
+        margin-right: 8rpx;
+        font-size: 22rpx;
+        border-radius: 50rpx;
+        padding: 4rpx 10rpx;
+      }
+      .nick {
+        font-weight: bold;
+        font-size: 26rpx;
+        color: #474f66;
+      }
+    }
+    .post-tool {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      box-sizing: border-box;
+      position: relative;
+      margin: 0rpx 0rpx;
+      .count-item {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        padding: 30rpx;
+        color: var(--txt-second);
+        font-size: 24rpx;
+        &.drill{
+          color: #d81e06;
+        }
+      }
+      .icon {
+        margin-right: 0rpx;
+        margin-right: 8rpx;
+        font-size: 34rpx;
+      }
+    }
+  }
+}
+.btn-follow {
+  font-size: 24rpx;
+  background: #fae37c;
+  box-shadow: 4rpx 8rpx 12rpx rgba(250, 227, 124, 0.5);
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  .icon {
+    font-size: 30rpx;
+  }
+  &.follow {
+    background: #f8f8f8;
+    color: #b2b2b2;
+  }
+  &.btn-hover {
+    background: rgba(250, 227, 124, 0.5);
+  }
+}
+.top {
+  font-size: 26rpx;
+  background: #fdf6ec;
+  color: #ec9615;
+  padding: 40rpx;
+  border-radius: 8rpx;
+  background: url(https://www.wutuobangxinyougou.com/public/ic/ic_top.svg)
+    no-repeat;
+  background-size: 100% 100%;
+}
+.more {
+  padding: 8rpx 0rpx;
+  padding-left: 60rpx;
+  .icon {
+    font-size: 56rpx;
+    color: #b2b2b2;
+  }
+}
+</style>
+<template>
+  <div class="post {{isTop ? 'post-top' : ''}}" @tap="goDetail">
+    <user-item :info="item.user">
+      <div slot="action" class="top" v-if="item.isTop"></div>
+      <div slot="action" v-else-if="!item.hasFollow && showBtnFollow">
+        <div class="btn-follow" hover-class="btn-hover" @tap.stop="onFollow">
+          <div class="icon icon-add"></div>
+          <div>关注</div>
+        </div>
+      </div>
+      <div slot="action" v-else-if="showMore" @tap.stop="onMore">
+        <div class="more">
+          <div class="icon icon-more" />
+        </div>
+      </div>
+    </user-item>
+    <div class="post-content">
+      <div class="post-txt">
+        <block v-for="obj in item.content">
+          <text
+            class="{{showInfo ? 'simple' : ''}}"
+            v-if="obj.type === 0"
+            space="nbsp"
+          >{{obj.value}}</text>
+          <img v-else class="icon-img" :src="obj.src" />
+        </block>
+      </div>
+      <div class="top-des" v-if="isTop">
+        <div>查看活动详情</div>
+        <div class="icon icon-arrow-right" />
+      </div>
+      <block v-if="!isTop">
+        <div class="post-imgs" v-if="item.user.id !== 1">
+          <div class="post-img-item" v-for="(img, index) in item.imgs" :key="index">
+            <img
+              @tap.stop="onPreview(item.imgs, index)"
+              :src="img.path"
+              mode="aspectFill"
+              :lazy-load="true"
+            />
+            <div class="img-des" v-if="img.height > item.height">长图</div>
+          </div>
+        </div>
+        <div v-else-if="item.user.id === 1 && !showInfo">
+          <img
+            @tap.stop="onPreview(item.imgs, index)"
+            v-for="(img, index) in item.imgs"
+            :key="index"
+            :src="img.origPath"
+            style="width:100%;height:{{img.height}}rpx;"
+            mode="widthFix"
+            :lazy-load="true"
+          />
+        </div>
+        <div class="location" v-if="item.address">
+          <div class="address" @tap.stop="openMap(item)">
+            <img src="../images/location.svg" />
+            <div class="name">{{item.address}}</div>
+            <div class="icon icon-arr-right"></div>
+          </div>
+        </div>
+        <block v-if="showInfo">
+          <div class="post-topic">
+            <div class="hot-num" v-if="item.hotNum > -1">
+              <text class="icon icon-hot" />热度
+              <text class="hot-num">{{item.hotNum}}</text>℃
+            </div>
+            <div class="topic" @tap.stop="goTopic(item.topicId)" v-else>
+              <div class="icon icon-topic-full" />
+              <div class="topicTitle">{{item.topicTitle}}</div>
+              <div class="icon icon-arrow-right" />
+            </div>
+            <div class="zan">
+              <img v-for="(img, index) in item.likers" :src="img" :key="index" />
+              <div class="zan-des">{{item.thumbsCount}}人赞了</div>
+            </div>
+          </div>
+          <div class="post-hot-comment" v-if="item.hotComment">
+            <text>
+              <text class="hot-tag">热评</text>
+              <text class="nick">{{item.hotComment.user.nick}}：</text>
+              <text>{{item.hotComment.content}}</text>
+            </text>
+          </div>
+          <div class="post-tool">
+            <div class="count-item" @tap.stop="onShare">
+              <div class="icon icon-share"></div>
+              <div>分享</div>
+            </div>
+            <div class="count-item {{item.drillCount ? 'drill' : ''}}">
+              <div class="icon icon-drill" />
+              <div>{{item.drillCount ? item.drillCount : '赞赏'}}</div>
+            </div>
+            <div class="count-item">
+              <div class="icon icon-zan-line" />
+              <div>{{item.thumbsCount || '赞'}}</div>
+            </div>
+            <div class="count-item">
+              <div class="icon icon-comment" />
+              <div>{{item.commentCount || '评论'}}</div>
+            </div>
+          </div>
+        </block>
+      </block>
+    </div>
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { Follow } from '../common/api';
+wepy.component({
+  options: {
+    multipleSlots: true,
+    addGlobalClass: true
+  },
+  props: {
+    showInfo: {
+      type: Boolean,
+      default: true
+    },
+    isTop: {
+      type: Boolean,
+      default: false
+    },
+    showMore: {
+      type: Boolean,
+      default: false
+    },
+    index: Number,
+    showBtnFollow: {
+      type: Boolean,
+      default: true
+    },
+    item: Object
+  },
+  methods: {
+    onPreview(imgs, index) {
+      const urls = imgs.map(img => {
+        return img.origPath;
+      });
+      wx.previewImage({
+        urls,
+        current: urls[index]
+      });
+    },
+    goTopic(id) {
+      wx.navigateTo({
+        url: '/pages/topic?id=' + id
+      });
+    },
+    goDetail() {
+      if (!this.showInfo) {
+        return;
+      }
+      if (this.$wx.getOpenerEventChannel) {
+        wx.navigateTo({ url: '/pages/post-details?id=' + this.item.id });
+      } else {
+        wx.navigateTo({
+          url: '/pages/post-details?id=' + this.item.id,
+          events: {
+            acceptDataFromOpenedPage: async res => {
+              if (res.hasFollow) {
+                this.item.hasFollow = res.hasFollow;
+                this.$emit('follow', this.item.user.id);
+              }
+            }
+          }
+        });
+      }
+    },
+    async onFollow() {
+      const { isBinding } = wx.getStorageSync('user');
+      if (isBinding === 0) {
+        wx.navigateTo({
+          url: '/pages/gender'
+        });
+      } else {
+        const isFollow = await Follow.concern(this.item.userId);
+        this.item.hasFollow = isFollow;
+      }
+    },
+    openMap(post) {
+      wx.openLocation({
+        latitude: Number.parseFloat(post.latitude),
+        longitude: Number.parseFloat(post.longitude),
+        name: post.address
+      });
+    },
+    onShare() {
+      wx.navigateTo({
+        url: '/pages/post-share?id=' + this.item.id
+      });
+    },
+    onMore() {
+      this.$emit('more', {
+        post: this.item,
+        index: this.index
+      });
+    }
+  }
+});
+</script>
+<config>
+{
+    usingComponents: {
+        "user-item": "./user-item"
+    }
+}
+</config>

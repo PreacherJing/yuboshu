@@ -1,0 +1,17 @@
+<style lang="less" scoped>
+.no-more{
+  line-height: 140rpx;
+  font-size: 28rpx;
+  color: #9a9a9a;
+  text-align: center;
+}
+</style>
+<template>
+  <div class="no-more">
+    ｡◕‿◕｡ 没有更多 ｡◕‿◕｡
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core';
+wepy.component({});
+</script>

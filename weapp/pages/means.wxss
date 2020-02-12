@@ -1,0 +1,120 @@
+.money {
+  padding: 50rpx;
+  background: #fff;
+  margin: 30rpx;
+  border-radius: 10rpx;
+}
+.money .title {
+  font-size: 24rpx;
+  color: #b2b2b2;
+}
+.money .value {
+  font-size: 72rpx;
+  font-weight: bold;
+  margin: 30rpx 0rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.money .value .des {
+  font-size: 42rpx;
+  font-weight: normal;
+}
+.money .value .des .flag {
+  font-size: 26rpx;
+  margin-left: 8rpx;
+}
+.money .list {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  position: relative;
+  padding-top: 30rpx;
+}
+.money .list::after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 0.4px solid rgba(235, 237, 245, 0.8);
+  color: rgba(235, 237, 245, 0.8);
+}
+.money .list .item {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 50%;
+  margin-right: 50rpx;
+}
+.money .list .item:last-child {
+  margin-right: 0rpx;
+}
+.money .list .item .item-title {
+  font-size: 24rpx;
+  color: #8a8a8a;
+  margin-bottom: 10rpx;
+}
+.money .list .item .item-value {
+  font-size: 56rpx;
+  font-weight: bold;
+  margin: 10rpx 0rpx;
+}
+.money .list .item .item-action {
+  font-size: 24rpx;
+  padding: 20rpx 0rpx;
+  color: #7a8299;
+}
+.money .list .item .item-action .icon {
+  font-size: 24rpx;
+}
+.money .list .item .item-des {
+  font-size: 24rpx;
+  color: #b2b2b2;
+}
+.money .btn {
+  border: #f1f1f1 solid 1px;
+  border-radius: 64rpx;
+  line-height: 64rpx;
+  font-size: 28rpx;
+  display: inline-block;
+  padding: 0rpx 40rpx;
+  background: #fff;
+}
+.money .btn.btn-hover {
+  background: #f1f1f1;
+}
+.cells {
+  padding: 30rpx;
+}
+.cells .cell {
+  padding: 30rpx 30rpx;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: #fff;
+  margin-bottom: 30rpx;
+  border-radius: 10rpx;
+}
+.cells .cell.cell-hover {
+  background: #f8f8f8;
+}
+.cells .cell .ic {
+  font-size: 56rpx;
+  margin-right: 10rpx;
+}
+.cells .cell .title {
+  font-size: 32rpx;
+  flex-grow: 1;
+}
+.cells .cell .value {
+  color: #8a8a8a;
+  font-size: 28rpx;
+  margin-right: 8rpx;
+}
+.cells .cell .icon-right {
+  color: #b2b2b2;
+  font-weight: bold;
+  font-size: 30rpx;
+}
+

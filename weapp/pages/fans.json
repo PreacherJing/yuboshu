@@ -1,0 +1,12 @@
+{
+    "navigationBarTitleText": "TA关注的",
+    "enablePullDownRefresh": true,
+    "component": true,
+    "usingComponents": {
+        "loading": "../components/loading/loading",
+        "mp-page": "../components/mp-page",
+        "user-item": "../components/user-item",
+        "no-more": "../components/no-more",
+        "empty": "../components/empty"
+    }
+}

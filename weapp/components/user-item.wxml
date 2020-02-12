@@ -1,0 +1,29 @@
+
+<view data-wpy-evt="74-0" catchtap="_proxy" class="user">
+  <view class="left">
+    <slot name="left"></slot>
+  </view>
+  <view class="avtater">
+    <image src="{{ info.avtater }}"></image>
+  </view>
+  <view class="info">
+    <view class="info-content">
+      <view class="nick {{(info.userType === 3 || info.isVip) ? 'vip' : ''}}">{{info.nick}}</view>
+      <block wx:if="{{ item.userType !== 3 }}">
+        <image wx:if="{{ info.isAuth }}" src="https://www.wutuobangxinyougou.com/public/ic/ic_auth.svg" class="ic-img"></image>
+        <image wx:if="{{ info.userType === 5 }}" src="https://www.wutuobangxinyougou.com/public/ic/ic_writer.svg" class="ic-img"></image>
+      </block>
+      <image wx:if="{{ info.userType === 3 }}" src="https://www.wutuobangxinyougou.com/public/ic/ic_sys.svg" class="ic-img"></image>
+      <view class="info-content-more">
+        <slot name="content"></slot>
+      </view>
+    </view>
+    <view class="info-des">
+      <text wx:if="{{ info.userType === 3 }}">{{info.title || info.school}}</text>
+      <text wx:else>{{info.gender}}·{{info.title || info.school || '新乡某大学'}}</text>
+    </view>
+  </view>
+  <view class="action">
+    <slot name="action"></slot>
+  </view>
+</view>

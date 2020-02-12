@@ -1,0 +1,312 @@
+<style lang="less" scoped>
+.list {
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+  .item {
+    background: #fff;
+    padding: 20rpx;
+    margin-bottom: 20rpx;
+    border-radius: 20rpx;
+    .item-txt {
+      margin: 20rpx 0rpx;
+      color: #000;
+      .txt-type {
+        color: #7a8299;
+        .icon {
+          margin-right: 8rpx;
+          font-size: 34rpx;
+          color: #7a8299;
+        }
+      }
+      text {
+        color: var(--txt-content);
+        font-size: 28rpx;
+        text-align: left;
+      }
+      .icon-img {
+        width: 28rpx;
+        height: 28rpx;
+      }
+    }
+    .comment-imgs {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 10rpx 0rpx;
+      .comment-img-item {
+        position: relative;
+        padding: 10rpx;
+        .img-des {
+          position: absolute;
+          right: 20rpx;
+          bottom: 20rpx;
+          background: rgba(0, 0, 0, 0.5);
+          color: #ffffff;
+          font-size: 22rpx;
+          padding: 6rpx 8rpx;
+          border-radius: 6rpx;
+        }
+        image {
+          width: 180rpx;
+          height: 180rpx;
+        }
+      }
+    }
+    .item-source {
+      display: flex;
+      background: #f1f1f1;
+      align-items: center;
+      border-radius: 10rpx;
+      padding: 20rpx;
+      image {
+        flex-shrink: 0;
+        width: 72rpx;
+        height: 72rpx;
+        border-radius: 10rpx;
+        margin-right: 20rpx;
+      }
+      .item-source-txt {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /*设置文本行数限制*/
+        -webkit-box-orient: vertical; /*设置文本排列方式*/
+        flex-grow: 1;
+        font-size: 26rpx;
+        color: #7a8299;
+      }
+    }
+    .item-date {
+      font-size: 24rpx;
+      color: #b2b2b2;
+      margin-top: 20rpx;
+    }
+  }
+}
+.btn {
+  font-size: 24rpx;
+  background: #f1f1f1;
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  line-height: normal;
+  color: #7a8299;
+  &.btn-hover {
+    background: rgba(240, 239, 236, 0.5);
+  }
+}
+</style>
+<template>
+  <mp-page
+    :state="state"
+    :offset="0"
+    :marginOffset="0"
+    :enableTips="false"
+    :enableRefresh="false"
+    :showMoreLoading="false"
+    @retry="onRetry"
+  >
+    <div slot="empty">
+      <div class="list" v-if="items.length">
+        <div class="item" v-for="item in items" :key="item.id">
+          <user-item :info="item.user">
+            <div slot="action" @tap.stop="onReply(item)" v-if="fromType !== '2'">
+              <div class="btn" hover-class="btn-hover">回复</div>
+            </div>
+          </user-item>
+          <div class="item-txt">
+            <text class="txt-type">
+              <text class="icon icon-{{icons[fromType]}}" />
+              <text>{{lables[fromType]}}{{fromType === '2' ? des[item.likeType] : ''}}</text>
+            </text>
+            <block v-for="obj in item.content">
+              <text
+                class="{{showInfo ? 'simple' : ''}}"
+                v-if="obj.type === 0"
+                space="nbsp"
+              >{{obj.value}}</text>
+              <img v-else class="icon-img" :src="obj.src" />
+            </block>
+          </div>
+          <div class="comment-imgs" v-if="item.imgs">
+            <div class="comment-img-item" v-for="(img, index) in item.imgs" :key="index">
+              <img
+                @tap.stop="onPreview(item.imgs, index)"
+                :src="img.path"
+                mode="aspectFill"
+                :lazy-load="true"
+              />
+              <div class="img-des" v-if="img.height > item.height">长图</div>
+            </div>
+          </div>
+          <div class="item-source" v-if="item.source" @tap.stop="goPost(item)">
+            <img
+              :src="item.source.imgs[0].path"
+              mode="aspectFill"
+              v-if="item.source && item.source.imgs && item.source.imgs.length"
+            />
+            <div class="item-source-txt">{{item.source.content}}</div>
+          </div>
+          <div class="item-date" v-if="item.senDate && fromType !== '2'">{{item.senDate}}</div>
+        </div>
+        <loading :show="true" type="circle" v-if="hasMore" />
+        <no-more v-else />
+      </div>
+      <div class="empty" v-else>
+        <empty des="还没有人跟你互动过,发个动弹试试" btnTxt="发布动弹" @action="onAction" />
+      </div>
+      <comment-input
+        :show="showInput"
+        @hide="onHide"
+        :placeholder="placeholder"
+        :toUserId="toUserId"
+        :replyId="replyId"
+        :toUserNick="toUserNick"
+        :commentId="commentId"
+        :postId="postId"
+        :type="1"
+      />
+    </div>
+  </mp-page>
+</template>
+<script>
+import { Comment } from '../common/api';
+import wepy from '@wepy/core';
+wepy.page({
+  config: {},
+  data: {
+    state: 0,
+    placeholder: '来,神评是你的',
+    lables: ['评论了你：', '回复了你：', '赞了你的'],
+    des: ['动弹', '评论', '回复'],
+    icons: ['pinglun', 'huifu', 'zan-full'],
+    title: ['收到的评论', '收到的回复', '收到的点赞'],
+    toUserId: null,
+    postId: null,
+    commentId: null,
+    replyId: null,
+    toUserNick: null,
+    items: [],
+    showInput: false,
+    pageIndex: 1,
+    pageSize: 20,
+    hasMore: true,
+    fromType: '0' // 0:评论1:回复
+  },
+  async onLoad(q) {
+    this.fromType = q.type;
+    wx.setNavigationBarTitle({
+      title: this.title[this.fromType]
+    });
+    await this.loadData();
+  },
+  async onPullDownRefresh() {
+    this.state = 0;
+    this.hasMore = true;
+    this.pageIndex = 1;
+    this.items = [];
+    await this.loadData();
+    wx.stopPullDownRefresh();
+  },
+  async onReachBottom() {
+    await this.loadData();
+  },
+  methods: {
+    async onRetry() {
+      this.state = 0;
+      this.pageIndex = 1;
+      await this.loadData();
+    },
+    async loadData() {
+      if (!this.hasMore) {
+        return;
+      }
+      let res = null;
+      if (this.fromType === '0') {
+        res = await Comment.getCommentForUser(this.pageIndex, this.pageSize);
+      } else if (this.fromType === '1') {
+        res = await Comment.getReplyForUser(this.pageIndex, this.pageSize);
+      } else {
+        res = await Comment.getLikeForUser(this.pageIndex, this.pageSize);
+      }
+      if (res) {
+        this.state = 2;
+        for (const item of res) {
+          this.items.push(item);
+        }
+        this.pageIndex++;
+        this.hasMore = res.length === this.pageSize;
+      } else {
+        this.state = 1;
+      }
+    },
+    goPost(item) {
+      console.log(item);
+      
+      let url = '';
+      switch (this.fromType) {
+        case '0':
+          url = `/pages/post-details?id=${item.postId}`;
+          break;
+        case '1':
+          url = `/pages/post-comment?id=${item.commentId}`;
+          break;
+        case '2':
+          if (item.likeType === 0) {
+            url = `/pages/post-details?id=${item.postId}`;
+          } else {
+            url = `/pages/post-comment?id=${item.commentId || item.sourceId}`;
+          }
+          break;
+        default:
+          break;
+      }
+      wx.navigateTo({
+        url
+      });
+    },
+    onPreview(imgs, index) {
+      const urls = imgs.map(img => {
+        return img.origPath;
+      });
+      wx.previewImage({
+        urls,
+        current: urls[index]
+      });
+    },
+    onReply(item) {
+      this.placeholder = `回复${item.user.nick}:`;
+      this.showInput = true;
+      this.toUserId = item.user.id;
+      this.postId = item.postId;
+      if (this.fromType === '1') {
+        this.commentId = item.commentId;
+        this.replyId = item.id;
+        this.toUserNick = item.user.nick;
+      } else {
+        this.commentId = item.id;
+      }
+    },
+    onHide() {
+      this.showInput = false;
+    },
+    onAction() {
+      wx.navigateTo({
+        url: '/pages/post-type'
+      });
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: '收到的评论',
+    enablePullDownRefresh:true,
+    "usingComponents": {
+      "user-item": "../components/user-item",
+      "loading": "../components/loading/loading",
+      "no-more": "../components/no-more",
+      "empty": "../components/empty",
+      "mp-page": "../components/mp-page",
+      "comment-input": "../components/comment-input",
+    }
+}
+</config>

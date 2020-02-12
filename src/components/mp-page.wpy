@@ -1,0 +1,218 @@
+<style lang="less" scoped>
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .page-init {
+    display: inline-block;
+    width: 100%;
+  }
+  .page-error {
+    text-align: center;
+    .des {
+      font-size: 24rpx;
+      color: #b2b2b2;
+    }
+    .btn {
+      font-size: 26rpx;
+      background: #fae37c;
+      box-shadow: 4rpx 8rpx 12rpx rgba(250, 227, 124, 0.5);
+      padding: 16rpx 40rpx;
+      color: #000;
+      border-radius: 10rpx;
+      margin-top: 20rpx;
+      &.btn-hover {
+        background: rgba(250, 227, 124, 0.5);
+      }
+    }
+  }
+  .page-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    scroll-view {
+      width: 100%;
+      height: 100%;
+    }
+    .tips {
+      position: absolute;
+      background: #fae37c;
+      box-shadow: 4rpx 8rpx 12rpx rgba(250, 227, 124, 0.6);
+      font-size: 28rpx;
+      width: 320rpx;
+      text-align: center;
+      padding: 16rpx 0rpx;
+      border-radius: 60rpx;
+      left: 215rpx;
+      transition: all 0.3s;
+    }
+  }
+  .page-empty {
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>
+<template>
+  <div
+    class="page"
+    style="height: calc({{baseHeight}} - {{offset}}px - {{bottomOffset}}rpx);{{autoHeight ? 'height:auto;' : ''}}"
+  >
+    <div class="page-init" v-if="state === 0">
+      <loading extClass="page-loading" :show="true" />
+    </div>
+    <div class="page-error" v-else-if="state === 1">
+      <div class="des">加载失败</div>
+      <div class="btn" hover-class="btn-hover" @tap="onRetry">点击重试</div>
+    </div>
+    <div class="page-empty" v-else-if="state === 2">
+      <slot name="empty" />
+    </div>
+    <div class="page-content" v-else>
+      <scroll-view
+        :scroll-y="!showLoading && scrollY"
+        @touchmove="onTouchmove"
+        @touchend="onTouchend"
+        @scroll="onScroll"
+        @scrolltolower="onScrolltolower"
+        class="content"
+      >
+        <div style="margin: {{margin}}px 0px;transition:{{transition}};">
+          <loading :show="showLoading" />
+        </div>
+        <slot />
+        <loading :show="showMoreLoading" type="circle" />
+      </scroll-view>
+      <block v-if="enableTips">
+        <div class="tips" style="top: {{top}}rpx;" v-if="count">为你选出{{count}}条好内容</div>
+        <div class="tips" style="top: {{top}}rpx;" v-else>暂时没有更好的内容</div>
+      </block>
+    </div>
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { User } from '../common/api';
+wepy.component({
+  options: {
+    multipleSlots: true,
+    addGlobalClass: true
+  },
+  props: {
+    state: {
+      type: Number,
+      default: 0
+    },
+    showMoreLoading: {
+      type: Boolean,
+      default: true
+    },
+    count: {
+      type: Number,
+      default: 0
+    },
+    baseHeight: {
+      type: String,
+      default: '100vh'
+    },
+    autoHeight: {
+      type: Boolean,
+      default: false
+    },
+    offset: {
+      type: Number,
+      default: User.getHeadHeight()
+    },
+    bottomOffset: {
+      type: Number,
+      default: 0
+    },
+    enableTips: {
+      type: Boolean,
+      default: true
+    },
+    marginOffset: {
+      type: Number,
+      default: 10
+    },
+    enableRefresh: {
+      type: Boolean,
+      default: false
+    },
+    scrollY: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data: {
+    margin: 0,
+    beginY: 0,
+    top: -100,
+    showLoading: false,
+    isLoading: false,
+    transition: 'none'
+  },
+  methods: {
+    onRetry() {
+      this.$emit('retry');
+    },
+    onTouchmove(e) {
+      if (!this.isLoading && this.enableRefresh) {
+        let y = e.changedTouches[0].clientY;
+        if (this.beginY === 0) {
+          this.beginY = y;
+          this.scrollY = false;
+        }
+        this.margin += (y - this.beginY) / 3;
+        if (this.margin > this.marginOffset && !this.showLoading) {
+          this.showLoading = true;
+        }
+        this.beginY = y;
+      }
+    },
+    hideRefresh() {
+      this.top = 10;
+      this.isLoading = false;
+      this.margin = 0;
+      this.scrollY = true;
+      setTimeout(() => {
+        this.showLoading = false;
+      }, 200);
+      setTimeout(() => {
+        this.top = -100;
+      }, 2000);
+    },
+    onTouchend() {
+      if (!this.isLoading && this.enableRefresh) {
+        this.transition = 'all 0.3s';
+        this.beginY = 0;
+        if (this.margin > 50) {
+          this.isLoading = true;
+          this.margin = 30;
+          this.$emit('refresh');
+        } else {
+          this.scrollY = true;
+          this.margin = 0;
+          setTimeout(() => {
+            this.isLoading = false;
+            this.showLoading = false;
+          }, 200);
+        }
+      }
+    },
+    onScroll(e) {
+      this.$emit('scroll', e.$wx.detail);
+    },
+    onScrolltolower() {
+      this.$emit('scrolltolower');
+    }
+  }
+});
+</script>
+<config>
+{
+    usingComponents: {
+        "loading": "./loading/loading"
+    }
+}
+</config>

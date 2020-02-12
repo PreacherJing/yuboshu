@@ -1,0 +1,256 @@
+<style lang="less" scoped>
+.comment {
+  padding: 30rpx;
+  background: #fff;
+  position: relative;
+  &::after {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 0.4px solid rgba(235, 237, 245, 0.8);
+    color: rgba(235, 237, 245, 0.8);
+  }
+  .comment-content {
+    margin-left: 74rpx;
+    .comment-txt {
+      margin: 20rpx 0rpx;
+      font-size: 32rpx;
+      color: #353535;
+      .nick {
+        color: #409eff;
+      }
+      text {
+        color: var(--txt-content);
+        font-size: 32rpx;
+        text-align: left;
+      }
+      .icon-img {
+        width: 34rpx;
+        height: 34rpx;
+      }
+    }
+    .comment-imgs {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 10rpx 0rpx;
+      .comment-img-item {
+        position: relative;
+        padding: 10rpx;
+        .img-des {
+          position: absolute;
+          right: 20rpx;
+          bottom: 20rpx;
+          background: rgba(0, 0, 0, 0.5);
+          color: #ffffff;
+          font-size: 22rpx;
+          padding: 6rpx 8rpx;
+          border-radius: 6rpx;
+        }
+        image {
+          width: 180rpx;
+          height: 180rpx;
+        }
+      }
+    }
+    .comment-action {
+      display: flex;
+      align-items: center;
+      .time {
+        color: #b2b2b2;
+        font-size: 22rpx;
+      }
+      .reply {
+        background: #f1f1f1;
+        padding: 6rpx 20rpx;
+        border-radius: 60rpx;
+        color: #353535;
+        font-size: 24rpx;
+        margin-left: 8rpx;
+      }
+    }
+  }
+  .zan {
+    font-size: 24rpx;
+    color: #353535;
+    display: flex;
+    align-items: center;
+    .icon {
+      font-size: 34rpx;
+      margin-right: 6rpx;
+    }
+    .num {
+      align-self: flex-start;
+    }
+  }
+  .btn-follow {
+    font-size: 24rpx;
+    background: #fae37c;
+    box-shadow: 4rpx 8rpx 12rpx rgba(250, 227, 124, 0.5);
+    padding: 10rpx 20rpx;
+    border-radius: 8rpx;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    .icon {
+      font-size: 30rpx;
+    }
+    &.follow {
+      background: #f8f8f8;
+      color: #b2b2b2;
+    }
+    &.btn-hover {
+      background: rgba(250, 227, 124, 0.5);
+    }
+  }
+  .ic-img {
+    width: 28rpx;
+    height: 28rpx;
+    margin-left: 8rpx;
+  }
+}
+</style>
+<template>
+  <div class="comment" @tap="goComment">
+    <user-item :info="item.user">
+      <div slot="content">
+        <img class="ic-img" v-if="item.isHot" src="http://img.wutuobangxinyougou.com/hot.svg" />
+      </div>
+      <div slot="action" class="zan" v-if="showAction" @tap.stop="onThumbs">
+        <div class="icon icon-zan-{{item.hasLike ? 'full' : 'line'}}" />
+        <div class="num">{{item.thumbsCount ? item.thumbsCount : '赞'}}</div>
+      </div>
+      <div slot="action" v-else>
+        <div class="btn-follow" hover-class="btn-hover" v-if="!item.hasFollow" @tap.stop="onFollow">
+          <div class="icon icon-add"></div>
+          <div>关注</div>
+        </div>
+      </div>
+    </user-item>
+    <div class="comment-content">
+      <div class="comment-txt">
+        <text v-if="item.toUserNick"><text>回复</text><text class="nick" @tap.stop="goUser(item.toUserId)">{{item.toUserNick}}</text>:</text>
+        <block v-for="obj in item.content">
+          <text v-if="obj.type === 0" space="nbsp">{{obj.value}}</text>
+          <img v-else class="icon-img" :src="obj.src" />
+        </block>
+      </div>
+      <div class="comment-imgs">
+        <div class="comment-img-item" v-for="(img, index) in item.imgs" :key="index">
+          <img
+            @tap.stop="onPreview(item.imgs, index)"
+            :src="img.path"
+            mode="aspectFill"
+            :lazy-load="true"
+          />
+          <div class="img-des" v-if="img.height > item.height">长图</div>
+        </div>
+      </div>
+      <div class="comment-action" v-if="showAction">
+        <div class="time" v-if="item.moment">{{item.moment}}</div>
+        <div class="reply">{{item.replyCount ? item.replyCount + '条' : ''}}回复</div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { Follow, Post } from '../common/api';
+wepy.component({
+  options: {
+    multipleSlots: true,
+    addGlobalClass: true
+  },
+  props: {
+    item: Object,
+    actionType: {
+      type: Number,
+      default: 0 // 0:跳转到详情1:直接弹出评论框，2:回复评论者
+    },
+    showAction: {
+      type: Boolean,
+      default: true
+    }
+  },
+  methods: {
+    onPreview(imgs, index) {
+      const urls = imgs.map(img => {
+        return img.origPath;
+      });
+      wx.previewImage({
+        urls,
+        current: urls[index]
+      });
+    },
+    goComment() {
+      switch (this.actionType) {
+        case 0:
+          wx.navigateTo({
+            url: '/pages/post-comment?id=' + this.item.id
+          });
+          break;
+        case 1:
+          this.$emit('itemTap', this.item);
+          break;
+        case 2:
+          this.$emit('itemTap', this.item);
+          break;
+        default:
+          break;
+      }
+    },
+    async onFollow() {
+      const { isBinding } = wx.getStorageSync('user');
+      if (isBinding === 0) {
+        wx.navigateTo({
+          url: '/pages/gender'
+        });
+      } else {
+        const isFollow = await Follow.concern(this.item.userId);
+        this.item.hasFollow = isFollow;
+      }
+    },
+    async onThumbs() {
+      const { isBinding } = wx.getStorageSync('user');
+      if (isBinding === 0) {
+        wx.navigateTo({
+          url: '/pages/gender'
+        });
+      } else {
+        const res = await Post.thumbs(
+          this.item.postId,
+          this.item.commentId,
+          this.item.id,
+          this.actionType + 1,
+          this.item.userId,
+          this.item.hasLike
+        );
+        if (res) {
+          this.item.hasLike = !this.item.hasLike;
+          if (this.item.hasLike) {
+            this.item.thumbsCount++;
+          } else {
+            this.item.thumbsCount--;
+          }
+        }
+      }
+    },
+    goUser(id) {
+      console.log(id);
+
+      wx.navigateTo({
+        url: '/pages/user-details?id=' + id
+      });
+    }
+  }
+});
+</script>
+<config>
+{
+    usingComponents: {
+        "user-item": "./user-item"
+    }
+}
+</config>

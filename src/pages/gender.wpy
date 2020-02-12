@@ -1,0 +1,169 @@
+<style lang="less">
+page {
+  background: #ffffff;
+}
+.container {
+  align-items: center;
+  text-align: center;
+  .title {
+    color: var(--txt-primary);
+    font-weight: bold;
+    font-size: 40rpx;
+    margin-top: 100rpx;
+  }
+
+  .action-des {
+    color: var(--txt-second);
+    font-size: 34rpx;
+    margin-top: 16rpx;
+  }
+
+  .gender {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin: 0px auto;
+    justify-content: center;
+    margin-top: 180rpx;
+
+    .gender-item {
+      flex-grow: 1;
+      text-align: center;
+
+      image {
+        width: 168rpx;
+        height: 240rpx;
+      }
+
+      .radio {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40rpx;
+        color: var(--txt-second);
+
+        .radio-txt {
+          margin-left: 8rpx;
+          font-weight: bold;
+        }
+
+        .icon {
+          font-size: 56rpx;
+        }
+      }
+
+      &.action .radio {
+        color: var(--txt-primary);
+      }
+    }
+  }
+}
+</style>
+<template>
+  <div class="container">
+    <div class="title">你的性别是?</div>
+    <div class="action-des">性别选择后无法修改</div>
+    <div class="gender">
+      <div class="gender-item {{gender === 1 ? 'action' : ''}}" @tap="choice(1)">
+        <img v-if="gender === 1" src="../images/boy_select.svg" alt />
+        <img v-else src="../images/boy.svg" alt />
+        <div class="radio">
+          <div class="icon {{gender === 1 ? 'icon-radio-select' : 'icon-radio'}}"></div>
+          <div class="radio-txt">大帅哥</div>
+        </div>
+      </div>
+      <div class="gender-item {{gender === 2 ? 'action' : ''}}" @tap="choice(2)">
+        <img v-if="gender === 2" src="../images/girl_select.svg" alt />
+        <img v-else src="../images/girl.svg" alt />
+        <div class="radio">
+          <div class="icon {{gender === 2 ? 'icon-radio-select' : 'icon-radio'}}"></div>
+          <div class="radio-txt">小仙女</div>
+        </div>
+      </div>
+    </div>
+    <footer
+      :btntext="btntext"
+      :loading="loading"
+      type="getUserInfo"
+      :disabled="disabled"
+      @getuser="onGetuser"
+      des="此刻开启不一样的校园生活吧"
+    />
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { User } from '../common/api';
+wepy.page({
+  data: {
+    gender: -1,
+    btntext: '微信授权',
+    loading: false,
+    disabled: false
+  },
+  onLoad() {
+    this.btntext = User.isQQ() ? 'QQ授权' : '微信授权'
+  },
+  methods: {
+    choice(gender) {
+      this.gender = gender;
+    },
+    async onGetuser(info) {
+      if (this.gender === -1) {
+        wx.showToast({
+          title: '请选择性别',
+          icon: 'none',
+          duration: 2000
+        });
+        return;
+      }
+      if (info) {
+        this.loading = true;
+        this.disabled = true;
+        this.btntext = '注册中..';
+        const {
+          nickName,
+          avatarUrl,
+          province,
+          city
+        } = info;
+        const res = await User.bindInfo(
+          nickName,
+          avatarUrl,
+          this.gender,
+          province,
+          city
+        );
+        if (res === -1) {
+          this.btntext = '重试';
+          wx.showToast({
+            title: '操作失败请重试',
+            icon: 'none',
+            duration: 2000
+          });
+        } else {
+          wx.navigateBack();
+        }
+        this.loading = false;
+        this.disabled = false;
+      } else {
+        wx.showToast({
+          title: '已取消授权',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    }
+  }
+});
+</script>
+<config>
+  {
+  navigationBarTitleText: '选择性别',
+  navigationBarBackgroundColor: '#ffffff',
+  "usingComponents": {
+  'footer': '../components/guide-footer'
+  }
+  }
+</config>

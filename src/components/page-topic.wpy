@@ -1,0 +1,406 @@
+<style lang="less" scoped>
+.tracks {
+  background: #ffffff;
+  margin-bottom: 16rpx;
+  .top {
+    display: flex;
+    align-items: center;
+    .title {
+      font-size: 30rpx;
+      font-weight: bold;
+      flex-grow: 1;
+      text-align: left;
+      padding-left: 30rpx;
+    }
+    .btn {
+      padding: 30rpx;
+      color: #b2b2b2;
+    }
+  }
+  .list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding-bottom: 30rpx;
+    .item {
+      margin-left: 30rpx;
+      padding: 5rpx;
+      flex-shrink: 0;
+      &::after {
+        content: ' ';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: 1px;
+        border-bottom: 0.4px solid rgba(235, 237, 245, 0.8);
+        color: rgba(235, 237, 245, 0.8);
+      }
+      image {
+        width: 120rpx;
+        height: 120rpx;
+        border-radius: 10rpx;
+      }
+      .item-title {
+        font-size: 22rpx;
+        font-weight: bold;
+        text-align: center;
+        max-width: 140rpx;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /*设置文本行数限制*/
+        -webkit-box-orient: vertical; /*设置文本排列方式*/
+      }
+      &.item-more {
+        .ic {
+          width: 120rpx;
+          height: 120rpx;
+          background: #f1f1f1;
+          border-radius: 10rpx;
+          text-align: center;
+          line-height: 120rpx;
+          margin-bottom: 10rpx;
+          margin-right: 35rpx;
+        }
+        .item-title {
+          margin-right: 35rpx;
+        }
+        color: #409eff;
+      }
+    }
+  }
+}
+.empty {
+  padding: 20rpx;
+  background: rgba(255, 209, 0, 0.1);
+  .empty-content {
+    background: url(http://img.wutuobangxinyougou.com/topic_empty.svg) no-repeat;
+    background-size: 30% 100%;
+    background-position: 100% 100%;
+    font-size: 28rpx;
+    padding: 30rpx;
+    text-align: left;
+    color: #7a8299;
+    line-height: 45rpx;
+  }
+}
+.recommends {
+  background: #ffffff;
+  .title {
+    display: flex;
+    align-items: center;
+    padding-bottom: 0rpx;
+    .left {
+      padding: 30rpx;
+      font-size: 32rpx;
+      font-weight: bold;
+      flex-grow: 1;
+      text-align: left;
+    }
+    .right {
+      padding: 30rpx;
+      display: flex;
+      align-items: center;
+      font-size: 28rpx;
+      color: #409eff;
+      .icon {
+        font-size: 32rpx;
+        font-weight: bold;
+      }
+    }
+  }
+  .list {
+    .item {
+      display: flex;
+      align-items: center;
+      padding: 40rpx 30rpx;
+      &.item-hover {
+        background: #fafafa;
+      }
+      image {
+        width: 96rpx;
+        height: 96rpx;
+        border-radius: 10rpx;
+      }
+      .item-content {
+        flex-grow: 1;
+        text-align: left;
+        margin-left: 16rpx;
+        .item-title {
+          font-size: 30rpx;
+        }
+        .item-des {
+          font-size: 26rpx;
+          margin-top: 12rpx;
+          color: #b2b2b2;
+          max-width: 410rpx;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 1; /*设置文本行数限制*/
+          -webkit-box-orient: vertical; /*设置文本排列方式*/
+        }
+      }
+      .item-action {
+        .btn {
+          font-size: 28rpx;
+          background: #fae37c;
+          box-shadow: 4rpx 8rpx 12rpx rgba(250, 227, 124, 0.5);
+          padding: 14rpx 20rpx;
+          border-radius: 8rpx;
+          display: flex;
+          align-items: center;
+          line-height: normal;
+          &::after {
+            border: none;
+          }
+          &.has {
+            box-shadow: none;
+            background: #f8f8f8;
+            color: #b2b2b2;
+            font-size: 26rpx;
+          }
+        }
+        .icon {
+          font-size: 32rpx;
+          margin-right: 6rpx;
+          font-weight: bold;
+        }
+        .num {
+          font-size: 28rpx;
+          color: #409eff;
+        }
+      }
+    }
+  }
+  .footer {
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    color: #409eff;
+    padding: 50rpx 0rpx;
+    text-align: center;
+    font-size: 28rpx;
+    .icon {
+      font-size: 34rpx;
+      margin-right: 6rpx;
+      font-weight: bold;
+    }
+  }
+}
+</style>
+<template>
+  <mp-page
+    :enableRefresh="true"
+    ref="list"
+    :state="state"
+    :enableTips="false"
+    :showMoreLoading="false"
+    @scrolltolower="onScrolltolower"
+    @retry="onRetry"
+    @refresh="onRefresh"
+  >
+    <div class="tracks" v-if="tracks">
+      <div class="top">
+        <div class="title">最近访问的话题</div>
+        <div class="btn" @tap="onClean">
+          <div class="icon icon-del-line"></div>
+        </div>
+      </div>
+      <scroll-view :scroll-x="true">
+        <div class="list">
+          <div class="item" v-for="item in tracks" :key="item.id" @tap="goTopic(item.id)">
+            <img :src="item.iconPath" />
+            <div class="item-title">{{item.title}}</div>
+          </div>
+          <div class="item item-more" @tap="goMaidan">
+            <div class="ic">
+              <text class="icon icon-more-line" />
+            </div>
+            <div class="item-title">发现话题</div>
+          </div>
+        </div>
+      </scroll-view>
+    </div>
+    <div class="follow recommends" v-if="items.length">
+      <div class="title">
+        <div class="left">关注话题</div>
+        <div class="right" @tap="goMaidan">
+          <div>话题广场</div>
+          <div class="icon icon-arrow-right" />
+        </div>
+      </div>
+      <div class="list">
+        <div
+          class="item"
+          v-for="item in items"
+          :key="item.id"
+          hover-class="item-hover"
+          @tap="goTopic(item.id)"
+        >
+          <img :src="item.iconPath" />
+          <div class="item-content">
+            <div class="item-title">{{item.title}}</div>
+            <div class="item-des">{{item.des}}</div>
+          </div>
+          <div class="item-action">
+            <!-- <div class="num">3</div> -->
+          </div>
+        </div>
+      </div>
+      <div class="footer" @tap="goMaidan">
+        <div class="icon icon-add"/>
+        <div>关注更多话题</div>
+      </div>
+    </div>
+    <div v-else>
+      <div class="empty">
+        <div class="empty-content">
+          <div>你还没有关注的话题,</div>
+          <div>先关注一下吧!</div>
+        </div>
+      </div>
+      <div class="recommends">
+        <div class="title">
+          <div class="left">推荐话题</div>
+          <div class="right" @tap="goMaidan">
+            <text>话题广场</text>
+            <text class="icon icon-arrow-right" />
+          </div>
+        </div>
+        <div class="list">
+          <div
+            class="item"
+            v-for="(item, index) in recommends"
+            :key="item.id"
+            @tap="goTopic(item.id)"
+          >
+            <img :src="item.iconPath" />
+            <div class="item-content">
+              <div class="item-title">{{item.title}}</div>
+              <div class="item-des">{{item.des}}</div>
+            </div>
+            <div class="item-action" @tap.stop="onFollow(item, index)">
+              <button class="btn {{item.hasFollow ? 'has' : ''}}">
+                <text class="icon icon-{{item.hasFollow ? 'follow' : 'add'}}"></text>
+                <text>{{item.hasFollow ? '已关注' : '关注'}}</text>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mp-page>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { Topic } from '../common/api';
+wepy.component({
+  options: {
+    addGlobalClass: true
+  },
+  data: {
+    state: 0,
+    tracks: [],
+    items: [],
+    recommends: [],
+    hasMore: true,
+    isLoadData: false,
+    pageIndex: 1,
+    pageSize: 15
+  },
+  methods: {
+    async init() {
+      this.state = 0;
+      let res = await Topic.myTopics(1, this.pageSize);
+      if (res) {
+        if (res.length > 0) {
+          this.items = res;
+          this.state = 3;
+          this.pageIndex++;
+        } else {
+          this.state = 3;
+          res = await Topic.getTopicList(1, 8);
+          if (res) {
+            this.recommends = res.map(item => {
+              item.hasFollow = false;
+              return item;
+            });
+          } else {
+            this.state = 1;
+          }
+        }
+      } else {
+        this.state = 1;
+      }
+    },
+    loadTrack() {
+      this.tracks = Topic.getTopicTrack();
+    },
+    async loadData() {
+      if (this.isLoadData || !this.hasMore) {
+        return;
+      }
+      this.isLoadData = true;
+      const res = await Topic.myTopics(this.pageIndex, this.pageSize);
+      if (res) {
+        for (const item of res) {
+          this.items.push(item);
+        }
+        this.pageIndex++;
+        this.hasMore = res.length === this.pageSize;
+      }
+      this.isLoadData = false;
+    },
+    async onFollow(item, index) {
+      const hasFollow = await Topic.topicFollow(item.id);
+      if (hasFollow) {
+        if (item.hasFollow) {
+          Topic.showToast('已取消关注', 'success');
+        } else {
+          Topic.showToast('关注成功,刷新页面可查看关注话题');
+        }
+        this.recommends[index].hasFollow = !item.hasFollow;
+      } else {
+        Topic.showToast('关注失败,重试');
+      }
+    },
+    goMaidan() {
+      wx.navigateTo({
+        url: '/pages/topic-maidan'
+      });
+    },
+    goTopic(id) {
+      wx.navigateTo({
+        url: '/pages/topic?id=' + id
+      });
+    },
+    onClean() {
+      Topic.cleanTopicTrack();
+      this.tracks = null;
+    },
+    async onScrolltolower() {
+      await this.loadData();
+    },
+    async onRetry() {
+      await this.init();
+    },
+    async onRefresh() {
+      this.hasMore = true;
+      this.pageIndex = 1;
+      this.items = [];
+      await this.loadData();
+      this.$refs.list.hideRefresh();
+    }
+  }
+});
+</script>
+<config>
+{
+    usingComponents: {
+        "mp-page": "./mp-page",
+    }
+}
+</config>

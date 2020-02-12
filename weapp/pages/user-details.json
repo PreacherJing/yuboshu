@@ -1,0 +1,12 @@
+{
+    "navigationStyle": "custom",
+    "disableScroll": true,
+    "component": true,
+    "usingComponents": {
+        "navigation-bar": "../components/navigation-bar/navigation-bar",
+        "tab-bar": "../components/tab-bar",
+        "user-tags": "../components/user-tags",
+        "user-post": "../components/user-post",
+        "user-photos": "../components/user-photos"
+    }
+}

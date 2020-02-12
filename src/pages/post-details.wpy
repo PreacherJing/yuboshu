@@ -1,0 +1,527 @@
+<style lang="less">
+.user-back {
+  display: flex;
+  .btn-back {
+    width: 64rpx;
+    height: 72rpx;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E  %3Cpath fill-opacity='.9' fill-rule='evenodd' d='M10 19.438L8.955 20.5l-7.666-7.79a1.02 1.02 0 0 1 0-1.42L8.955 3.5 10 4.563 2.682 12 10 19.438z'/%3E%3C/svg%3E");
+    background-position: 0% 50%;
+    background-size: 44%;
+    background-repeat: no-repeat;
+  }
+}
+.navigation-title {
+  font-size: 34rpx;
+}
+.topic {
+  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  margin: 20rpx 0rpx;
+  font-size: 34rpx;
+  color: #409eff;
+  image {
+    width: 84rpx;
+    height: 84rpx;
+    border-radius: 10rpx;
+  }
+  .topic-content {
+    flex-grow: 1;
+    margin-left: 30rpx;
+    .title {
+      color: #000;
+      font-size: 32rpx;
+      margin-bottom: 10rpx;
+    }
+    .num {
+      color: #b2b2b2;
+      font-size: 26rpx;
+      text {
+        margin-right: 8rpx;
+      }
+    }
+  }
+  .title {
+    flex-grow: 1;
+  }
+  .des {
+    font-size: 24rpx;
+  }
+}
+.comments {
+  background: #ffffff;
+  .comments-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rpx 20rpx;
+    .title {
+      font-size: 32rpx;
+    }
+    .zan {
+      display: flex;
+      align-items: center;
+      font-size: 24rpx;
+      color: #b2b2b2;
+      margin: 30rpx 0rpx;
+      image {
+        width: 36rpx;
+        height: 36rpx;
+        border-radius: 36rpx;
+        border: #ffffff solid 4rpx;
+        margin-right: -14rpx;
+      }
+      .zan-des {
+        margin-left: 24rpx;
+      }
+    }
+  }
+}
+.main {
+  background: #fff;
+  padding-bottom: 30rpx;
+  .post-share {
+    display: flex;
+    align-items: center;
+    padding: 0rpx 60rpx;
+    button {
+      flex-grow: 1;
+      margin-right: 30rpx;
+      font-size: 32rpx;
+      display: flex;
+      align-items: center;
+      .icon {
+        margin-right: 10rpx;
+        font-size: 36rpx;
+      }
+      &::after {
+        border: none;
+      }
+      &:last-child {
+        margin-right: 0rpx;
+      }
+    }
+  }
+}
+.btn-gift {
+  font-size: 32rpx;
+  background: #fae37c;
+  box-shadow: 4rpx 8rpx 12rpx rgba(250, 227, 124, 0.5);
+  padding: 20rpx 0rpx;
+  border-radius: 50rpx;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  margin: 30rpx auto;
+  margin-bottom: 20rpx;
+  width: 300rpx;
+  justify-content: center;
+  &::after {
+    border: none;
+  }
+  &.btn-disabled {
+    background: #f8f8f8;
+    color: #8a8a8a;
+    box-shadow: none;
+  }
+  .icon {
+    font-size: 42rpx;
+    margin-right: 10rpx;
+  }
+  &.btn-hover {
+    background: rgba(250, 227, 124, 0.5);
+  }
+}
+.gift-des{
+  color: #d81e06;
+  font-size: 26rpx;
+  text-align: center;
+  margin-bottom: 50rpx;
+  .icon{
+    margin-right: 8rpx;
+  }
+}
+.btn-des {
+  font-size: 26rpx;
+  color: #7a8299;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+.dialog {
+  .dialog-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 34rpx;
+    padding: 30rpx 0rpx;
+    padding-bottom: 0rpx;
+    .icon {
+      font-size: 56rpx;
+      margin-right: 8rpx;
+    }
+  }
+  .dialog-title-des {
+    font-size: 26rpx;
+    text-align: center;
+    color: #b2b2b2;
+    padding-bottom: 40rpx;
+  }
+  .dialog-content {
+    display: flex;
+    flex-wrap: wrap;
+    .item {
+      flex-basis: 220rpx;
+      color: #8a8a8a;
+      border: solid #f1f1f1 1rpx;
+      padding: 30rpx 0rpx;
+      border-radius: 10rpx;
+      box-sizing: border-box;
+      text-align: center;
+      margin-left: 20rpx;
+      margin-bottom: 30rpx;
+      &.active {
+        border-color: #fae37c;
+        background: #fae37c;
+        color: #000;
+      }
+    }
+  }
+}
+</style>
+<template>
+  <div class="container">
+    <navigation-bar :back="!showUser" background="#ffffff">
+      <div slot="left" class="user-back" v-if="showUser">
+        <div class="btn-back" @tap="goBack"></div>
+        <user-item style="opacity:1;transition: all 0.3s;" :info="post.user" />
+      </div>
+      <div slot="center" class="navigation-title" v-else>帖子详情</div>
+    </navigation-bar>
+    <mp-page
+      :state="state"
+      @scroll="onScroll"
+      @retry="onRetry"
+      :bottomOffset="110"
+      :enableTips="false"
+      @scrolltolower="onScrolltolower"
+      :showMoreLoading="false"
+    >
+      <div class="main">
+        <post-item :showInfo="false" :item="post" />
+        <div
+          class="btn-gift"
+          hover-class="btn-hover"
+          @tap="showReward"
+          v-if="user.id !== post.user.id"
+        >
+          <div class="icon icon-gift"></div>
+          <div>赞赏支持</div>
+        </div>
+        <div class="gift-des" v-if="post.drillCount">
+          <text>获得<text class="icon icon-drill"></text><text>{{post.drillCount || 0}}</text>个玉帛钻</text>
+        </div>
+        <div  class="gift-des" v-else>小礼物走一走,来玉帛书关注我</div>
+        <div class="post-share">
+          <button class="btn" open-type="share">
+            <div class="icon icon-{{isqq ? 'QQ' : 'weixin'}}" />
+            <div>{{isqq ? '分享至QQ' : '分享至微信'}}</div>
+          </button>
+          <button class="btn" @tap="onShare">
+            <div class="icon icon-{{isqq ? 'zone' : 'circle'}}" />
+            <div>{{isqq ? '发表到说说' : '分享至朋友圈'}}</div>
+          </button>
+        </div>
+      </div>
+      <div class="topic" @tap="goTopic">
+        <img :src="post.topic.iconPath" />
+        <div class="topic-content">
+          <div class="title">#{{post.topic.title}}</div>
+          <div class="num">
+            <text>{{post.topic.followCount}}</text>
+            {{post.topic.nickName}}
+          </div>
+        </div>
+        <div class="des">进入话题</div>
+        <div class="icon icon-arrow-right"></div>
+      </div>
+      <div class="comments">
+        <div class="comments-top">
+          <div class="title">评论({{post.commentCount}})</div>
+          <div class="zan" @tap="onShowThumbs">
+            <img v-for="(img, index) in post.likers" :src="img" :key="index" />
+            <div class="zan-des">{{post.thumbsCount}}人赞了</div>
+          </div>
+        </div>
+        <post-comments :postId="postId" ref="comments" @action="onShowInput" />
+      </div>
+    </mp-page>
+    <comment-action
+      :commentCount="post.commentCount"
+      :thumbsCount="post.thumbsCount"
+      :postId="post.id"
+      :commentId="null"
+      :sourceId="post.id"
+      :likeType="0"
+      :toUserId="post.userId"
+      :isCancel="post.hasLike"
+      @thumbs="onThumbs"
+      @showInput="onShowInput"
+      v-if="state===3"
+    />
+    <comment-input
+      :show="showInput"
+      @hide="onHide"
+      @comment="onComment"
+      :toUserId="post.user.id"
+      :postId="post.id"
+      :type="0"
+    />
+    <likers :showDialog="showDialog" :postId="postId" @cancel="hideDialog" />
+    <screen-dialog :show="rewardDialog" :closabled="false" @close="onRewardCancel">
+      <div slot="desc" class="dialog">
+        <div class="dialog-title">
+          <div class="icon icon-drill"></div>
+          <div>赞赏TA</div>
+        </div>
+        <div class="dialog-title-des">你账户还有{{scoreUser && scoreUser.score}}个玉帛币</div>
+        <div class="dialog-content">
+          <div
+            class="icon icon-drill-full item {{active === 1 ? 'active' : ''}}"
+            @tap="onChoice(1, 2)"
+          >2</div>
+          <div
+            class="icon icon-drill-full item {{active === 2 ? 'active' : ''}}"
+            @tap="onChoice(2, 5)"
+          >5</div>
+          <div
+            class="icon icon-drill-full item {{active === 3 ? 'active' : ''}}"
+            @tap="onChoice(3, 10)"
+          >10</div>
+          <div
+            class="icon icon-drill-full item {{active === 4 ? 'active' : ''}}"
+            @tap="onChoice(4, 20)"
+          >20</div>
+          <div
+            class="icon icon-drill-full item {{active === 5 ? 'active' : ''}}"
+            @tap="onChoice(5, 50)"
+          >50</div>
+          <div class="item {{active === 6 ? 'active' : ''}}" @tap="onChoice(6)">
+            <input
+              type="number"
+              @input="onInput"
+              v-model.number="score"
+              maxlength="10"
+              placeholder="自定义"
+            />
+          </div>
+        </div>
+        <block v-if="disabled">
+          <div class="btn-gift btn-disabled">
+            <div>玉帛币不足</div>
+          </div>
+          <div class="btn-des">经常使用公众号「壹淘」可获得玉帛币</div>
+        </block>
+        <button v-else :disabled="btnDisabled" :loading="btnLoading" class="btn-gift" hover-class="btn-hover" @tap="onReward">
+          <div>确认打赏</div>
+        </button>
+      </div>
+    </screen-dialog>
+  </div>
+</template>
+
+<script>
+import { Post, User } from '../common/api';
+
+import wepy from '@wepy/core';
+wepy.page({
+  data: {
+    showUser: false,
+    showInput: false,
+    showDialog: false,
+    rewardDialog: false,
+    btnDisabled: false,
+    btnLoading: false,
+    active: 1,
+    isqq: false,
+    state: 0,
+    post: null,
+    postId: null,
+    user: null,
+    score: '',
+    choiceScore: 2,
+    disabled: false,
+    scoreUser: null,
+    baseBottom: 0
+  },
+  async onLoad(q) {
+    this.user = wx.getStorageSync('user');
+    const { bottom } = wx.getMenuButtonBoundingClientRect();
+    this.baseBottom = bottom;
+    const { id, commentid } = q;
+    this.postId = id;
+    this.isqq = Post.isQQ();
+    await this.init();
+    this.scoreUser = await User.getScore();
+    this.disabled = !this.scoreUser || this.scoreUser.score < 2;
+  },
+  onShareAppMessage() {
+    const imageUrl =
+      this.post.imgs && this.post.imgs.length
+        ? this.post.imgs[0].path
+        : `${Post.getImgUrl()}/share.png`;
+    return {
+      title: this.post.origTxt,
+      imageUrl: imageUrl,
+      path: `/pages/index?id=${this.user.id}&postId=${this.postId}`
+    };
+  },
+  methods: {
+    async init() {
+      this.state = 0;
+      const post = await Post.getPost(this.postId);
+      if (post) {
+        this.post = post;
+        this.state = 3;
+      } else {
+        this.state = 1;
+      }
+    },
+    goTopic() {
+      wx.navigateTo({
+        url: '/pages/topic?id=' + this.post.topicId
+      });
+    },
+    goBack() {
+      wx.navigateBack();
+    },
+    async onRetry() {
+      await this.init();
+    },
+    onScroll(res) {
+      this.showUser = res.scrollTop > this.baseBottom;
+    },
+    async onScrolltolower() {
+      await this.$refs.comments.loadData();
+    },
+    onRewardCancel() {
+      this.rewardDialog = false;
+    },
+    showReward() {
+      const { isBinding } = wx.getStorageSync('user');
+      if (isBinding === 0) {
+        wx.navigateTo({
+          url: '/pages/gender'
+        });
+      } else {
+        this.rewardDialog = true;
+      }
+    },
+    onChoice(active, score) {
+      this.active = active;
+      this.choiceScore = score;
+      if (active < 6) {
+        this.disabled = !this.scoreUser || this.scoreUser.score < score;
+      }
+    },
+    onInput(e) {
+      const { value } = e.$wx.detail;
+      this.score = parseInt(value);
+      this.disabled = !this.scoreUser || this.scoreUser.score < this.score;
+    },
+    onShowInput() {
+      this.showInput = true;
+    },
+    onHide() {
+      this.showInput = false;
+    },
+    onComment(comment) {
+      this.$refs.comments.unshift(comment);
+    },
+    onThumbs(hasLike) {
+      this.post.hasLike = hasLike;
+      if (hasLike) {
+        this.post.thumbsCount++;
+      } else {
+        this.post.thumbsCount--;
+      }
+    },
+    onShowThumbs() {
+      this.showDialog = true;
+    },
+    async onReward() {
+      this.btnDisabled = true
+      this.btnLoading = true
+      wx.showLoading({
+        title: '赞赏中...',
+        mask: true
+      });
+      const score = this.active === 6 ? this.score : this.choiceScore;
+      const isReward = await Post.reward(
+        this.post.user.id,
+        this.post.id,
+        score
+      );
+      if (isReward) {
+        this.scoreUser.score -= score;
+        this.rewardDialog = false;
+      }
+      this.btnDisabled = false
+      this.btnLoading = false
+    },
+    async onShare() {
+      if (this.isqq) {
+        if (wx.openQzonePublish) {
+          let path = null;
+          let imageUrl = `${Post.getImgUrl()}/share.png`;
+          if (this.post.imgs.length) {
+            const img = this.post.imgs[0];
+            imageUrl = this.post.imgs[0].path;
+            if (img.isQiniu) {
+              path = await Post.getShareImg(img.fileName);
+            }
+          }
+          if (!path) {
+            path = await Post.getShareImg(imageUrl, true);
+          }
+          wx.openQzonePublish({
+            text: this.post.origTxt,
+            media: [
+              {
+                type: 'photo',
+                path
+              }
+            ]
+          });
+        }
+      } else {
+        wx.navigateTo({
+          url: '/pages/post-share?id=' + this.postId
+        });
+      }
+    },
+    hideDialog() {
+      this.showDialog = false;
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: '我',
+    navigationStyle: 'custom',
+    usingComponents: {
+        "navigation-bar": "../components/navigation-bar/navigation-bar",
+        "screen-dialog": "../components/half-screen-dialog/half-screen-dialog",
+        "mp-page": "../components/mp-page",
+        "post-item": "../components/post-item",
+        "post-comments": "../components/post-comments",
+        "comment-action": "../components/comment-action",
+        "user-item": "../components/user-item",
+        "comment-input": "../components/comment-input",
+        'likers': "../components/post-likers",
+    }
+}
+</config>

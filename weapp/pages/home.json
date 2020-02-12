@@ -1,0 +1,12 @@
+{
+    "navigationBarTitleText": "社区",
+    "navigationStyle": "custom",
+    "component": true,
+    "usingComponents": {
+        "navigation-bar": "../components/navigation-bar/navigation-bar",
+        "tab": "../components/tab-bar",
+        "recommend": "../components/page-recommend",
+        "follow": "../components/page-follow",
+        "topic": "../components/page-topic"
+    }
+}

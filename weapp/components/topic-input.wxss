@@ -1,0 +1,39 @@
+.topics .topic-item {
+  text-align: left;
+  font-size: 30rpx;
+  padding: 20rpx 30rpx;
+  align-items: center;
+  display: flex;
+}
+.topics .topic-item image {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 10rpx;
+}
+.topics .topic-item .content {
+  margin-left: 20rpx;
+}
+.topics .topic-item .content .title {
+  margin-bottom: 8rpx;
+}
+.topics .topic-item .content .title .top {
+  background: #409eff;
+  color: #ffffff;
+  font-size: 20rpx;
+  padding: 3rpx 6rpx;
+  border-radius: 6rpx;
+  margin-left: 8rpx;
+  vertical-align: middle;
+}
+.topics .topic-item .content .title .top.top-gift {
+  background: #fdf6ec;
+  color: #ec9615;
+}
+.topics .topic-item .content .des {
+  font-size: 24rpx;
+  color: #b2b2b2;
+}
+.topics .topic-item .content .des .num {
+  margin-right: 10rpx;
+}
+

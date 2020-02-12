@@ -1,0 +1,494 @@
+<style lang="less" scoped>
+page {
+  background: #ffd100;
+}
+.share {
+  position: relative;
+  .footer {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    left: 0rpx;
+    bottom: 0rpx;
+    background: #ffd100;
+    padding: 40rpx 0rpx;
+    box-shadow: 0px -15px 10px rgba(255, 209, 0, 0.9);
+    .btn {
+      background: #ffffff;
+      border: #000000 solid 6rpx;
+      box-shadow: 0px 6px 0px rgba(0, 0, 0, 1);
+      display: inline-block;
+      font-size: 36rpx;
+      font-weight: bold;
+      padding: 20rpx 60rpx;
+      border-radius: 80rpx;
+    }
+  }
+}
+</style>
+<template>
+  <div class="share" style="height: {{height}}px;">
+    <navigation-bar ext-class="bar-back" :back="true" show="false" background="#ffd100"></navigation-bar>
+    <scroll-view style="height: calc(100vh - {{bottom}}px - 160rpx);" :scroll-y="true">
+      <canvas
+        style="width: {{width}}px; height: {{height}}px;background: #ffd100;"
+        canvas-id="poster"
+      ></canvas>
+    </scroll-view>
+    <cover-view class="footer" v-if="show">
+      <cover-view class="btn" @tap="onSave">{{btnText}}</cover-view>
+    </cover-view>
+  </div>
+</template>
+<script>
+import { Post } from '../common/api';
+import shareMixin from '../common/share.js';
+import wepy from '@wepy/core';
+wepy.page({
+   mixins: [shareMixin],
+  data: {
+    width: 300,
+    height: 600,
+    bottom: 0,
+    openStatus: true,
+    btnText: '分享到朋友圈',
+    user: null,
+    post: null,
+    qrUrl: null,
+    id: null,
+    canvasToTempFilePath: null,
+    show: false
+  },
+  onLoad(q) {
+    const { id } = q;
+    this.id = id;
+    const sys = wx.getSystemInfoSync()
+    if (sys.AppPlatform && sys.AppPlatform === 'qq') {
+      this.btnText = '发布到说说'
+    }
+  },
+  async onReady() {
+    wx.showLoading({
+      title: '海报生成中...'
+    });
+    this.qrUrl = await Post.getUserQr(this.id);
+    this.user = wx.getStorageSync('user');
+    this.post = await Post.getPost(this.id);
+    const ctx = wx.createCanvasContext('poster', this);
+    this.bottom = wx.getMenuButtonBoundingClientRect().bottom;
+    const { screenWidth, screenHeight, pixelRatio } = wx.getSystemInfoSync();
+    this.width = screenWidth;
+    const _height = this.getHeight(ctx, pixelRatio);
+    this.height = _height + 200;
+    // ctx.setStrokeStyle('#ffd100')
+    ctx.setFillStyle('#ffd100');
+    ctx.fillRect(0, 0, screenWidth, this.height);
+    this.drawBox(ctx, screenWidth, this.height);
+    await this.drawUser(ctx);
+    let articleHeight = 76;
+    if (this.post.origTxt.length) {
+      articleHeight = this.drawArticle(
+        ctx,
+        this.post.origTxt,
+        screenWidth - 100,
+        36,
+        116
+      );
+    }
+    const imgHeight = await this.drawImg(
+      ctx,
+      screenWidth - 90,
+      articleHeight + 30,
+      pixelRatio
+    );
+    this.drawDivider(ctx, screenWidth - 60, articleHeight + imgHeight + 60);
+    await this.drawQr(ctx, articleHeight + imgHeight + 90, pixelRatio);
+    ctx.draw();
+    wx.hideLoading();
+    this.show = true;
+  },
+  methods: {
+    getHeight(ctx, pixelRatio) {
+      let _height = 76;
+      if (this.post.origTxt.length) {
+        _height = this.measureHeight(
+          ctx,
+          this.post.origTxt,
+          this.width - 100,
+          36,
+          116
+        );
+      }
+      if (this.post.imgs.length) {
+        const { width, height } = this.post.imgs[0];
+        const imgHeight =
+          ((this.width - 90) / (width / pixelRatio)) * (height / pixelRatio);
+        _height += imgHeight > 500 ? 500 : imgHeight;
+      }
+      _height += 92;
+      return _height;
+    },
+    drawBox(ctx, width, height) {
+      ctx.setLineWidth(4);
+      ctx.setStrokeStyle('black');
+      ctx.rect(20, 20, width - 60, height - 100);
+      ctx.setFillStyle('white');
+      ctx.fill();
+      ctx.stroke();
+      ctx.setFillStyle('black');
+      // ctx.setStrokeStyle('red')
+      ctx.setLineWidth(1);
+      ctx.beginPath();
+      ctx.setLineCap('round');
+      ctx.moveTo(width - 39, 18);
+      ctx.lineTo(width - 39, 23);
+      ctx.lineTo(width - 34, 36);
+      ctx.lineTo(width - 32, 34);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(width - 34, 36);
+      ctx.lineTo(width - 32, 34);
+      ctx.lineTo(width - 30, height - 60);
+      ctx.lineTo(width - 33, height - 60);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      // ctx.setStrokeStyle('red')
+      ctx.setLineWidth(1);
+      ctx.moveTo(19, height - 78);
+      ctx.lineTo(37, height - 60);
+      ctx.lineTo(width - 32, height - 60);
+      ctx.lineTo(width - 32, height - 70);
+      ctx.lineTo(width - 38, height - 83);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    },
+    async getImg(url) {
+      const res = await wepy.wx
+        .getImageInfo({
+          src: url
+        })
+        .then(obj => {
+          return obj;
+        })
+        .catch(err => {
+          console.log(err);
+          
+          return null;
+        });
+      if (res) {
+        return res;
+      }
+      wx.hideLoading();
+      wx.showToast({
+        title: '生成失败,返回重试',
+        icon: 'none'
+      });
+      return null;
+    },
+    async drawUser(ctx) {
+      let url = this.post.user.avtater;
+      if (url.indexOf('thirdwx.qlogo.cn') > -1) {
+        url = url.replace('http', 'https');
+      }
+      const { width, height, path } = await this.getImg(url);
+      let avatarurl_width = 48, //绘制的头像宽度
+        avatarurl_heigth = 48, //绘制的头像高度
+        avatarurl_x = 38, //绘制的头像在画布上的位置
+        avatarurl_y = 36; //绘制的头像在画布上的位置
+
+      ctx.beginPath(); //开始绘制
+      ctx.setStrokeStyle('white');
+      //先画个圆   前两个参数确定了圆心 （x,y） 坐标  第三个参数是圆的半径  四参数是绘图方向  默认是false，即顺时针
+      ctx.arc(
+        avatarurl_width / 2 + avatarurl_x,
+        avatarurl_heigth / 2 + avatarurl_y,
+        avatarurl_width / 2,
+        0,
+        Math.PI * 2,
+        false
+      );
+      ctx.stroke();
+      ctx.save(); // 先保存状态 已便于画完圆再用
+      ctx.clip(); //画了圆 再剪切  原始画布中剪切任意形状和尺寸。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内
+      ctx.drawImage(
+        path,
+        avatarurl_x,
+        avatarurl_y,
+        avatarurl_width,
+        avatarurl_heigth
+      ); // 推进去图片
+      ctx.restore();
+      // ctx.font = 'normal normal 14px sans-serif';
+      ctx.setFontSize(14);
+      ctx.fillText(this.post.user.nick, 96, 56);
+      ctx.setFontSize(12);
+      ctx.setFillStyle('#8a8a8a');
+      ctx.fillText(this.post.user.school || '玉帛书', 96, 74);
+    },
+    measureHeight(ctx, kl, width, x, y) {
+      ctx.setFontSize(14);
+      let chr = kl.split(''); // 分割为字符串数组
+      let temp = '';
+      let row = [];
+      for (let a = 0; a < chr.length; a++) {
+        if (ctx.measureText(temp).width < width) {
+          temp += chr[a];
+        } else {
+          a--;
+          row.push(temp);
+          temp = '';
+        }
+      }
+      row.push(temp);
+      let _len = row.length; // > 2 ? 2 : row.length;
+      return y + (_len - 1) * 20;
+    },
+    // 绘制文字自动换行
+    drawArticle(ctx, kl, width, x, y) {
+      ctx.setFontSize(14);
+      ctx.setFillStyle('#474747');
+      let chr = kl.split(''); // 分割为字符串数组
+      let temp = '';
+      let row = [];
+      for (let a = 0; a < chr.length; a++) {
+        if (ctx.measureText(temp).width < width) {
+          temp += chr[a];
+        } else {
+          a--;
+          row.push(temp);
+          temp = '';
+        }
+      }
+      row.push(temp);
+
+      for (var b = 0; b < row.length; b++) {
+        // 控制最多显示2行
+        // if (b < 2) {
+        ctx.fillText(row[b], x, y + b * 20);
+        // }
+      }
+      let _len = row.length; // > 2 ? 2 : row.length;
+      return y + (_len - 1) * 20;
+    },
+    async drawImg(ctx, w, y, pixelRatio) {
+      if (this.post.imgs.length) {
+        const img = this.post.imgs[0];
+        let _filePath = img.origPath;
+        if (img.isQiniu) {
+          const tempFilePath = await Post.getShareImg(img.fileName);
+          if (!tempFilePath) {
+            wx.showToast({
+              title: '生成失败,返回重试',
+              icon: 'none'
+            });
+            return;
+          }
+          _filePath = tempFilePath;
+        }
+        console.log(_filePath);
+        
+        const { width, height, path } = await this.getImg(_filePath);
+        let _height = (w / (width / pixelRatio)) * (height / pixelRatio);
+        ctx.beginPath(); //开始绘制
+        // ctx.setFillStyle('white');
+        ctx.setStrokeStyle('white');
+        ctx.rect(36, y, w, _height > 500 ? 500 : _height);
+        ctx.stroke();
+        ctx.save(); // 先保存状态 已便于画完圆再用
+        ctx.clip(); //画了圆 再剪切  原始画布中剪切任意形状和尺寸。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内
+        ctx.drawImage(path, 36, y, w, _height);
+        ctx.restore();
+        return _height > 500 ? 500 : _height;
+      }
+      return 0;
+    },
+    drawDivider(ctx, width, y) {
+      const num = Math.ceil(width / 20);
+      ctx.setStrokeStyle('#f1f1f1');
+      ctx.setLineWidth(2);
+      ctx.beginPath();
+      for (let i = 0; i < num; i++) {
+        ctx.moveTo((i + 1) * 20 + 6, y);
+        ctx.lineTo((i + 2) * 20 - 10, y);
+      }
+      ctx.stroke();
+    },
+    async drawQr(ctx, y, pixelRatio) {
+      ctx.setFontSize(10);
+      const str = '长按识别小程序码，查看更多内容';
+      ctx.fillText(str, 36, y + 35);
+      ctx.fillText('玉帛书「记录自己的大学故事」', 36, y + 55);
+      console.log(this.qrUrl);
+      const _width = ctx.measureText(str).width;
+      if (this.qrUrl) {
+        const self = this;
+        const { width, height, path } = await this.getImg(this.qrUrl);
+        ctx.drawImage(path, this.width - 134, y, 84, 84);
+      }
+    },
+    async onSave() {
+      wx.showLoading({
+        title: '保存中...'
+      });
+      if (!this.canvasToTempFilePath) {
+        const res = await wepy.wx.canvasToTempFilePath({
+          canvasId: 'poster'
+        });
+        let { tempFilePath } = res;
+        this.canvasToTempFilePath = tempFilePath;
+      }
+      wx.hideLoading();
+      let that = this;
+      // 获取用户是否开启用户授权相册
+      if (!this.openStatus) {
+        wx.openSetting({
+          success: result => {
+            if (result) {
+              if (result.authSetting['scope.writePhotosAlbum'] === true) {
+                that.openStatus = true;
+                that.saveImg(that.canvasToTempFilePath)
+                // wx.saveImageToPhotosAlbum({
+                //   filePath: that.canvasToTempFilePath,
+                //   success() {
+                //     wx.showToast({
+                //       title: '图片保存成功，快去分享到朋友圈吧~',
+                //       icon: 'none',
+                //       duration: 2000
+                //     });
+                //   },
+                //   fail() {
+                //     wx.showToast({
+                //       title: '保存失败',
+                //       icon: 'none'
+                //     });
+                //   }
+                // });
+              }
+            }
+          },
+          fail: () => {},
+          complete: () => {}
+        });
+      } else {
+        wx.getSetting({
+          success(res) {
+            // 如果没有则获取授权
+            if (!res.authSetting['scope.writePhotosAlbum']) {
+              wx.authorize({
+                scope: 'scope.writePhotosAlbum',
+                success() {
+                  that.openStatus = true;
+                  that.saveImg(that.canvasToTempFilePath)
+                  // wx.saveImageToPhotosAlbum({
+                  //   filePath: that.canvasToTempFilePath,
+                  //   success() {
+                  //     wx.showToast({
+                  //       title: '图片保存成功，快去分享到朋友圈吧~',
+                  //       icon: 'none',
+                  //       duration: 2000
+                  //     });
+                  //   },
+                  //   fail() {
+                  //     wx.showToast({
+                  //       title: '保存失败',
+                  //       icon: 'none'
+                  //     });
+                  //   }
+                  // });
+                },
+                fail() {
+                  // 如果用户拒绝过或没有授权，则再次打开授权窗口
+                  that.openStatus = false;
+                  console.log('请设置允许访问相册');
+                  wx.showToast({
+                    title: '请设置允许访问相册',
+                    icon: 'none'
+                  });
+                }
+              });
+            } else {
+              // 有则直接保存
+              that.openStatus = true;
+              that.saveImg(that.canvasToTempFilePath)
+              // if (wx.openQzonePublish) {
+              //   wx.openQzonePublish({
+              //     text: '玉帛书「记录真实校园生活」',
+              //     media: [
+              //       {
+              //         type: 'photo',
+              //         path: that.canvasToTempFilePath
+              //       }
+              //     ]
+              //   });
+              // } else {
+              //   wx.saveImageToPhotosAlbum({
+              //     filePath: that.canvasToTempFilePath,
+              //     success() {
+              //       wx.showToast({
+              //         title: '图片保存成功，快去分享到朋友圈吧~',
+              //         icon: 'none',
+              //         duration: 2000
+              //       });
+              //     },
+              //     fail() {
+              //       wx.showToast({
+              //         title: '保存失败',
+              //         icon: 'none'
+              //       });
+              //     }
+              //   });
+              // }
+            }
+          },
+          fail(err) {
+            console.log(err);
+          }
+        });
+      }
+    },
+    saveImg(path) {
+      if (wx.openQzonePublish) {
+        wx.openQzonePublish({
+          text: '玉帛书「记录真实校园生活」',
+          media: [
+            {
+              type: 'photo',
+              path
+            }
+          ]
+        });
+      } else {
+        wx.saveImageToPhotosAlbum({
+          filePath: path,
+          success() {
+            wx.showToast({
+              title: '图片保存成功，快去分享到朋友圈吧~',
+              icon: 'none',
+              duration: 2000
+            });
+          },
+          fail() {
+            wx.showToast({
+              title: '保存失败',
+              icon: 'none'
+            });
+          }
+        });
+      }
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationStyle: 'custom',
+    "usingComponents": {
+      "navigation-bar": "../components/navigation-bar/navigation-bar"
+    }
+}
+</config>

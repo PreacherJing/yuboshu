@@ -1,0 +1,124 @@
+<style lang="less" scoped>
+.list{
+  .item{
+    background: #ffffff;
+    padding: 15rpx 30rpx;
+    &.item-hover{
+      background: #f8f8f8;
+    }
+  }
+}
+</style>
+<template>
+  <screen-dialog :show.sync="showDialog" @close="onCancel">
+    <div slot="title">赞过的同学</div>
+    <div slot="desc">
+      <mp-page
+        :state="state"
+        :offset="0"
+        baseHeight="80vh"
+        :marginOffset="60"
+        :enableTips="false"
+        :enableRefresh="false"
+        :showMoreLoading="false"
+        @retry="onRetry"
+        @scrolltolower="onScrolltolower"
+      >
+        <div v-if="items.length">
+          <div class="list">
+            <div class="item" v-for="item in items" :key="item.id" hover-class="item-hover">
+              <user-item :info="item" />
+            </div>
+          </div>
+          <loading :show="true" type="circle" v-if="hasMore" />
+          <no-more v-else />
+        </div>
+        <div class="empty" v-else>
+          <empty des="该帖还没有同学赞过,赞一个吧" />
+        </div>
+      </mp-page>
+    </div>
+  </screen-dialog>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { Post } from '../common/api';
+
+wepy.component({
+  options: {
+    addGlobalClass: true
+  },
+  props: {
+    showDialog: {
+      type: Boolean,
+      default: false
+    },
+    postId: Number
+  },
+  data: {
+    items: [],
+    state: 0,
+    hasMore: true,
+    pageIndex: 1,
+    pageSize: 20
+  },
+  watch: {
+    async showDialog(obj) {
+      if (obj && this.state === 0) {
+        this.pageIndex = 1;
+        this.hasMore = true;
+        this.items = [];
+        await this.loadData();
+      }
+    }
+  },
+  methods: {
+    onCancel() {
+      this.$emit('cancel');
+    },
+    async loadData() {
+      if (!this.hasMore) {
+        return;
+      }
+      const res = await Post.getLikers(
+        this.postId,
+        this.pageIndex,
+        this.pageSize
+      );
+      if (res) {
+        for (const item of res) {
+          this.items.push(item);
+        }
+        this.pageIndex++;
+        this.hasMore = res.length === this.pageSize;
+        this.state = 3;
+      } else {
+        this.state = 1;
+      }
+    },
+    async onRetry() {
+      await this.loadData();
+    },
+    async onScrolltolower() {
+      await this.loadData();
+    },
+    goUser(id) {
+      wx.navigateTo({
+        url: '/pages/user-details?id=' + id
+      });
+    }
+  }
+});
+</script>
+<config>
+{
+    "usingComponents": {
+      "mp-page": "./mp-page",
+      "user-item": "./user-item",
+      "empty": "./empty",
+      "no-more": "./no-more",
+      "loading": "./loading/loading",
+      "screen-dialog": "./half-screen-dialog/half-screen-dialog"
+    }
+}
+</config>

@@ -1,0 +1,10 @@
+{
+    "component": true,
+    "usingComponents": {
+        "loading": "loading/loading",
+        "mp-page": "mp-page",
+        "post-item": "post-user-item",
+        "empty": "empty",
+        "no-more": "no-more"
+    }
+}

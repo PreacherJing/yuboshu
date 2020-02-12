@@ -1,0 +1,49 @@
+.user {
+  display: flex;
+}
+.user .avtater {
+  flex-shrink: 0;
+}
+.user .avtater image {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 8rpx;
+}
+.user .info {
+  flex-grow: 1;
+  margin-left: 20rpx;
+}
+.user .info .info-content {
+  display: flex;
+  align-items: center;
+}
+.user .info .info-content .nick {
+  font-size: 26rpx;
+  color: #606266;
+  max-width: 260rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  /*设置文本行数限制*/
+  -webkit-box-orient: vertical;
+  /*设置文本排列方式*/
+}
+.user .info .info-content .nick.vip {
+  color: #d81e06;
+}
+.user .info .info-content .ic-img {
+  width: 28rpx;
+  height: 28rpx;
+  margin-left: 8rpx;
+}
+.user .info .info-des {
+  margin-top: 6rpx;
+  color: #b2b2b2;
+  font-size: 22rpx;
+  text-align: left;
+}
+.user .left {
+  align-self: center;
+}
+

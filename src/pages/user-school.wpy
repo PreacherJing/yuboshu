@@ -1,0 +1,210 @@
+<style lang="less" scoped>
+.cells {
+  background: #ffffff;
+  margin-top: 30rpx;
+  .cell {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 40rpx 30rpx;
+    font-size: 36rpx;
+    .right {
+      align-content: flex-end;
+      display: flex;
+      align-items: center;
+      color: #b2b2b2;
+      font-size: 30rpx;
+      .icon {
+        font-size: 34rpx;
+      }
+    }
+    &.btn-cell {
+      justify-content: center;
+      align-items: center;
+      .icon {
+        font-size: 38rpx;
+        font-weight: bold;
+        margin-right: 20rpx;
+      }
+    }
+  }
+  .cell-hover {
+    background: #f8f8f8;
+  }
+}
+.des {
+  padding: 20rpx 30rpx;
+  color: #888888;
+  font-weight: lighter;
+  font-size: 26rpx;
+  margin-top: -30rpx;
+}
+</style>
+<template>
+  <div class="container">
+    <div class="cells">
+      <div
+        class="cell"
+        hover-class="cell-hover"
+        v-for="(item, index) in info"
+        :key="index"
+        @tap="onItemTap(item)"
+      >
+        <div class="left">{{item.label}}</div>
+        <div class="right">
+          <div class="value">{{item.value || '点击设置'}}</div>
+          <div class="icon icon-arrow-right"></div>
+        </div>
+      </div>
+    </div>
+    <footer btntext="下一步" des="下一步,进行学生认证" @click="goVerify" />
+    <screen-dialog :show="showDialog" :closabled="false" @close="onCancel">
+      <div slot="desc" class="dialog">
+        <div class="title">
+          <div class="left btn" @tap="onCancel">取消</div>
+          <div class="center">{{title}}</div>
+          <div class="right btn btn-confirm" @tap="onConfirm">确认</div>
+        </div>
+        <picker-view
+          :value="value"
+          @change="onChange"
+          indicator-style="height: 50px;"
+          style="height: 260rpx;"
+        >
+          <picker-view-column>
+            <div v-for="item in dataSoure[index]" class="picker-col">{{item}}</div>
+          </picker-view-column>
+        </picker-view>
+      </div>
+    </screen-dialog>
+    <school-input :show="showSchool" @result="onSchoolSelect" @close="onSchoolClose" />
+  </div>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { User } from '../common/api';
+const year = new Date().getFullYear();
+const years = [];
+for (let i = year - 5; i <= year; i++) {
+  years.push(i);
+}
+wepy.page({
+  data: {
+    showDialog: false,
+    showSchool: false,
+    title: '',
+    dataSoure: [
+      [
+        '河南师范大学',
+        '河南科技学院',
+        '新乡学院',
+        '河南工学院',
+        '新乡医学院',
+        '新乡医学院三全学院',
+        '河南科技学院新科学院',
+        '河南师范大学新联学院'
+      ],
+      ['专科', '本科', '硕士', '博士'],
+      years
+    ],
+    value: [0],
+    index: 0,
+    info: [
+      {
+        index: 0,
+        label: '学校',
+        value: ''
+      },
+      {
+        index: 1,
+        label: '学历',
+        value: ''
+      },
+      {
+        index: 2,
+        label: '入学时间',
+        value: ''
+      }
+    ]
+  },
+  onLoad() {
+    const user = wx.getStorageSync('user');
+    if (user && user.school) {
+      this.info[0].value = user.school;
+      this.info[1].value = this.dataSoure[1][user.education];
+      this.info[2].value = user.enrollmentYear;
+    }
+  },
+  methods: {
+    onCancel() {
+      this.showDialog = false;
+    },
+    onConfirm() {
+      this.onCancel();
+      this.info[this.index].value = this.dataSoure[this.index][this.value[0]];
+    },
+    onChange(e) {
+      const res = e.$wx.detail.value;
+      this.value[0] = res[0];
+    },
+    onSchoolSelect(school) {
+      this.info[0].value = school.name
+      this.showSchool = false;
+    },
+    onSchoolClose() {
+      this.showSchool = false;
+    },
+    onItemTap(item) {
+      if (item.index === 0) {
+        this.showSchool = true
+      } else {
+        this.index = item.index;
+        this.value = [
+          this.dataSoure[item.index].indexOf(this.info[item.index].value)
+        ];
+        this.showDialog = true;
+        this.title = item.label;
+      }
+    },
+    async goVerify() {
+      this.user = wx.getStorageSync('user');
+      if (!this.user.isBinding) {
+        wx.navigateTo({
+          url: '/pages/gender'
+        });
+        return;
+      }
+      for (const item of this.info) {
+        if (!item.value) {
+          wx.showToast({
+            title: `${item.label}不能为空`,
+            icon: 'none',
+            duration: 2000
+          });
+          return;
+        }
+      }
+      const isSave = await User.setSchool(
+        this.info[0].value,
+        this.dataSoure[1].indexOf(this.info[1].value),
+        this.info[2].value
+      );
+      if (isSave) {
+        wx.navigateTo({
+          url: '/pages/user-verify'
+        });
+      }
+    }
+  }
+});
+</script>
+<config>
+{
+    navigationBarTitleText: '添加就读学校',
+    "usingComponents": {
+      'footer': '../components/guide-footer',
+      "school-input": "../components/school-input",
+      "screen-dialog": "../components/half-screen-dialog/half-screen-dialog"
+    }
+}
+</config>

@@ -1,0 +1,82 @@
+
+<mp-page bind_init="_initComponent" enableRefresh="{{ true }}" data-ref="list" state="{{ state }}" enableTips="{{ false }}" showMoreLoading="{{ false }}" data-wpy-evt="67-0" bindscrolltolower="_proxy" bindretry="_proxy" bindrefresh="_proxy">
+  <view wx:if="{{ tracks }}" class="tracks">
+    <view class="top">
+      <view class="title">最近访问的话题</view>
+      <view data-wpy-evt="67-3" bindtap="_proxy" class="btn">
+        <view class="icon icon-del-line"></view>
+      </view>
+    </view>
+    <scroll-view scroll-x="{{ true }}">
+      <view class="list">
+        <view wx:for="{{ tracks }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" data-wpy-evt="67-4" bindtap="_proxy" data-wpytap-a="{{ item }}" class="item">
+          <image src="{{ item.iconPath }}"></image>
+          <view class="item-title">{{item.title}}</view>
+        </view>
+        <view data-wpy-evt="67-5" bindtap="_proxy" class="item item-more">
+          <view class="ic">
+            <text class="icon icon-more-line"></text>
+          </view>
+          <view class="item-title">发现话题</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <view wx:if="{{ items.length }}" class="follow recommends">
+    <view class="title">
+      <view class="left">关注话题</view>
+      <view data-wpy-evt="67-6" bindtap="_proxy" class="right">
+        <view>话题广场</view>
+        <view class="icon icon-arrow-right"></view>
+      </view>
+    </view>
+    <view class="list">
+      <view wx:for="{{ items }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" hover-class="item-hover" data-wpy-evt="67-7" bindtap="_proxy" data-wpytap-a="{{ item }}" class="item">
+        <image src="{{ item.iconPath }}"></image>
+        <view class="item-content">
+          <view class="item-title">{{item.title}}</view>
+          <view class="item-des">{{item.des}}</view>
+        </view>
+        <view class="item-action">
+          
+        </view>
+      </view>
+    </view>
+    <view data-wpy-evt="67-8" bindtap="_proxy" class="footer">
+      <view class="icon icon-add"></view>
+      <view>关注更多话题</view>
+    </view>
+  </view>
+  <view wx:else>
+    <view class="empty">
+      <view class="empty-content">
+        <view>你还没有关注的话题,</view>
+        <view>先关注一下吧!</view>
+      </view>
+    </view>
+    <view class="recommends">
+      <view class="title">
+        <view class="left">推荐话题</view>
+        <view data-wpy-evt="67-9" bindtap="_proxy" class="right">
+          <text>话题广场</text>
+          <text class="icon icon-arrow-right"></text>
+        </view>
+      </view>
+      <view class="list">
+        <view wx:for="{{ recommends }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" data-wpy-evt="67-10" bindtap="_proxy" data-wpytap-a="{{ item }}" class="item">
+          <image src="{{ item.iconPath }}"></image>
+          <view class="item-content">
+            <view class="item-title">{{item.title}}</view>
+            <view class="item-des">{{item.des}}</view>
+          </view>
+          <view data-wpy-evt="67-11" catchtap="_proxy" data-wpytap-a="{{ item }}" data-wpytap-b="{{ index }}" class="item-action">
+            <button class="btn {{item.hasFollow ? 'has' : ''}}">
+              <text class="icon icon-{{item.hasFollow ? 'follow' : 'add'}}"></text>
+              <text>{{item.hasFollow ? '已关注' : '关注'}}</text>
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</mp-page>

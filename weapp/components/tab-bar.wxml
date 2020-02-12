@@ -1,0 +1,7 @@
+
+<view class="tab-bar {{extClass}}">
+  <view class="tabs">
+    <view wx:for="{{ labels }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ index }}" data-wpy-evt="64-0" bindtap="_proxy" data-wpytap-a="{{ index }}" class="tab {{index === selectedIndex ? 'active' : ''}}">{{item}}</view>
+    <view style="left: {{left}}rpx;" class="tab-bar"></view>
+  </view>
+</view>

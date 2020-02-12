@@ -1,0 +1,113 @@
+.comment {
+  padding: 30rpx;
+  background: #fff;
+  position: relative;
+}
+.comment::after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 0.4px solid rgba(235, 237, 245, 0.8);
+  color: rgba(235, 237, 245, 0.8);
+}
+.comment .comment-content {
+  margin-left: 74rpx;
+}
+.comment .comment-content .comment-txt {
+  margin: 20rpx 0rpx;
+  font-size: 32rpx;
+  color: #353535;
+}
+.comment .comment-content .comment-txt .nick {
+  color: #409eff;
+}
+.comment .comment-content .comment-txt text {
+  color: var(--txt-content);
+  font-size: 32rpx;
+  text-align: left;
+}
+.comment .comment-content .comment-txt .icon-img {
+  width: 34rpx;
+  height: 34rpx;
+}
+.comment .comment-content .comment-imgs {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10rpx 0rpx;
+}
+.comment .comment-content .comment-imgs .comment-img-item {
+  position: relative;
+  padding: 10rpx;
+}
+.comment .comment-content .comment-imgs .comment-img-item .img-des {
+  position: absolute;
+  right: 20rpx;
+  bottom: 20rpx;
+  background: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  font-size: 22rpx;
+  padding: 6rpx 8rpx;
+  border-radius: 6rpx;
+}
+.comment .comment-content .comment-imgs .comment-img-item image {
+  width: 180rpx;
+  height: 180rpx;
+}
+.comment .comment-content .comment-action {
+  display: flex;
+  align-items: center;
+}
+.comment .comment-content .comment-action .time {
+  color: #b2b2b2;
+  font-size: 22rpx;
+}
+.comment .comment-content .comment-action .reply {
+  background: #f1f1f1;
+  padding: 6rpx 20rpx;
+  border-radius: 60rpx;
+  color: #353535;
+  font-size: 24rpx;
+  margin-left: 8rpx;
+}
+.comment .zan {
+  font-size: 24rpx;
+  color: #353535;
+  display: flex;
+  align-items: center;
+}
+.comment .zan .icon {
+  font-size: 34rpx;
+  margin-right: 6rpx;
+}
+.comment .zan .num {
+  align-self: flex-start;
+}
+.comment .btn-follow {
+  font-size: 24rpx;
+  background: #fae37c;
+  box-shadow: 4rpx 8rpx 12rpx rgba(250, 227, 124, 0.5);
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+}
+.comment .btn-follow .icon {
+  font-size: 30rpx;
+}
+.comment .btn-follow.follow {
+  background: #f8f8f8;
+  color: #b2b2b2;
+}
+.comment .btn-follow.btn-hover {
+  background: rgba(250, 227, 124, 0.5);
+}
+.comment .ic-img {
+  width: 28rpx;
+  height: 28rpx;
+  margin-left: 8rpx;
+}
+

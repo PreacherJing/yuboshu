@@ -1,0 +1,13 @@
+
+<mp-page bind_init="_initComponent" state="{{ state }}" enableTips="{{ false }}" showMoreLoading="{{ false }}" autoHeight="{{ true }}">
+  <view slot="empty">
+    <view wx:if="{{ items.length }}">
+      <comment-item bind_init="_initComponent" wx:for="{{ items }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" item="{{ item }}" actionType="{{ 1 }}" data-wpy-evt="78-0" binditemTap="_proxy"></comment-item>
+      <loading bind_init="_initComponent" show="{{ true }}" type="circle" wx:if="{{ hasMore }}"></loading>
+      <no-more bind_init="_initComponent" wx:else></no-more>
+    </view>
+    <view wx:else class="empty">
+      <empty bind_init="_initComponent" des="该帖子还没有人发表评论" btnTxt="发表评论" data-wpy-evt="78-1" bindaction="_proxy"></empty>
+    </view>
+  </view>
+</mp-page>

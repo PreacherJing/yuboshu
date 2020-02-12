@@ -1,0 +1,156 @@
+<style lang="less" scoped>
+.photos {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-left: 30rpx;
+  padding-top: 30rpx;
+  .photo {
+    margin-right: 20rpx;
+    margin-bottom: 20rpx;
+    width: 220rpx;
+    height: 220rpx;
+    position: relative;
+    .btn-more {
+      position: absolute;
+      width: 50rpx;
+      height: 50rpx;
+      background: rgba(0, 0, 0, 0.5);
+      font-size: 48rpx;
+      color: #ffffff;
+      font-weight: bold;
+      line-height: 50rpx;
+      text-align: center;
+      border-radius: 8rpx;
+      right: 8rpx;
+      bottom: 8rpx;
+    }
+    image {
+      width: 220rpx;
+      height: 220rpx;
+      border-radius: 20rpx;
+      margin-right: 10rpx;
+    }
+    .add {
+      text-align: center;
+      line-height: 220rpx;
+      border-radius: 20rpx;
+      background: #f8f8f8;
+      .icon {
+        font-size: 64rpx;
+        color: #b2b2b2;
+      }
+    }
+  }
+}
+</style>
+<template>
+  <block v-if="mode === 'view' && images.length === 0">
+    <empty des="TA太懒了,还没有上传个人照片"  />
+  </block>
+  <block v-else>
+    <div class="photos">
+      <div class="photo" v-for="index in [0,1,2,3,4,5,6,7,8]" :key="index">
+        <block v-if="images[index]">
+          <img :src="images[index].src" @tap="onPreview(index)" mode="aspectFill" />
+          <div v-if="mode === 'edit'" class="btn-more" @tap.stop="onMore(index, images[index].id)">
+            <div class="icon icon-more"></div>
+          </div>
+        </block>
+        <block v-else>
+          <div class="add" v-if="mode === 'edit'" @tap="onAdd">
+            <div class="icon icon-add"></div>
+          </div>
+        </block>
+      </div>
+    </div>
+  </block>
+</template>
+<script>
+import wepy from '@wepy/core';
+import { User } from '../common/api';
+wepy.component({
+  options: {
+    addGlobalClass: true
+  },
+  props: {
+    mode: {
+      type: String,
+      default: 'view'
+    },
+    userId: Number,
+    show: {
+      type: Boolean,
+      default: false
+    }
+  },
+  watch: {
+    async show(isShow) {
+      if (isShow) {
+        await this.loadData();
+      }
+    }
+  },
+  data: {
+    images: []
+  },
+  methods: {
+    onPreview(index) {
+      wx.previewImage({
+        urls: this.images.map(img => {
+          return img.src;
+        }),
+        current: index
+      });
+    },
+    async onAdd() {
+      const items = await User.addPhoto(this.userId);
+      if (items) {
+        for (const photo of items) {
+          this.images.push(photo);
+        }
+      }
+    },
+    async loadData() {
+      const items = await User.getPhotos(this.userId);
+      if (items) {
+        for (const photo of items) {
+          this.images.push(photo);
+        }
+      }
+    },
+    async onRefresh() {
+      await this.loadData();
+    },
+    onMore(index, id) {
+      wx.showActionSheet({
+        itemList: ['删除'],
+        success: res => {
+          if (res.tapIndex === 0) {
+            wx.showModal({
+              title: '删除提示',
+              content: '确定要删除照片吗?',
+              success: async res1 => {
+                if (res1.confirm) {
+                  const isDel = User.delPhoto(id);
+                  if (isDel) {
+                    this.images.splice(index, 1);
+                  }
+                }
+              }
+            });
+          }
+        },
+        fail(res) {}
+      });
+    }
+  }
+});
+</script>
+<config>
+{
+    "usingComponents": {
+			"empty": "./empty"
+    }
+}
+</config>

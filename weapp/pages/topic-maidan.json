@@ -1,0 +1,11 @@
+{
+    "navigationBarTitleText": "话题广场",
+    "component": true,
+    "usingComponents": {
+        "loading": "../components/loading/loading",
+        "searchbar": "../components/searchbar/searchbar",
+        "mp-page": "../components/mp-page",
+        "empty": "../components/empty",
+        "no-more": "../components/no-more"
+    }
+}
