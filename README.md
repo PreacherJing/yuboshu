@@ -11,11 +11,19 @@
 + 【故事】这里你可以看到其他同学的故事，我有酒你有故事吗？
 
 ![小程序码](https://www.wutuobangxinyougou.com/public/images/qr.jpg)
-![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/1.jpg)
-![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/2.jpg)
-![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/3.jpg)
-![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/4.jpg)
-![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/5.jpg)
-![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/6.jpg)
-![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/7.jpg)
-![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/8.jpg)
+
+![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/1.jpeg)
+
+![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/2.jpeg)
+
+![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/3.jpeg)
+
+![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/4.jpeg)
+
+![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/5.jpeg)
+
+![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/6.jpeg)
+
+![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/7.jpeg)
+
+![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/8.jpeg)
