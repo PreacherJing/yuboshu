@@ -11,3 +11,11 @@
 + 【故事】这里你可以看到其他同学的故事，我有酒你有故事吗？
 
 ![小程序码](https://www.wutuobangxinyougou.com/public/images/qr.jpg)
+![截图](https://www.wutuobangxinyougou.com/public/images/1.jpg)
+![截图](https://www.wutuobangxinyougou.com/public/images/2.jpg)
+![截图](https://www.wutuobangxinyougou.com/public/images/3.jpg)
+![截图](https://www.wutuobangxinyougou.com/public/images/4.jpg)
+![截图](https://www.wutuobangxinyougou.com/public/images/5.jpg)
+![截图](https://www.wutuobangxinyougou.com/public/images/6.jpg)
+![截图](https://www.wutuobangxinyougou.com/public/images/7.jpg)
+![截图](https://www.wutuobangxinyougou.com/public/images/8.jpg)
