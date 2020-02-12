@@ -1,8 +1,0 @@
-.list .item {
-  background: #ffffff;
-  padding: 15rpx 30rpx;
-}
-.list .item.item-hover {
-  background: #f8f8f8;
-}
-

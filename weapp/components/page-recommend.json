@@ -1,7 +1,0 @@
-{
-    "component": true,
-    "usingComponents": {
-        "mp-page": "mp-page",
-        "post-item": "post-item"
-    }
-}

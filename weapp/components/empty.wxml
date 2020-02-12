@@ -1,8 +1,0 @@
-
-<view class="empty">
-  <image src="../images/ic_empty.svg" class="ic-empty"></image>
-  <view class="des">{{des}}</view>
-  <view class="content">
-    <view hover-class="btn-hover" wx:if="{{ btnTxt }}" data-wpy-evt="70-0" bindtap="_proxy" class="btn icon icon-xiezuo">{{btnTxt}}</view>
-  </view>
-</view>

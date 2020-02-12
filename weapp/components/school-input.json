@@ -1,7 +1,0 @@
-{
-    "component": true,
-    "usingComponents": {
-        "screen-dialog": "half-screen-dialog/half-screen-dialog",
-        "searchbar": "searchbar/searchbar"
-    }
-}

@@ -1,5 +1,0 @@
-
-<mp-page bind_init="_initComponent" enableRefresh="{{ true }}" data-ref="list" count="{{ count }}" state="{{ state }}" data-wpy-evt="65-0" bindscrolltolower="_proxy" bindretry="_proxy" bindrefresh="_proxy">
-  <post-item bind_init="_initComponent" wx:for="{{ topItems }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" item="{{ item }}" isTop="{{ true }}"></post-item>
-  <post-item bind_init="_initComponent" wx:for="{{ items }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" item="{{ item }}" showBtnFollow="{{ false }}"></post-item>
-</mp-page>

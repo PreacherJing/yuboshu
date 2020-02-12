@@ -1,6 +1,0 @@
-.schools .school-item {
-  text-align: left;
-  font-size: 30rpx;
-  padding: 30rpx 30rpx;
-}
-

@@ -1,6 +1,0 @@
-
-<view class="container">
-  <view class="labels">
-    <view wx:for="{{ labels }}" wx:for-index="index" wx:for-item="label" wx:key="index" key="{{ label.id }}" data-wpy-evt="19-0" bindtap="_proxy" data-wpytap-a="{{ index }}" class="label {{label.isActive ? 'active' : ''}}">{{label.text}}</view>
-  </view>
-</view>

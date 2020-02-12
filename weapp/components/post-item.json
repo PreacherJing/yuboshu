@@ -1,6 +1,0 @@
-{
-    "component": true,
-    "usingComponents": {
-        "user-item": "user-item"
-    }
-}

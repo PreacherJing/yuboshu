@@ -1,8 +1,0 @@
-{
-    "navigationBarTitleText": "选择性别",
-    "navigationBarBackgroundColor": "#ffffff",
-    "component": true,
-    "usingComponents": {
-        "footer": "../components/guide-footer"
-    }
-}
