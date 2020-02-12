@@ -20,13 +20,12 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"appid": "wxccfdb0fcf115d175",
+	"appid": "wxa6e5985d29f9ea7f",
 	"projectname": "community-miniprogram",
 	"miniprogramRoot": "weapp/",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
-	"qqappid": "1110072555",
 	"condition": {
 		"search": {
 			"current": -1,
