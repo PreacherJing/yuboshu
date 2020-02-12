@@ -10,3 +10,4 @@
 + 【私密性】头像名称任意修改，内心不能说的秘密尽情倾诉
 + 【故事】这里你可以看到其他同学的故事，我有酒你有故事吗？
 
+![小程序码](https://www.wutuobangxinyougou.com/public/images/qr.jpg)
