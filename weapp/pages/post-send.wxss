@@ -1,0 +1,246 @@
+page {
+  background: #ffffff;
+}
+.user-back {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.user-back .icon {
+  padding: 20rpx 0rpx;
+  padding-right: 30rpx;
+  font-size: 42rpx;
+  font-weight: bold;
+}
+.user-back .title {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.user-back .title .des {
+  font-size: 24rpx;
+  color: #b2b2b2;
+  font-weight: normal;
+  margin-top: 6rpx;
+}
+.send-content textarea {
+  padding: 30rpx;
+  font-size: 32rpx;
+  width: 100%;
+  height: 240rpx;
+  box-sizing: border-box;
+  color: var(--txt-content);
+}
+.send-content .placeholder {
+  color: #b2b2b2;
+}
+.send-content .imags {
+  padding: 30rpx;
+  padding-top: 0rpx;
+}
+.send-content .imags .ext .weui-uploader__overview {
+  display: none;
+}
+.send-content .topic-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  position: relative;
+}
+.send-content .topic-input::after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 1px;
+  border-top: 0.4px solid rgba(235, 237, 245, 0.8);
+  color: rgba(235, 237, 245, 0.8);
+}
+.send-content .topic-input .title {
+  flex-grow: 1;
+  font-size: 30rpx;
+  color: #409eff;
+}
+.send-content .topic-input .icon-topic-full {
+  font-size: 34rpx;
+  color: #409eff;
+  margin-right: 8rpx;
+}
+.send-content .topic-input .des {
+  color: #b2b2b2;
+  font-size: 26rpx;
+}
+.send-content .topic-input .icon {
+  font-size: 34rpx;
+  font-weight: bold;
+}
+.send-content .topic-input .icon-arrow-right {
+  color: #b2b2b2;
+}
+.tool {
+  position: fixed;
+  width: 100%;
+  left: 0rpx;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  transition: all 0.3s;
+}
+.tool::after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px;
+  border-top: 0.4px solid rgba(235, 237, 245, 0.8);
+  color: rgba(235, 237, 245, 0.8);
+}
+.tool .check {
+  flex-grow: 1;
+  padding: 30rpx 0rpx;
+  padding-left: 32rpx;
+}
+.tool .check .title {
+  font-size: 26rpx;
+  color: #8a8a8a;
+  margin-bottom: 8rpx;
+}
+.tool .check .des {
+  font-size: 22rpx;
+  color: #b2b2b2;
+}
+.tool .item {
+  flex-grow: 1;
+  padding: 30rpx 0rpx;
+  text-align: center;
+  position: relative;
+}
+.tool .item .icon {
+  display: inline-block;
+  font-size: 48rpx;
+}
+.tool .item.lock .icon {
+  color: #b2b2b2;
+}
+.tool .item.icon-lock {
+  font-size: 26rpx;
+  color: #b2b2b2;
+}
+.tool .item.icon-lock::before {
+  position: absolute;
+  right: 22%;
+  top: 8rpx;
+}
+.tool .btn {
+  flex-basis: 200rpx;
+  text-align: center;
+}
+.tool .btn .btn-send {
+  display: inline-block;
+  background: #ffd100;
+  color: #000;
+  font-size: 30rpx;
+  font-weight: bold;
+  padding: 15rpx 30rpx;
+  border-radius: 10rpx;
+  line-height: normal;
+}
+.tool .btn .btn-send::after {
+  border: none;
+}
+.tool .btn button[disabled] {
+  background: #f1f1f1;
+  color: #b2b2b2;
+}
+.tool .line {
+  position: absolute;
+  top: -70rpx;
+  left: 0rpx;
+  width: 100%;
+  background: #ffffff;
+  box-sizing: border-box;
+  display: flex;
+  padding: 10rpx 30rpx;
+  justify-content: space-between;
+}
+.tool .line .location {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 24rpx;
+  padding: 10rpx 0rpx;
+  color: #409eff;
+}
+.tool .line .location .icon {
+  font-size: 24rpx;
+  padding: 4rpx 15rpx;
+}
+.tool .line .location .icon.icon-location,
+.tool .line .location .icon.icon-topic-line {
+  padding: 0rpx;
+  padding-right: 6rpx;
+}
+.tool .line .location .txt {
+  height: 32rpx;
+  line-height: 32rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 260rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  /*设置文本行数限制*/
+  -webkit-box-orient: vertical;
+  /*设置文本排列方式*/
+}
+.imags {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.imags .item {
+  flex-shrink: 0;
+  position: relative;
+  margin-right: 30rpx;
+  margin-bottom: 30rpx;
+}
+.imags .item image {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 10rpx;
+}
+.imags .item .btn {
+  position: absolute;
+  font-size: 56rpx;
+  top: -20rpx;
+  right: -20rpx;
+  color: #ffd100;
+}
+.imags .item .num {
+  position: absolute;
+  bottom: 10rpx;
+  right: 0rpx;
+  padding: 6rpx 12rpx;
+  font-size: 22rpx;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  border-top-left-radius: 10rpx;
+  border-bottom-right-radius: 10rpx;
+}
+.imags .item-add {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 10rpx;
+  background: #f1f1f1;
+  text-align: center;
+  line-height: 200rpx;
+}
+.imags .item-add .icon {
+  font-size: 64rpx;
+  color: #b2b2b2;
+}
+

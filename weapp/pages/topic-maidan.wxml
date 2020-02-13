@@ -1,0 +1,28 @@
+
+<mp-page bind_init="_initComponent" state="{{ state }}" offset="{{ 0 }}" marginOffset="{{ 0 }}" enableTips="{{ false }}" enableRefresh="{{ false }}" showMoreLoading="{{ false }}" data-wpy-evt="21-0" bindscrolltolower="_proxy" bindretry="_proxy" class="maidan">
+  
+  <searchbar bind_init="_initComponent" placeholder="输入话题" data-wpy-evt="21-2" bindinput="_proxy" bindcancel="_proxy"></searchbar>
+  <block wx:if="{{ items.length }}">
+    <view class="list">
+      <view wx:for="{{ items }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" hover-class="item-hover" data-wpy-evt="21-4" bindtap="_proxy" data-wpytap-a="{{ item }}" class="item">
+        <view class="item-main">
+          <image src="{{ item.iconPath }}"></image>
+          <view class="item-content">
+            <view class="item-title">
+              <view class="item-title-t">{{item.title}}</view>
+              <view class="item-title-c">{{item.followCount}}{{item.nickName}}</view>
+            </view>
+            <view class="item-des">{{item.des}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <loading bind_init="_initComponent" show="{{ true }}" type="circle" wx:if="{{ hasMore }}"></loading>
+    <no-more bind_init="_initComponent" wx:else></no-more>
+    <view hover-class="btn-hover" data-wpy-evt="21-5" bindtap="_proxy" class="btn-add">
+      <view class="icon icon-add"></view>
+      <view>创建话题</view>
+    </view>
+  </block>
+  <empty bind_init="_initComponent" des="还没有找到话题,你可以创建话题" btnTxt="创建话题" wx:else data-wpy-evt="21-6" bindaction="_proxy"></empty>
+</mp-page>

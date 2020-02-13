@@ -1,0 +1,29 @@
+
+<mp-page bind_init="_initComponent" state="{{ state }}" offset="{{ 0 }}" marginOffset="{{ 0 }}" enableTips="{{ false }}" enableRefresh="{{ false }}" showMoreLoading="{{ false }}" data-wpy-evt="18-0" bindretry="_proxy">
+  <view slot="empty" class="rank">
+    <view class="img-rank">
+      <image src="http://img.wutuobangxinyougou.com/ic_rank.svg"></image>
+    </view>
+    <view wx:if="{{ items.length }}" class="list">
+      <view hover-class="item-hover" wx:for="{{ items }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" class="item">
+        <user-item bind_init="_initComponent" info="{{ item.user }}">
+          <view slot="left" class="rank-num">
+            <text wx:if="{{ item.rownum > 3 }}">{{item.rownum}}</text>
+            <image src="http://img.wutuobangxinyougou.com/rank_{{item.rownum}}.svg" wx:else></image>
+          </view>
+          <view slot="action">
+            <view hover-class="btn-hover" data-wpy-evt="18-1" catchtap="_proxy" data-wpytap-a="{{ item }}" data-wpytap-b="{{ index }}" class="btn-follow {{item.hasFollow ? 'follow' : ''}}">
+              <view wx:if="{{ !item.hasFollow }}" class="icon icon-add"></view>
+              <view>{{item.hasFollow ? '已关注' : '关注'}}</view>
+            </view>
+          </view>
+        </user-item>
+      </view>
+      <loading bind_init="_initComponent" show="{{ true }}" type="circle" wx:if="{{ hasMore }}"></loading>
+      <no-more bind_init="_initComponent" wx:else></no-more>
+    </view>
+    <view wx:else class="empty">
+      <empty bind_init="_initComponent" des="还没有人关注你,发个动弹试试" btnTxt="发布动弹"></empty>
+    </view>
+  </view>
+</mp-page>

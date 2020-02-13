@@ -1,0 +1,37 @@
+
+<view hidden="{{ !show }}" data-wpy-evt="75-0" catchtouchmove="_proxy">
+  <view data-wpy-evt="75-1" catchtap="_proxy" class="mask"></view>
+  <emoji-input bind_init="_initComponent" height="{{ boardheight }}" hide="{{ bottom <= 0 }}" data-wpy-evt="75-2" bindemoji="_proxy" binddel="_proxy"></emoji-input>
+  <view style="bottom: {{bottom}}px;" class="input-box">
+    <scroll-view scroll-x="{{ true }}" wx:if="{{ imgs.length }}" class="input-imgs">
+      <view class="list">
+        <view wx:for="{{ imgs }}" wx:for-index="index" wx:for-item="img" wx:key="index" class="item">
+          <image src="{{ img.path }}" mode="aspectFill"></image>
+          <view data-wpy-evt="75-4" catchtap="_proxy" data-wpytap-a="{{ index }}" class="btn icon icon-del-full"></view>
+          <view class="num">{{index + 1}}</view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="input-textarea">
+      <textarea placeholder="{{ placeholder }}" adjust-position="{{ false }}" show-confirm-bar="{{ false }}" auto-focus="{{ false }}" hold-keyboard="{{ true }}" focus="{{ focus }}" cursor="{{ cursor }}" auto-height="{{ true }}" maxlength="{{ 500 }}" wx:if="{{ show }}" value="{{ content }}" bindinput="_proxy" data-model-id="10" data-wpy-evt="75-5" bindkeyboardheightchange="_proxy" bindfocus="_proxy" bindblur="_proxy"></textarea>
+    </view>
+    <view class="input-tool">
+      <view class="action">
+        <view wx:if="{{ inputType === 0 }}" data-wpy-evt="75-8" catchtap="_proxy" class="item">
+          <view class="icon icon-emoji"></view>
+        </view>
+        <view wx:else data-wpy-evt="75-9" catchtap="_proxy" class="item">
+          <view class="icon icon-jianpan"></view>
+        </view>
+        <view wx:if="{{ !isPlane }}" data-wpy-evt="75-10" catchtap="_proxy" class="item">
+          <view class="icon icon-tupian"></view>
+        </view>
+      </view>
+      <view wx:if="{{ isPlane }}" class="buttons">
+        <button disabled="{{ disabled }}" loading="{{ loading }}" hover-class="btn-hover" wx:if="{{ hasWrite }}" data-wpy-evt="75-11" catchtap="_proxy" class="btn btn-recall icon icon-recall">撤回纸飞机</button>
+        <button disabled="{{ disabled }}" loading="{{ loading }}" hover-class="btn-hover" data-wpy-evt="75-12" catchtap="_proxy" class="btn">{{btnTxt}}</button>
+      </view>
+      <button disabled="{{ disabled }}" loading="{{ loading }}" hover-class="btn-hover" wx:else data-wpy-evt="75-13" catchtap="_proxy" class="btn">{{btnTxt}}</button>
+    </view>
+  </view>
+</view>

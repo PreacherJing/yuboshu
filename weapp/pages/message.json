@@ -1,0 +1,10 @@
+{
+    "navigationBarTitleText": "系统消息",
+    "component": true,
+    "usingComponents": {
+        "loading": "../components/loading/loading",
+        "mp-page": "../components/mp-page",
+        "no-more": "../components/no-more",
+        "empty": "../components/empty"
+    }
+}

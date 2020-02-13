@@ -1,0 +1,27 @@
+
+<mp-page bind_init="_initComponent" state="{{ state }}" offset="{{ 0 }}" marginOffset="{{ 0 }}" enableTips="{{ false }}" enableRefresh="{{ false }}" showMoreLoading="{{ false }}" data-wpy-evt="27-0" bindretry="_proxy">
+  <view slot="empty">
+    <view wx:if="{{ items.length }}" class="list">
+      <view wx:for="{{ items }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" class="item">
+        <user-item bind_init="_initComponent" info="{{ item.user }}"></user-item>
+        <view class="item-txt">
+          <text class="txt-type">
+            <text class="icon icon-gift"></text>
+            <text>赞赏你了{{item.score}}个玉帛钻</text>
+            <text class="icon icon-drill-full"></text>
+          </text>
+        </view>
+        <view wx:if="{{ item.post }}" data-wpy-evt="27-1" catchtap="_proxy" data-wpytap-a="{{ item }}" class="item-source">
+          <image src="{{ item.post.imgs[0].path }}" mode="aspectFill" wx:if="{{ item.post && item.post.imgs && item.post.imgs.length }}"></image>
+          <view class="item-source-txt">{{item.post.origTxt}}</view>
+        </view>
+        <view wx:if="{{ item.senDate && fromType !== '2' }}" class="item-date">{{item.senDate}}</view>
+      </view>
+      <loading bind_init="_initComponent" show="{{ true }}" type="circle" wx:if="{{ hasMore }}"></loading>
+      <no-more bind_init="_initComponent" wx:else></no-more>
+    </view>
+    <view wx:else class="empty">
+      <empty bind_init="_initComponent" des="还没有人跟你互动过,发个动弹试试" btnTxt="发布动弹" data-wpy-evt="27-2" bindaction="_proxy"></empty>
+    </view>
+  </view>
+</mp-page>

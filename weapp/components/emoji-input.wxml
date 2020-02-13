@@ -1,0 +1,16 @@
+
+<view hidden="{{ hide }}" style="height:{{height}}px;" class="emoji">
+  <scroll-view scroll-y="{{ true }}" style="height:{{height}}px;">
+    <view class="icons">
+      <view wx:for="{{ emojis }}" wx:for-index="index" wx:for-item="img" wx:key="index" key="{{ img.id }}" data-wpy-evt="79-0" catchtap="_proxy" data-wpytap-a="{{ img }}" class="img">
+        <image src="{{ img.url }}" lazy-load="{{ true }}" class="icon-img"></image>
+      </view>
+    </view>
+    <view style="height:148rpx;"></view>
+  </scroll-view>
+  <view class="btn-box">
+    <view data-wpy-evt="79-1" catchtap="_proxy" class="btn-del">
+      <view class="icon icon-input-del"></view>
+    </view>
+  </view>
+</view>

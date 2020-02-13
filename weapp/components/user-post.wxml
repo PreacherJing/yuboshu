@@ -1,0 +1,15 @@
+
+<view hidden="{{ !(typeIndex === type) }}">
+  <mp-page bind_init="_initComponent" state="{{ state }}" offset="{{ offset }}" bottomOffset="{{ 100 }}" marginOffset="{{ 0 }}" enableTips="{{ false }}" enableRefresh="{{ false }}" showMoreLoading="{{ false }}" scrollY="{{ scrollY }}" data-wpy-evt="83-0" bindscrolltolower="_proxy" bindretry="_proxy">
+    <view class="topic-posts">
+      <post-item bind_init="_initComponent" wx:for="{{ items }}" wx:for-index="index" wx:for-item="item" wx:key="index" key="{{ item.id }}" item="{{ item }}" showDel="{{ isSelf }}" isSelf="{{ isSelf }}" index="{{ index }}" data-wpy-evt="83-2" binddel="_proxy"></post-item>
+      <loading bind_init="_initComponent" show="{{ true }}" type="circle" wx:if="{{ hasMore }}"></loading>
+      <no-more bind_init="_initComponent" wx:else></no-more>
+    </view>
+    <view slot="empty">
+      <view class="empty">
+        <empty bind_init="_initComponent" des="该话题还没有精华动弹" btnTxt="发布动弹"></empty>
+      </view>
+    </view>
+  </mp-page>
+</view>

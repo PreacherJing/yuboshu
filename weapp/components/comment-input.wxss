@@ -1,0 +1,119 @@
+.mask {
+  background: rgba(0, 0, 0, 0.1);
+  position: fixed;
+  height: calc(100vh);
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 10001;
+}
+.input-box {
+  position: fixed;
+  left: 0rpx;
+  bottom: 0rpx;
+  background: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  align-items: center;
+  border-top: #f1f1f1 solid 0.5px;
+  z-index: 10002;
+}
+.input-box .input-textarea {
+  padding: 20rpx 0rpx;
+}
+.input-box .input-textarea textarea {
+  width: 100%;
+  font-size: 32rpx;
+  padding: 0rpx 20rpx;
+  color: #474747;
+  box-sizing: border-box;
+  height: 100rpx;
+}
+.input-imgs {
+  background: transparent;
+}
+.input-imgs .list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 30rpx 0rpx;
+}
+.input-imgs .list .item {
+  flex-shrink: 0;
+  position: relative;
+  margin-left: 30rpx;
+}
+.input-imgs .list .item image {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 10rpx;
+}
+.input-imgs .list .item .btn {
+  position: absolute;
+  font-size: 56rpx;
+  top: -20rpx;
+  right: -20rpx;
+  color: #ffd100;
+}
+.input-imgs .list .item .num {
+  position: absolute;
+  bottom: 10rpx;
+  right: 0rpx;
+  padding: 6rpx 12rpx;
+  font-size: 22rpx;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  border-top-left-radius: 10rpx;
+  border-bottom-right-radius: 10rpx;
+}
+.input-tool {
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+}
+.input-tool .btn {
+  color: #000000;
+  padding: 10rpx 20rpx;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  align-self: center;
+  line-height: normal;
+  background: #fae37c;
+  color: #13100e;
+  border: none;
+}
+.input-tool .btn::after {
+  border: none;
+}
+.input-tool .btn.btn-hover {
+  background: rgba(250, 227, 124, 0.5);
+}
+.input-tool .btn.btn-recall {
+  background: #f1f1f1;
+  color: #474747;
+}
+.input-tool .action {
+  flex-grow: 1;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+.input-tool .action .item {
+  text-align: left;
+  padding: 0rpx 36rpx;
+  padding-left: 0rpx;
+}
+.input-tool .action .item .icon {
+  font-size: 56rpx;
+}
+.input-tool .buttons {
+  display: flex;
+  align-content: center;
+}
+.input-tool .buttons .btn {
+  margin-left: 30rpx;
+}
+

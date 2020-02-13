@@ -1,0 +1,9 @@
+{
+    "navigationBarTitleText": "添加就读学校",
+    "component": true,
+    "usingComponents": {
+        "screen-dialog": "../components/half-screen-dialog/half-screen-dialog",
+        "footer": "../components/guide-footer",
+        "school-input": "../components/school-input"
+    }
+}

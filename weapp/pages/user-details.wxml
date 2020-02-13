@@ -1,0 +1,64 @@
+
+<view data-wpy-evt="14-0" bindtouchmove="_proxy" bindtouchend="_proxy" class="container">
+  <navigation-bar bind_init="_initComponent" ext-class="bar-back" back="{{ true }}" show="false" background="{{ background }}"></navigation-bar>
+  <view class="head">
+    <view class="avtater">
+      <image src="{{ user.avtater }}"></image>
+      <view wx:if="{{ user.feeling === 0 }}" class="feeling">
+        <image src="../images/icon_dan.svg"></image>
+      </view>
+      <view wx:if="{{ isSelf }}" data-wpy-evt="14-2" bindtap="_proxy" class="btn-follow">
+        <view class="icon icon-edit"></view>
+        <view>编辑资料</view>
+      </view>
+      <view wx:else data-wpy-evt="14-3" catchtap="_proxy" class="btn-follow {{user.hasFollow ? 'has' : ''}}">
+        <view wx:if="{{ !user.hasFollow }}" class="icon icon-add"></view>
+        <view>{{user.hasFollow ? '已关注' : '关注'}}</view>
+      </view>
+    </view>
+    <view class="info">
+      <view class="name">
+        <view class="nick">{{user.nick}}</view>
+      </view>
+      <view wx:if="{{ user.userType === 3 }}" class="des">
+        <view>{{user.school}}</view>
+      </view>
+      <view wx:else class="des">
+        <view>{{user.gender === 1 ? '男' : '女'}}</view>
+        <view wx:if="{{ user.constellation }}">{{user.constellation || ''}}</view>
+        <view wx:if="{{ user.enrollmentYear }}">{{user.enrollmentYear}}</view>
+        <view wx:if="{{ user.school }}">{{user.school}}</view>
+        <view wx:if="{{ user.province }}">{{user.province || ''}} {{user.city || ''}}</view>
+      </view>
+      <view class="tool">
+        <view class="item">
+          <text class="value">{{user.thumbsNum}}</text>
+          <text class="label">获赞</text>
+        </view>
+        <view data-wpy-evt="14-4" bindtap="_proxy" class="item">
+          <text class="value">{{user.followNum}}</text>
+          <text class="label">关注</text>
+        </view>
+        <view data-wpy-evt="14-5" bindtap="_proxy" class="item">
+          <text class="value">{{user.fansNum}}</text>
+          <text class="label">粉丝</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view id="content" style="top: {{top}}px;{{position}};transition: {{transition}};" class="content">
+    <tab-bar bind_init="_initComponent" labels="{{ tabs }}" selectedIndex="{{ tabIndex }}" id="tab" data-wpy-evt="14-6" bindchange="_proxy"></tab-bar>
+    <swiper current="{{ current }}" easing-function="easeOutCubic" data-wpy-evt="14-7" bindchange="_proxy" style="height: calc(100vh - {{top}}px);">
+      <swiper-item>
+        <user-post bind_init="_initComponent" scrollY="{{ scrollY }}" offset="{{ bottom }}" userId="{{ user.id }}" isSelf="{{ isSelf }}"></user-post>
+      </swiper-item>
+      <swiper-item>
+        <user-photos bind_init="_initComponent" userId="{{ user.id }}" show="{{ loadPhotos }}" mode="{{ isSelf ? 'edit' : 'view' }}"></user-photos>
+      </swiper-item>
+      <swiper-item>
+        <user-tags bind_init="_initComponent" scroll-y="{{ scrollY }}" userId="{{ user.id }}" show="{{ loadTag }}" reload="{{ reload }}" mode="{{ isSelf ? 'edit' : 'view' }}" data-wpy-evt="14-8" bindreset="_proxy"></user-tags>
+      </swiper-item>
+      <swiper-item></swiper-item>
+    </swiper>
+  </view>
+</view>

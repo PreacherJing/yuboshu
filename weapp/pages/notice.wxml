@@ -1,0 +1,89 @@
+
+<view>
+  <view class="header">
+    <view data-wpy-evt="5-0" bindtap="_proxy" class="item">
+      <view class="item-ic sys">
+        <view class="icon icon-bell-fill"></view>
+        <view wx:if="{{ user.sysMsgCount }}" class="item-count">{{user.sysMsgCount}}</view>
+      </view>
+      <view class="item-title">小书通知</view>
+    </view>
+    <view data-wpy-evt="5-1" bindtap="_proxy" class="item">
+      <view class="item-ic thumbup">
+        <view class="icon icon-thumbup-fill"></view>
+        <view wx:if="{{ user.likeCount }}" class="item-count">{{user.likeCount}}</view>
+      </view>
+      <view class="item-title">收到的赞</view>
+    </view>
+    <view data-wpy-evt="5-2" bindtap="_proxy" class="item">
+      <view class="item-ic fens">
+        <view class="icon icon-user-fill"></view>
+        <view wx:if="{{ user.followCount }}" class="item-count">{{user.followCount}}</view>
+      </view>
+      <view class="item-title">新增粉丝</view>
+    </view>
+  </view>
+  <view wx:if="{{ !user.reply && !user.comment }}" class="empty">
+    <view class="space"></view>
+    <image src="https://www.wutuobangxinyougou.com/public/ic_notice_empty.svg" alt="" srcset=""></image>
+    <view class="des">网络一线牵，主动才有缘～</view>
+  </view>
+  <view wx:else class="list">
+    <view hover-class="item-hover" data-wpy-evt="5-3" bindtap="_proxy" class="item">
+      <view class="avtater">
+        <text class="icon icon-pinglun"></text>
+        <view wx:if="{{ user.commentCount }}" class="num">{{user.commentCount}}</view>
+      </view>
+      <view class="main">
+        <view class="top">
+          <view class="title">评论通知</view>
+          <view class="date">{{user.comment && user.comment.senDate}}</view>
+        </view>
+        <view class="content">{{user.comment && user.comment.content || '暂无评论'}}</view>
+      </view>
+    </view>
+    <view hover-class="item-hover" data-wpy-evt="5-4" bindtap="_proxy" class="item">
+      <view class="avtater">
+        <text class="icon icon-huifu"></text>
+        <view wx:if="{{ user.replyCount }}" class="num">{{user.replyCount}}</view>
+      </view>
+      <view class="main">
+        <view class="top">
+          <view class="title">回复通知</view>
+          <view class="date">{{user.reply && user.reply.senDate || ''}}</view>
+        </view>
+        <view class="content">{{user.reply && user.reply.content || '暂无回复'}}</view>
+      </view>
+    </view>
+    <view hover-class="item-hover" data-wpy-evt="5-5" bindtap="_proxy" class="item">
+      <view class="avtater">
+        <text class="icon icon-gift"></text>
+        <view wx:if="{{ user.rewardCount }}" class="num">{{user.rewardCount}}</view>
+      </view>
+      <view class="main">
+        <view class="top">
+          <view class="title">赞赏通知</view>
+          <view class="date">{{user.reward && user.reward.rewardDate || ''}}</view>
+        </view>
+        <view wx:if="{{ user.reward && user.reward.user }}" class="content">
+          {{user.reward.user.nick}}
+          <text class="value">赞赏了你{{user.reward.score}}个玉帛钻</text>
+        </view>
+        <view wx:else class="content">还没有用户赞赏你的动弹</view>
+      </view>
+    </view>
+    <view hover-class="item-hover" data-wpy-evt="5-6" bindtap="_proxy" class="item">
+      <view class="avtater">
+        <text class="icon icon-plane"></text>
+        <view wx:if="{{ user.planeCount }}" class="num">{{user.planeCount}}</view>
+      </view>
+      <view class="main">
+        <view class="top">
+          <view class="title">纸飞机消息</view>
+          <view class="date">{{user.plane && user.plane.senDate || ''}}</view>
+        </view>
+        <view class="content">{{user.plane && user.plane.content || '暂无消息'}}</view>
+      </view>
+    </view>
+  </view>
+</view>

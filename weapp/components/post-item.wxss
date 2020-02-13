@@ -1,0 +1,239 @@
+.post {
+  padding: 20rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+.post.post-top {
+  padding: 20rpx;
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+}
+.post .post-content {
+  margin-left: 74rpx;
+}
+.post .post-content .top-des {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #409eff;
+  font-size: 26rpx;
+  padding-bottom: 10rpx;
+  padding-right: 30rpx;
+}
+.post .post-content .top-des .icon {
+  font-size: 28rpx;
+}
+.post .post-content .post-txt {
+  margin: 10rpx 0rpx;
+  font-size: 32rpx;
+  color: #353535;
+}
+.post .post-content .post-txt text {
+  color: var(--txt-content);
+  font-size: 32rpx;
+  text-align: left;
+}
+.post .post-content .post-txt text.simple {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  /*设置文本行数限制*/
+  -webkit-box-orient: vertical;
+  /*设置文本排列方式*/
+}
+.post .post-content .post-txt .icon-img {
+  width: 34rpx;
+  height: 34rpx;
+}
+.post .post-content .post-imgs {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10rpx 0rpx;
+}
+.post .post-content .post-imgs .post-img-item {
+  position: relative;
+  padding: 10rpx;
+}
+.post .post-content .post-imgs .post-img-item .img-des {
+  position: absolute;
+  right: 20rpx;
+  bottom: 20rpx;
+  background: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  font-size: 22rpx;
+  padding: 6rpx 8rpx;
+  border-radius: 6rpx;
+}
+.post .post-content .post-imgs .post-img-item image {
+  width: 180rpx;
+  height: 180rpx;
+}
+.post .post-content .location {
+  margin-top: 30rpx;
+}
+.post .post-content .location .address {
+  display: flex;
+  align-items: center;
+  font-size: 22rpx;
+  color: #24c688;
+}
+.post .post-content .location .address image {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 8rpx;
+}
+.post .post-content .location .address .icon-arr-right {
+  font-size: 36rpx;
+}
+.post .post-content .post-topic {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.post .post-content .post-topic .topic {
+  font-size: 26rpx;
+  color: #409eff;
+  background: #ecf8ff;
+  padding: 8rpx 20rpx;
+  border-radius: 50rpx;
+  margin-right: 10rpx;
+  display: flex;
+  align-items: center;
+}
+.post .post-content .post-topic .topic .topicTitle {
+  max-width: 260rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  /*设置文本行数限制*/
+  -webkit-box-orient: vertical;
+  /*设置文本排列方式*/
+}
+.post .post-content .post-topic .topic .icon {
+  font-size: 30rpx;
+}
+.post .post-content .post-topic .topic .icon-topic-full {
+  font-weight: normal;
+  font-size: 30rpx;
+  margin-right: 6rpx;
+}
+.post .post-content .post-topic .hot-num {
+  color: red;
+  font-size: 28rpx;
+  background: linear-gradient(to right, red, blue);
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+}
+.post .post-content .post-topic .hot-num .hot-num {
+  font-size: 28rpx;
+  margin-left: 6rpx;
+}
+.post .post-content .post-topic .hot-num .icon {
+  margin-right: 0rpx;
+}
+.post .post-content .post-topic .zan {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #b2b2b2;
+  margin: 30rpx 0rpx;
+}
+.post .post-content .post-topic .zan image {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 36rpx;
+  border: #ffffff solid 4rpx;
+  margin-right: -14rpx;
+}
+.post .post-content .post-topic .zan .zan-des {
+  margin-left: 24rpx;
+}
+.post .post-content .post-hot-comment {
+  padding: 10rpx 20rpx;
+  border-left: #efefef solid 1rpx;
+}
+.post .post-content .post-hot-comment text {
+  font-size: 26rpx;
+  color: #7a8299;
+  line-height: 42rpx;
+}
+.post .post-content .post-hot-comment .hot-tag {
+  background: #fdf6ec;
+  color: #ec9615;
+  font-weight: normal;
+  margin-right: 8rpx;
+  font-size: 22rpx;
+  border-radius: 50rpx;
+  padding: 4rpx 10rpx;
+}
+.post .post-content .post-hot-comment .nick {
+  font-weight: bold;
+  font-size: 26rpx;
+  color: #474f66;
+}
+.post .post-content .post-tool {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  position: relative;
+  margin: 0rpx 0rpx;
+}
+.post .post-content .post-tool .count-item {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  padding: 30rpx;
+  color: var(--txt-second);
+  font-size: 24rpx;
+}
+.post .post-content .post-tool .count-item.drill {
+  color: #d81e06;
+}
+.post .post-content .post-tool .icon {
+  margin-right: 0rpx;
+  margin-right: 8rpx;
+  font-size: 34rpx;
+}
+.btn-follow {
+  font-size: 24rpx;
+  background: #fae37c;
+  box-shadow: 4rpx 8rpx 12rpx rgba(250, 227, 124, 0.5);
+  padding: 10rpx 20rpx;
+  border-radius: 8rpx;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+}
+.btn-follow .icon {
+  font-size: 30rpx;
+}
+.btn-follow.follow {
+  background: #f8f8f8;
+  color: #b2b2b2;
+}
+.btn-follow.btn-hover {
+  background: rgba(250, 227, 124, 0.5);
+}
+.top {
+  font-size: 26rpx;
+  background: #fdf6ec;
+  color: #ec9615;
+  padding: 40rpx;
+  border-radius: 8rpx;
+  background: url(https://www.wutuobangxinyougou.com/public/ic/ic_top.svg) no-repeat;
+  background-size: 100% 100%;
+}
+.more {
+  padding: 8rpx 0rpx;
+  padding-left: 60rpx;
+}
+.more .icon {
+  font-size: 56rpx;
+  color: #b2b2b2;
+}
+

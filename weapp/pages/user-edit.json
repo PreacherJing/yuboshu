@@ -1,0 +1,9 @@
+{
+    "navigationBarTitleText": "编辑个人资料",
+    "component": true,
+    "usingComponents": {
+        "actionSheet": "../components/actionSheet/actionSheet",
+        "dialog": "../components/dialog/dialog",
+        "screen-dialog": "../components/half-screen-dialog/half-screen-dialog"
+    }
+}

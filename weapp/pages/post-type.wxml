@@ -1,0 +1,23 @@
+
+<view class="container">
+  <view hover-class="item-hover" data-wpy-evt="10-0" bindtap="_proxy" class="item">
+    <image src="http://img.wutuobangxinyougou.com/img_dongtan.svg"></image>
+    <view class="center">
+      <view class="title">发布动弹</view>
+      <view class="des">记录真实的校园生活</view>
+    </view>
+    <view class="right">
+      <view class="icon icon-arrow-right"></view>
+    </view>
+  </view>
+  <button open-type="{{isqq ? 'openGroupProfile' : 'contact'}}" group-id="1006532345" class="item">
+    <image src="http://img.wutuobangxinyougou.com/ic_contribute.svg"></image>
+    <view class="center">
+      <view class="title">我要投稿</view>
+      <view class="des">自己发不方便,官方来帮你</view>
+    </view>
+    <view class="right">
+      <view class="icon icon-arrow-right"></view>
+    </view>
+  </button>
+</view>
