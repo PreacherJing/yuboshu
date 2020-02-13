@@ -23,6 +23,7 @@
     "@wepy/cli": "^2.0.0-alpha.20",
     "@babel/core": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
+    "@wepy/use-promisify": "^2.0.1",
     "@wepy/babel-plugin-import-regenerator": "0.0.2",
     "babel-eslint": "^7.2.1",
     "cross-env": "^5.1.3",

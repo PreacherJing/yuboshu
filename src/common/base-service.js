@@ -1,5 +1,5 @@
 import wepy from '@wepy/core'
-const baseUrl = 'https://www.wutuobangxinyougou.com'
+const baseUrl = 'http://test.wutuobangxinyougou.com'
 // export const baseUrl = 'http://127.0.0.1:7001'
 const qiniuUrl = 'http://img.wutuobangxinyougou.com/'
 const imgUrl = baseUrl + '/public/images'
