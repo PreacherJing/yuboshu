@@ -4,7 +4,7 @@ var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
 var _api = require('../common/api.js');
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -280,76 +280,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{"dialog":{"path":"../components/dialog/dialog"},"comment-input":{"path":"../components/comment-input"},"plane-add":{"path":"../components/comment-input"},"user-item":{"path":"../components/user-item"}},"on":{"32-3":["close"],"32-6":["hide","throw","recall"],"32-9":["hide"]}}, handlers: {'32-0': {"scrolltolower": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onScrolltolower($event)
-      })();
-    
-  }},'32-1': {"tap": function proxy (plane, index, j) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onItem(plane, index, j)
-      })();
-    
-  }},'32-2': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onShow($event)
-      })();
-    
-  }},'32-3': {"close": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.showDialog=_vm.flase
-      })();
-    
-  }},'32-4': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.showReplyInput=true
-      })();
-    
-  }},'32-5': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.showDialog=false
-      })();
-    
-  }},'32-6': {"hide": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onHide($event)
-      })();
-    
-  }, "throw": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onThrow($event)
-      })();
-    
-  }, "recall": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRecall($event)
-      })();
-    
-  }},'32-9': {"hide": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onReplyHide($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"dialog":{"path":"../components/dialog/dialog"},"comment-input":{"path":"../components/comment-input"},"plane-add":{"path":"../components/comment-input"},"user-item":{"path":"../components/user-item"}},"on":{"32-3":["close"],"32-6":["hide","throw","recall"],"32-9":["hide"]}}, handlers: {'32-0': {"scrolltolower": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

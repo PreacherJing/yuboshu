@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -176,56 +176,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{"footer":{"path":"../components/guide-footer"}},"on":{"24-4":["destap","tap"]}}, handlers: {'24-0': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onView($event)
-      })();
-    
-  }},'24-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onDel($event)
-      })();
-    
-  }},'24-2': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onUpload($event)
-      })();
-    
-  }},'24-3': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onDel($event)
-      })();
-    
-  }},'24-4': {"destap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goCenter($event)
-      })();
-    
-  }, "tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onSubmit($event)
-      })();
-    
-  }}}, models: {'8': {
-      type: "input",
-      expr: "realName",
-      handler: function set ($v) {
-      var _vm=this;
-        _vm.realName = $v;
-      
-    }
-    }} }, {info: {"components":{"footer":{"path":"../components/guide-footer"}},"on":{"24-4":["destap","tap"]}}, handlers: {'24-0': {"tap": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

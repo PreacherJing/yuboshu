@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -189,13 +189,6 @@ _core["default"].component({
     }
   }
 }, {info: {"components":{"loading":{"path":"loading/loading"},"comment-item":{"path":"post-comment-item"},"mp-page":{"path":"mp-page"},"empty":{"path":"empty"},"no-more":{"path":"no-more"}},"on":{"72-0":["action"]}}, handlers: {'72-0': {"action": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onAction($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"loading":{"path":"loading/loading"},"comment-item":{"path":"post-comment-item"},"mp-page":{"path":"mp-page"},"empty":{"path":"empty"},"no-more":{"path":"no-more"}},"on":{"72-0":["action"]}}, handlers: {'72-0': {"action": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

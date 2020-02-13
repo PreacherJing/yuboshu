@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -158,111 +158,6 @@ _core["default"].component({
     }
   }
 }, {info: {"components":{"user-item":{"path":"user-item"}},"on":{}}, handlers: {'77-0': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goComment($event)
-      })();
-    
-  }},'77-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onThumbs($event)
-      })();
-    
-  }},'77-2': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onFollow($event)
-      })();
-    
-  }},'77-3': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goUser(_vm.item.toUserId)
-      })();
-    
-  }},'77-4': {"tap": function proxy (index) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onPreview(_vm.item.imgs, index)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"user-item":{"path":"user-item"}},"on":{}}, handlers: {'77-0': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goComment($event)
-      })();
-    
-  }},'77-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onThumbs($event)
-      })();
-    
-  }},'77-2': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onFollow($event)
-      })();
-    
-  }},'77-3': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goUser(_vm.item.toUserId)
-      })();
-    
-  }},'77-4': {"tap": function proxy (index) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onPreview(_vm.item.imgs, index)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"user-item":{"path":"user-item"}},"on":{}}, handlers: {'77-0': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goComment($event)
-      })();
-    
-  }},'77-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onThumbs($event)
-      })();
-    
-  }},'77-2': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onFollow($event)
-      })();
-    
-  }},'77-3': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goUser(_vm.item.toUserId)
-      })();
-    
-  }},'77-4': {"tap": function proxy (index) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onPreview(_vm.item.imgs, index)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"user-item":{"path":"user-item"}},"on":{}}, handlers: {'77-0': {"tap": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

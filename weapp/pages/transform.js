@@ -4,7 +4,7 @@ var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
 var _api = require('../common/api.js');
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -85,28 +85,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{},"on":{}}, handlers: {'30-0': {"input": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onInput($event)
-      })();
-    
-  }},'30-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onTransform($event)
-      })();
-    
-  }}}, models: {'3': {
-      type: "input",
-      expr: "score",
-      handler: function set ($v) {
-      var _vm=this;
-        _vm.score = $v;
-      
-    }
-    }} }, {info: {"components":{},"on":{}}, handlers: {'30-0': {"input": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

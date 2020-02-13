@@ -4,7 +4,7 @@ var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
 var _api = require('../common/api.js');
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _share = _interopRequireDefault(require('../common/share.js'));
 
@@ -226,69 +226,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{"navigation-bar":{"path":"../components/navigation-bar/navigation-bar"},"tab-bar":{"path":"../components/tab-bar"},"user-tags":{"path":"../components/user-tags"},"user-post":{"path":"../components/user-post"},"user-photos":{"path":"../components/user-photos"}},"on":{"14-6":["change"],"14-8":["reset"]}}, handlers: {'14-0': {"touchmove": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.touchmove($event)
-      })();
-    
-  }, "touchend": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.touchend($event)
-      })();
-    
-  }},'14-2': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goEdit($event)
-      })();
-    
-  }},'14-3': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onFollow($event)
-      })();
-    
-  }},'14-4': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goFans(_vm.user.id, 0)
-      })();
-    
-  }},'14-5': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goFans(_vm.user.id, 1)
-      })();
-    
-  }},'14-6': {"change": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onTabChange($event)
-      })();
-    
-  }},'14-7': {"change": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onChange($event)
-      })();
-    
-  }},'14-8': {"reset": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onReset($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"navigation-bar":{"path":"../components/navigation-bar/navigation-bar"},"tab-bar":{"path":"../components/tab-bar"},"user-tags":{"path":"../components/user-tags"},"user-post":{"path":"../components/user-post"},"user-photos":{"path":"../components/user-photos"}},"on":{"14-6":["change"],"14-8":["reset"]}}, handlers: {'14-0': {"touchmove": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

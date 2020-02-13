@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -253,55 +253,6 @@ _core["default"].page({
     onAction: function onAction() {}
   }
 }, {info: {"components":{"loading":{"path":"../components/loading/loading"},"searchbar":{"path":"../components/searchbar/searchbar"},"mp-page":{"path":"../components/mp-page"},"empty":{"path":"../components/empty"},"no-more":{"path":"../components/no-more"}},"on":{"21-0":["scrolltolower","retry"],"21-2":["input","cancel"],"21-6":["action"]}}, handlers: {'21-0': {"scrolltolower": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onScrolltolower($event)
-      })();
-    
-  }, "retry": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRetry($event)
-      })();
-    
-  }},'21-2': {"input": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onSearch($event)
-      })();
-    
-  }, "cancel": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onCancel($event)
-      })();
-    
-  }},'21-4': {"tap": function proxy (item) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goTopic(item.id)
-      })();
-    
-  }},'21-5': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goAdd($event)
-      })();
-    
-  }},'21-6': {"action": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onAction($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"loading":{"path":"../components/loading/loading"},"searchbar":{"path":"../components/searchbar/searchbar"},"mp-page":{"path":"../components/mp-page"},"empty":{"path":"../components/empty"},"no-more":{"path":"../components/no-more"}},"on":{"21-0":["scrolltolower","retry"],"21-2":["input","cancel"],"21-6":["action"]}}, handlers: {'21-0': {"scrolltolower": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

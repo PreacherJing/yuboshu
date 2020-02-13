@@ -10,7 +10,15 @@
 + 【私密性】头像名称任意修改，内心不能说的秘密尽情倾诉
 + 【故事】这里你可以看到其他同学的故事，我有酒你有故事吗？
 
+# 玉帛书小程序码
+
 ![小程序码](https://www.wutuobangxinyougou.com/public/images/qr.jpg)
+
+# 个人微信二维码
+
+![截图](https://www.wutuobangxinyougou.com/public/images/user.png)
+
+# 小程序内部截图
 
 ![截图](https://www.wutuobangxinyougou.com/public/images/screenshot/1.jpg)
 

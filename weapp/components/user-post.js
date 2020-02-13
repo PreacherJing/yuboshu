@@ -4,7 +4,7 @@ var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
 var _api = require('../common/api.js');
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -289,27 +289,6 @@ _core["default"].component({
     }
   }
 }, {info: {"components":{"loading":{"path":"loading/loading"},"mp-page":{"path":"mp-page"},"post-item":{"path":"post-user-item"},"empty":{"path":"empty"},"no-more":{"path":"no-more"}},"on":{"83-0":["scrolltolower","retry"],"83-2":["del"]}}, handlers: {'83-0': {"scrolltolower": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onScrolltolower($event)
-      })();
-    
-  }, "retry": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRetry($event)
-      })();
-    
-  }},'83-2': {"del": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onDel($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"loading":{"path":"loading/loading"},"mp-page":{"path":"mp-page"},"post-item":{"path":"post-user-item"},"empty":{"path":"empty"},"no-more":{"path":"no-more"}},"on":{"83-0":["scrolltolower","retry"],"83-2":["del"]}}, handlers: {'83-0': {"scrolltolower": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

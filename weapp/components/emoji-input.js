@@ -2,7 +2,7 @@
 
 var _api = require('../common/api.js');
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -56,118 +56,6 @@ _core["default"].component({
     }
   }
 }, {info: {"components":{},"on":{}}, handlers: {'79-0': {"tap": function proxy (img) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onTap(img.value)
-      })();
-    
-  }},'79-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onDel($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'79-0': {"tap": function proxy (img) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onTap(img.value)
-      })();
-    
-  }},'79-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onDel($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'79-0': {"tap": function proxy (img) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onTap(img.value)
-      })();
-    
-  }},'79-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onDel($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'79-0': {"tap": function proxy (img) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onTap(img.value)
-      })();
-    
-  }},'79-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onDel($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'79-0': {"tap": function proxy (img) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onTap(img.value)
-      })();
-    
-  }},'79-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onDel($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'79-0': {"tap": function proxy (img) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onTap(img.value)
-      })();
-    
-  }},'79-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onDel($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'79-0': {"tap": function proxy (img) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onTap(img.value)
-      })();
-    
-  }},'79-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onDel($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'79-0': {"tap": function proxy (img) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onTap(img.value)
-      })();
-    
-  }},'79-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onDel($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'79-0': {"tap": function proxy (img) {
     
     var _vm=this;
       return (function () {

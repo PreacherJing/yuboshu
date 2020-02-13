@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -277,13 +277,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{},"on":{}}, handlers: {'19-0': {"tap": function proxy (index) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onTap(index)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'19-0': {"tap": function proxy (index) {
     
     var _vm=this;
       return (function () {

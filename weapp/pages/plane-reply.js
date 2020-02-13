@@ -4,7 +4,7 @@ var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
 var _api = require('../common/api.js');
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -239,41 +239,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{"loading":{"path":"../components/loading/loading"},"user-item":{"path":"../components/user-item"},"no-more":{"path":"../components/no-more"},"empty":{"path":"../components/empty"},"mp-page":{"path":"../components/mp-page"},"comment-input":{"path":"../components/comment-input"}},"on":{"33-0":["retry"],"33-3":["action"],"33-4":["hide"]}}, handlers: {'33-0': {"retry": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRetry($event)
-      })();
-    
-  }},'33-1': {"tap": function proxy (item) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onReply(item)
-      })();
-    
-  }},'33-2': {"tap": function proxy (item, index) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onPreview(item.imgs, index)
-      })();
-    
-  }},'33-3': {"action": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onAction($event)
-      })();
-    
-  }},'33-4': {"hide": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onHide($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"loading":{"path":"../components/loading/loading"},"user-item":{"path":"../components/user-item"},"no-more":{"path":"../components/no-more"},"empty":{"path":"../components/empty"},"mp-page":{"path":"../components/mp-page"},"comment-input":{"path":"../components/comment-input"}},"on":{"33-0":["retry"],"33-3":["action"],"33-4":["hide"]}}, handlers: {'33-0': {"retry": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

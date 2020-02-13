@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -104,48 +104,6 @@ _core["default"].component({
     }
   }
 }, {info: {"components":{},"on":{}}, handlers: {'90-0': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goDetail($event)
-      })();
-    
-  }},'90-1': {"tap": function proxy (index) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onPreview(_vm.item.imgs, index)
-      })();
-    
-  }},'90-2': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goTopic(_vm.item.topicId)
-      })();
-    
-  }},'90-3': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.openMap(_vm.item)
-      })();
-    
-  }},'90-4': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onShare($event)
-      })();
-    
-  }},'90-5': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onAction($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'90-0': {"tap": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

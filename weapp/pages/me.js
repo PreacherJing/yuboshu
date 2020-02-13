@@ -4,7 +4,7 @@ var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
 var _api = require('../common/api.js');
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _share = _interopRequireDefault(require('../common/share.js'));
 
@@ -159,55 +159,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{},"on":{}}, handlers: {'6-0': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goHomPage($event)
-      })();
-    
-  }},'6-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goGender($event)
-      })();
-    
-  }},'6-2': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goRank($event)
-      })();
-    
-  }},'6-3': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goMeans($event)
-      })();
-    
-  }},'6-4': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goFans(_vm.user.id, 1)
-      })();
-    
-  }},'6-5': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goEdit($event)
-      })();
-    
-  }},'6-6': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goSchool($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'6-0': {"tap": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

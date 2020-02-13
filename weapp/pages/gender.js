@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -98,27 +98,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{"footer":{"path":"../components/guide-footer"}},"on":{"20-2":["getuser"]}}, handlers: {'20-0': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.choice(1)
-      })();
-    
-  }},'20-1': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.choice(2)
-      })();
-    
-  }},'20-2': {"getuser": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onGetuser($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"footer":{"path":"../components/guide-footer"}},"on":{"20-2":["getuser"]}}, handlers: {'20-0': {"tap": function proxy () {
     
     var _vm=this;
       return (function () {

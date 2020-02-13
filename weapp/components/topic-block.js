@@ -4,7 +4,7 @@ var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
 var _api = require('../common/api.js');
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -360,27 +360,6 @@ _core["default"].component({
     }
   }
 }, {info: {"components":{"loading":{"path":"loading/loading"},"mp-page":{"path":"mp-page"},"post-item":{"path":"post-item"},"empty":{"path":"empty"},"no-more":{"path":"no-more"}},"on":{"81-0":["retry"],"81-1":["more"],"81-2":["action"]}}, handlers: {'81-0': {"retry": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRetry($event)
-      })();
-    
-  }},'81-1': {"more": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onMore($event)
-      })();
-    
-  }},'81-2': {"action": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onAction($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"loading":{"path":"loading/loading"},"mp-page":{"path":"mp-page"},"post-item":{"path":"post-item"},"empty":{"path":"empty"},"no-more":{"path":"no-more"}},"on":{"81-0":["retry"],"81-1":["more"],"81-2":["action"]}}, handlers: {'81-0': {"retry": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

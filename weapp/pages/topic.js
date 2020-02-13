@@ -6,7 +6,7 @@ var _api = require('../common/api.js');
 
 var _share = _interopRequireDefault(require('../common/share.js'));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -280,69 +280,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{"navigation-bar":{"path":"../components/navigation-bar/navigation-bar"},"tab-bar":{"path":"../components/tab-bar"},"mp-page":{"path":"../components/mp-page"},"topic-block":{"path":"../components/topic-block"}},"on":{"12-2":["scroll","scrolltolower","retry","refresh"],"12-7":["change"]}}, handlers: {'12-0': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goBack($event)
-      })();
-    
-  }},'12-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goBack($event)
-      })();
-    
-  }},'12-2': {"scroll": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onScroll($event)
-      })();
-    
-  }, "scrolltolower": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onScrolltolower($event)
-      })();
-    
-  }, "retry": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRetry($event)
-      })();
-    
-  }, "refresh": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRefresh($event)
-      })();
-    
-  }},'12-6': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onFollow($event)
-      })();
-    
-  }},'12-7': {"change": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onTabChange($event)
-      })();
-    
-  }},'12-8': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goSend($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"navigation-bar":{"path":"../components/navigation-bar/navigation-bar"},"tab-bar":{"path":"../components/tab-bar"},"mp-page":{"path":"../components/mp-page"},"topic-block":{"path":"../components/topic-block"}},"on":{"12-2":["scroll","scrolltolower","retry","refresh"],"12-7":["change"]}}, handlers: {'12-0': {"tap": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

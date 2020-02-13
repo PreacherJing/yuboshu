@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -310,90 +310,6 @@ _core["default"].component({
     }
   }
 }, {info: {"components":{"mp-page":{"path":"mp-page"}},"on":{"67-0":["scrolltolower","retry","refresh"]}}, handlers: {'67-0': {"scrolltolower": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onScrolltolower($event)
-      })();
-    
-  }, "retry": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRetry($event)
-      })();
-    
-  }, "refresh": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRefresh($event)
-      })();
-    
-  }},'67-3': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onClean($event)
-      })();
-    
-  }},'67-4': {"tap": function proxy (item) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goTopic(item.id)
-      })();
-    
-  }},'67-5': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goMaidan($event)
-      })();
-    
-  }},'67-6': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goMaidan($event)
-      })();
-    
-  }},'67-7': {"tap": function proxy (item) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goTopic(item.id)
-      })();
-    
-  }},'67-8': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goMaidan($event)
-      })();
-    
-  }},'67-9': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goMaidan($event)
-      })();
-    
-  }},'67-10': {"tap": function proxy (item) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goTopic(item.id)
-      })();
-    
-  }},'67-11': {"tap": function proxy (item, index) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onFollow(item, index)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"mp-page":{"path":"mp-page"}},"on":{"67-0":["scrolltolower","retry","refresh"]}}, handlers: {'67-0': {"scrolltolower": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -224,41 +224,6 @@ _core["default"].component({
     }
   }
 }, {info: {"components":{"screen-dialog":{"path":"half-screen-dialog/half-screen-dialog"},"searchbar":{"path":"searchbar/searchbar"}},"on":{"86-0":["close"],"86-1":["input","cancel"]}}, handlers: {'86-0': {"close": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onClose($event)
-      })();
-    
-  }},'86-1': {"input": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onSearch($event)
-      })();
-    
-  }, "cancel": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onCancel($event)
-      })();
-    
-  }},'86-3': {"scrolltolower": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onScrolltolower($event)
-      })();
-    
-  }},'86-4': {"tap": function proxy (item) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onSelect(item)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"screen-dialog":{"path":"half-screen-dialog/half-screen-dialog"},"searchbar":{"path":"searchbar/searchbar"}},"on":{"86-0":["close"],"86-1":["input","cancel"]}}, handlers: {'86-0': {"close": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

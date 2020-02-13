@@ -2,7 +2,7 @@
 
 var _api = require('../common/api.js');
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _share = _interopRequireDefault(require('../common/share.js'));
 
@@ -36,13 +36,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{},"on":{}}, handlers: {'10-0': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goSend(0)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'10-0': {"tap": function proxy () {
     
     var _vm=this;
       return (function () {

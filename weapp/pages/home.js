@@ -6,7 +6,7 @@ var _api = require('../common/api.js');
 
 var _share = _interopRequireDefault(require('../common/share.js'));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -166,41 +166,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{"navigation-bar":{"path":"../components/navigation-bar/navigation-bar"},"tab":{"path":"../components/tab-bar"},"recommend":{"path":"../components/page-recommend"},"follow":{"path":"../components/page-follow"},"topic":{"path":"../components/page-topic"}},"on":{"4-0":["change"]}}, handlers: {'4-0': {"change": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onTabChange($event)
-      })();
-    
-  }},'4-1': {"change": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onChange($event)
-      })();
-    
-  }},'4-2': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goSend($event)
-      })();
-    
-  }},'4-3': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goPlane($event)
-      })();
-    
-  }},'4-4': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goMoney($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"navigation-bar":{"path":"../components/navigation-bar/navigation-bar"},"tab":{"path":"../components/tab-bar"},"recommend":{"path":"../components/page-recommend"},"follow":{"path":"../components/page-follow"},"topic":{"path":"../components/page-topic"}},"on":{"4-0":["change"]}}, handlers: {'4-0': {"change": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

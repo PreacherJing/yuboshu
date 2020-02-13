@@ -6,7 +6,7 @@ var _api = require('../common/api.js');
 
 var _share = _interopRequireDefault(require('../common/share.js'));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -634,13 +634,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{"navigation-bar":{"path":"../components/navigation-bar/navigation-bar"}},"on":{}}, handlers: {'26-0': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onSave($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"navigation-bar":{"path":"../components/navigation-bar/navigation-bar"}},"on":{}}, handlers: {'26-0': {"tap": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

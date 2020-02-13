@@ -6,7 +6,7 @@ var _api = require('../common/api.js');
 
 var _share = _interopRequireDefault(require('../common/share.js'));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -251,55 +251,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{},"on":{}}, handlers: {'5-0': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goMessage($event)
-      })();
-    
-  }},'5-1': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goComment(2)
-      })();
-    
-  }},'5-2': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goFollow($event)
-      })();
-    
-  }},'5-3': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goComment(0)
-      })();
-    
-  }},'5-4': {"tap": function proxy () {
-    
-    var _vm=this;
-      return (function () {
-        _vm.goComment(1)
-      })();
-    
-  }},'5-5': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goReward($event)
-      })();
-    
-  }},'5-6': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goPlane($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{},"on":{}}, handlers: {'5-0': {"tap": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

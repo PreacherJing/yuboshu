@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -166,51 +166,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{},"on":{}}, handlers: {'13-0': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.chooseImage($event)
-      })();
-    
-  }},'13-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.chooseImage($event)
-      })();
-    
-  }},'13-2': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onAdd($event)
-      })();
-    
-  }}}, models: {'0': {
-      type: "input",
-      expr: "title",
-      handler: function set ($v) {
-      var _vm=this;
-        _vm.title = $v;
-      
-    }
-    },'1': {
-      type: "input",
-      expr: "nickName",
-      handler: function set ($v) {
-      var _vm=this;
-        _vm.nickName = $v;
-      
-    }
-    },'2': {
-      type: "input",
-      expr: "des",
-      handler: function set ($v) {
-      var _vm=this;
-        _vm.des = $v;
-      
-    }
-    }} }, {info: {"components":{},"on":{}}, handlers: {'13-0': {"tap": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

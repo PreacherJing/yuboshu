@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -207,27 +207,6 @@ _core["default"].component({
     }
   }
 }, {info: {"components":{"loading":{"path":"loading/loading"},"screen-dialog":{"path":"half-screen-dialog/half-screen-dialog"},"mp-page":{"path":"mp-page"},"user-item":{"path":"user-item"},"empty":{"path":"empty"},"no-more":{"path":"no-more"}},"on":{"76-0":["close"],"76-1":["retry","scrolltolower"]}}, handlers: {'76-0': {"close": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onCancel($event)
-      })();
-    
-  }},'76-1': {"retry": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRetry($event)
-      })();
-    
-  }, "scrolltolower": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onScrolltolower($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"loading":{"path":"loading/loading"},"screen-dialog":{"path":"half-screen-dialog/half-screen-dialog"},"mp-page":{"path":"mp-page"},"user-item":{"path":"user-item"},"empty":{"path":"empty"},"no-more":{"path":"no-more"}},"on":{"76-0":["close"],"76-1":["retry","scrolltolower"]}}, handlers: {'76-0': {"close": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

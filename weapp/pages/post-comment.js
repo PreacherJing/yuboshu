@@ -4,7 +4,7 @@ var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
 var _api = require('../common/api.js');
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -148,55 +148,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{"mp-page":{"path":"../components/mp-page"},"comment-action":{"path":"../components/comment-action"},"comment-item":{"path":"../components/post-comment-item"},"post-replys":{"path":"../components/post-replys"},"comment-input":{"path":"../components/comment-input"}},"on":{"9-0":["retry"],"9-1":["action","itemTap"],"9-3":["thumbs","showInput"],"9-5":["hide","comment"]}}, handlers: {'9-0': {"retry": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRetry($event)
-      })();
-    
-  }},'9-1': {"action": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onShowInput($event)
-      })();
-    
-  }, "itemTap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onItemTap($event)
-      })();
-    
-  }},'9-3': {"thumbs": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onThumbs($event)
-      })();
-    
-  }, "showInput": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onShowInput($event)
-      })();
-    
-  }},'9-5': {"hide": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onHide($event)
-      })();
-    
-  }, "comment": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onComment($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"mp-page":{"path":"../components/mp-page"},"comment-action":{"path":"../components/comment-action"},"comment-item":{"path":"../components/post-comment-item"},"post-replys":{"path":"../components/post-replys"},"comment-input":{"path":"../components/comment-input"}},"on":{"9-0":["retry"],"9-1":["action","itemTap"],"9-3":["thumbs","showInput"],"9-5":["hide","comment"]}}, handlers: {'9-0': {"retry": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

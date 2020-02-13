@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -192,62 +192,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{"screen-dialog":{"path":"../components/half-screen-dialog/half-screen-dialog"},"footer":{"path":"../components/guide-footer"},"school-input":{"path":"../components/school-input"}},"on":{"23-1":["tap"],"23-2":["close"],"23-6":["result","close"]}}, handlers: {'23-0': {"tap": function proxy (item) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onItemTap(item)
-      })();
-    
-  }},'23-1': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.goVerify($event)
-      })();
-    
-  }},'23-2': {"close": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onCancel($event)
-      })();
-    
-  }},'23-3': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onCancel($event)
-      })();
-    
-  }},'23-4': {"tap": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onConfirm($event)
-      })();
-    
-  }},'23-5': {"change": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onChange($event)
-      })();
-    
-  }},'23-6': {"result": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onSchoolSelect($event)
-      })();
-    
-  }, "close": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onSchoolClose($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"screen-dialog":{"path":"../components/half-screen-dialog/half-screen-dialog"},"footer":{"path":"../components/guide-footer"},"school-input":{"path":"../components/school-input"}},"on":{"23-1":["tap"],"23-2":["close"],"23-6":["result","close"]}}, handlers: {'23-0': {"tap": function proxy (item) {
     
     var _vm=this;
       return (function () {

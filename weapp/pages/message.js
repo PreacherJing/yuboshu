@@ -4,7 +4,7 @@ var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
 var _api = require('../common/api.js');
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -210,20 +210,6 @@ _core["default"].page({
     }
   }
 }, {info: {"components":{"loading":{"path":"../components/loading/loading"},"mp-page":{"path":"../components/mp-page"},"no-more":{"path":"../components/no-more"},"empty":{"path":"../components/empty"}},"on":{"7-0":["retry"]}}, handlers: {'7-0': {"retry": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRetry($event)
-      })();
-    
-  }},'7-1': {"tap": function proxy (item, index) {
-    
-    var _vm=this;
-      return (function () {
-        _vm.onRead(item.id, index)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"loading":{"path":"../components/loading/loading"},"mp-page":{"path":"../components/mp-page"},"no-more":{"path":"../components/no-more"},"empty":{"path":"../components/empty"}},"on":{"7-0":["retry"]}}, handlers: {'7-0': {"retry": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

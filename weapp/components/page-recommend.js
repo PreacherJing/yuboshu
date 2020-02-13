@@ -2,7 +2,7 @@
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _api = require('../common/api.js');
 
@@ -371,27 +371,6 @@ _core["default"].component({
     }
   }
 }, {info: {"components":{"mp-page":{"path":"mp-page"},"post-item":{"path":"post-item"}},"on":{"65-0":["scrolltolower","retry","refresh"]}}, handlers: {'65-0': {"scrolltolower": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onScrolltolower($event)
-      })();
-    
-  }, "retry": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRetry($event)
-      })();
-    
-  }, "refresh": function proxy () {
-    var $event = arguments[arguments.length - 1];
-    var _vm=this;
-      return (function () {
-        _vm.onRefresh($event)
-      })();
-    
-  }}}, models: {} }, {info: {"components":{"mp-page":{"path":"mp-page"},"post-item":{"path":"post-item"}},"on":{"65-0":["scrolltolower","retry","refresh"]}}, handlers: {'65-0': {"scrolltolower": function proxy () {
     var $event = arguments[arguments.length - 1];
     var _vm=this;
       return (function () {

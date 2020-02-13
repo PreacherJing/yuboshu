@@ -7,7 +7,7 @@ exports["default"] = exports.weibo_emojis = void 0;
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
-var _core = _interopRequireDefault(require('../vendor.js')(0));
+var _core = _interopRequireDefault(require('../vendor.js')(1));
 
 var _weiboEmotions = _interopRequireDefault(require('weibo-emotions.js'));
 
