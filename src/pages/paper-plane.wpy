@@ -269,7 +269,7 @@ page {
             <div class="school">
               <text>
                 <text class="icon icon-dingwei-full"></text>
-                <text>{{plane.user.school}}</text>
+                <text>{{plane.user.school || '中国某大学'}}</text>
               </text>
             </div>
           </div>
