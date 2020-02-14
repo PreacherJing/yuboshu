@@ -267,7 +267,7 @@
         <div class="icon icon-arrow-right" />
       </div>
       <block v-if="!isTop">
-        <div class="post-imgs" v-if="item.user.id !== 1">
+        <div class="post-imgs" v-if="showInfo">
           <div class="post-img-item" v-for="(img, index) in item.imgs" :key="index">
             <img
               @tap.stop="onPreview(item.imgs, index)"
@@ -278,7 +278,7 @@
             <div class="img-des" v-if="img.height > item.height">长图</div>
           </div>
         </div>
-        <div v-else-if="item.user.id === 1 && !showInfo">
+        <div v-else>
           <img
             @tap.stop="onPreview(item.imgs, index)"
             v-for="(img, index) in item.imgs"

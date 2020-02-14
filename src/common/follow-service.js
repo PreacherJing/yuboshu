@@ -49,7 +49,6 @@ export default class FollowService extends BaseService {
             this.showToast(res.erroCode > 0 ? res.msg : '取关失败,重试')
             return false
         }
-
     }
     async getUserRank() {
         const res = await this.request('/user/follow/rank/index')
