@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = exports.weibo_emojis = void 0;
+exports["default"] = exports.weibo_emojis = exports.baseUrl = void 0;
 
 var _regeneratorRuntime2 = _interopRequireDefault(require('../vendor.js')(3));
 
@@ -23,8 +23,9 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var baseUrl = 'http://test.wutuobangxinyougou.com'; // export const baseUrl = 'http://127.0.0.1:7001'
-
+// const baseUrl = 'http://test.wutuobangxinyougou.com'
+var baseUrl = 'http://127.0.0.1:7001';
+exports.baseUrl = baseUrl;
 var qiniuUrl = 'http://img.wutuobangxinyougou.com/';
 var imgUrl = baseUrl + '/public/images';
 var genders = ['未知', '男', '女'];

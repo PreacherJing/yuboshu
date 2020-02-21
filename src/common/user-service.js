@@ -12,7 +12,7 @@ export default class UserService extends BaseService {
         }
         let userId = ''
         try {
-            userId = 18056 // wx.getStorageSync('userId')
+            userId =  wx.getStorageSync('userId')
         } catch (error) {
             console.log(error);
         }

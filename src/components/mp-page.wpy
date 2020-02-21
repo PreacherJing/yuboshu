@@ -71,9 +71,11 @@
     <div class="page-content" v-else>
       <scroll-view
         :scroll-y="!showLoading && scrollY"
-        @touchmove="onTouchmove"
-        @touchend="onTouchend"
+        :refresher-enabled="true"
+        :refresher-triggered="triggered"
         @scroll="onScroll"
+        @refresherrefresh="onRefresherrefresh"
+        @refresherrestore="onRefresherrestore"
         @scrolltolower="onScrolltolower"
         class="content"
       >
@@ -149,6 +151,7 @@ wepy.component({
     beginY: 0,
     top: -100,
     showLoading: false,
+    triggered: false,
     isLoading: false,
     transition: 'none'
   },
@@ -205,6 +208,16 @@ wepy.component({
     },
     onScrolltolower() {
       this.$emit('scrolltolower');
+    },
+    onRefresherrefresh() {
+      this.triggered = true;
+      this.$emit('refresh');
+      setTimeout(() => {
+        this.triggered = false
+      }, 2000)
+    },
+    onRefresherrestore() {
+      this.triggered = true;
     }
   }
 });

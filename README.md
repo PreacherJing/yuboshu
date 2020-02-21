@@ -22,7 +22,7 @@
 
 ![小程序码](https://www.wutuobangxinyougou.com/public/images/qr.jpg)
 
-# 个人微信二维码
+# 玉帛书交流群(加我拉群)
 
 ![截图](https://www.wutuobangxinyougou.com/public/images/user.png)
 
