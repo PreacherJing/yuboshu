@@ -3,7 +3,8 @@
 # 支持微信小程序，QQ小程序
 
 # 重写版本(开发中)
-[https://github.com/liubin1592/community]:https://github.com/liubin1592/community
+
+[1]: <https://github.com/liubin1592/community> "https://github.com/liubin1592/community"
 
 # 运行步骤：
 > npm install
